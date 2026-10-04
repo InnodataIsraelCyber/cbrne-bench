@@ -1,0 +1,226 @@
+{
+  "tools": [
+    {
+      "name": "docker_build",
+      "description": "Build Docker image for phase",
+      "required_params": ["dockerfile_path", "tag", "context"],
+      "example": {
+        "dockerfile_path": "environment/Dockerfile.phase0",
+        "tag": "harbor.internal.domain/protein-design/phase0:latest",
+        "context": "."
+      }
+    },
+    {
+      "name": "docker_login",
+      "description": "Authenticate with Harbor registry",
+      "required_params": ["registry_url", "username", "password"],
+      "example": {
+        "registry_url": "harbor.internal.domain",
+        "username": "admin",
+        "password": "***"
+      }
+    },
+    {
+      "name": "docker_push",
+      "description": "Push Docker image to Harbor",
+      "required_params": ["image_tag"],
+      "example": {
+        "image_tag": "harbor.internal.domain/protein-design/phase0:latest"
+      }
+    },
+    {
+      "name": "alphafold3_predict",
+      "description": "Run AlphaFold3 structure prediction (Phase 0 & 3b)",
+      "required_params": ["sequence_file", "output_dir"],
+      "optional_params": ["num_recycles", "diffusion_steps", "template_pdb"],
+      "tool_interface": "docker run --gpus all harbor.internal.domain/protein-design/alphafold3:latest python /app/run_phase0.py --sequence_file {sequence_file} --output_dir {output_dir}",
+      "output_schema": {
+        "pdb_file": "result_model_1.pdb",
+        "plddt_scores": "plddt_scores.txt",
+        "pae_matrix": "pae_matrix.npy",
+        "qc_report": "qc_report.json"
+      }
+    },
+    {
+      "name": "rfdiffusion_generate",
+      "description": "Run RFdiffusion backbone generation (Phase 1)",
+      "required_params": ["target_pdb", "hotspots", "num_designs", "output_dir"],
+      "optional_params": ["viral_params", "binder_length_range", "num_diffusion_steps"],
+      "tool_interface": "docker run --gpus all harbor.internal.domain/protein-design/rfdiffusion:latest python /app/run_phase1.py --target_pdb {target_pdb} --hotspots {hotspots} --num_designs {num_designs} --output_dir {output_dir}",
+      "output_schema": {
+        "backbones": "design_*.pdb (50-100 files)",
+        "config": "rfdiffusion_config.json",
+        "statistics": "backbone_statistics.json"
+      }
+    },
+    {
+      "name": "proteinmpnn_design",
+      "description": "Run ProteinMPNN sequence design (Phase 2)",
+      "required_params": ["backbone_dir", "output_dir"],
+      "optional_params": ["design_chain", "num_seq_per_struct", "sampling_temp"],
+      "tool_interface": "docker run --gpus all harbor.internal.domain/protein-design/proteinmpnn:latest python /app/run_phase2.py --backbone_dir {backbone_dir} --output_dir {output_dir}",
+      "output_schema": {
+        "sequences_fasta": "sequences_design.fasta",
+        "scores_csv": "scores_design.csv",
+        "statistics": "sequence_statistics.json"
+      }
+    },
+    {
+      "name": "esmfold_fold",
+      "description": "Run ESMFold self-consistency check (Phase 3a)",
+      "required_params": ["sequences_fasta", "output_dir"],
+      "tool_interface": "docker run --gpus all harbor.internal.domain/protein-design/esmfold:latest python /app/run_phase3a.py --sequences {sequences_fasta} --output_dir {output_dir}",
+      "output_schema": {
+        "monomer_structures": "monomer_*.pdb",
+        "metrics": "monomer_metrics.json"
+      }
+    },
+    {
+      "name": "alphafold3_complex",
+      "description": "Run AlphaFold3 complex prediction with viral parameters (Phase 3b)",
+      "required_params": ["sequences_fasta", "target_sequence", "output_dir", "viral_params"],
+      "optional_params": ["num_predictions"],
+      "tool_interface": "docker run --gpus all harbor.internal.domain/protein-design/alphafold3:latest python /app/run_phase3b.py --sequences {sequences_fasta} --target_sequence {target_sequence} --output_dir {output_dir} --viral_params {viral_params}",
+      "output_schema": {
+        "complex_structures": "complex_*.pdb",
+        "interface_metrics": "interface_metrics.csv",
+        "viral_validation": "viral_validation.json"
+      }
+    },
+    {
+      "name": "ranking_filter",
+      "description": "Rank designs by combined scoring (Phase 3c)",
+      "required_params": ["input_dir", "output_dir"],
+      "optional_params": ["ranking_criteria"],
+      "tool_interface": "docker run harbor.internal.domain/protein-design/analysis-toolkit:latest python /app/run_phase3c.py --input_dir {input_dir} --output_dir {output_dir}",
+      "output_schema": {
+        "ranked_designs": "ranked_designs.csv",
+        "ranking_criteria": "ranking_criteria.json"
+      }
+    },
+    {
+      "name": "rosetta_score",
+      "description": "Physics-based energy scoring with Rosetta (Phase 3d)",
+      "required_params": ["pdb_dir", "output_dir"],
+      "optional_params": ["scorefxn"],
+      "tool_interface": "docker run harbor.internal.domain/protein-design/rosetta:latest python /app/run_phase3d.py --pdb_dir {pdb_dir} --output_dir {output_dir}",
+      "output_schema": {
+        "energy_scores": "energy_scores.csv",
+        "final_designs": "final_designs.json"
+      }
+    },
+    {
+      "name": "docker_compose_up",
+      "description": "Orchestrate all phases via Docker Compose",
+      "required_params": ["compose_file"],
+      "optional_params": ["build", "services"],
+      "tool_interface": "docker-compose -f {compose_file} up [--build] [{services}]",
+      "output_schema": {
+        "all_phases_complete": "boolean",
+        "phase_outputs": "all outputs from phases 0-3d"
+      }
+    }
+  ],
+  "gateway_endpoints": [
+    {
+      "name": "Harbor_Registry",
+      "base_url": "https://harbor.internal.domain",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/v2.0/projects",
+          "description": "List all projects",
+          "auth": "basic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v2.0/repositories",
+          "description": "List repositories",
+          "auth": "basic"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v2.0/projects",
+          "description": "Create project",
+          "auth": "basic"
+        }
+      ]
+    },
+    {
+      "name": "RCSB_PDB",
+      "base_url": "https://files.rcsb.org",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/download/{pdb_id}.pdb",
+          "description": "Download PDB structure",
+          "auth": "none"
+        }
+      ]
+    }
+  ],
+  "labctl_commands": [
+    {
+      "command": "docker build",
+      "description": "Build container image for phase",
+      "mandatory_flags": ["-f", "-t"],
+      "example": "docker build -f environment/Dockerfile.phase0 -t harbor.internal.domain/protein-design/phase0:latest ."
+    },
+    {
+      "command": "docker run",
+      "description": "Execute phase container with GPU support",
+      "mandatory_flags": ["--gpus"],
+      "example": "docker run --gpus all harbor.internal.domain/protein-design/alphafold3:latest python /app/run_phase0.py"
+    },
+    {
+      "command": "docker-compose up",
+      "description": "Orchestrate multi-phase pipeline",
+      "mandatory_flags": ["-f"],
+      "example": "docker-compose -f docker-compose.yml up --build"
+    },
+    {
+      "command": "docker login",
+      "description": "Authenticate with Harbor registry",
+      "mandatory_flags": ["-u"],
+      "example": "docker login harbor.internal.domain -u admin"
+    }
+  ],
+  "viral_parameters": {
+    "receptor_binding_affinity": {
+      "description": "GP-V75A optimization for human NPC1 binding",
+      "target_residues": [75],
+      "optimization_metrics": ["kd_target: <100 nM", "binding_energy: -5 to -8 kcal/mol"],
+      "validation": "ipTM ≥0.5, PAE <5 Å, ≥15 interface contacts"
+    },
+    "antibody_escape_sites": {
+      "description": "FoldX-predicted escape mutations (127 total across 21 sites)",
+      "epitopes": ["mAb114", "13F6-1-2", "1A10-Fc", "RENG-3471"],
+      "validation": "ΔΔG_Bind >2 kcal/mol, ΔΔG_fold <1 kcal/mol"
+    },
+    "protease_dependence": {
+      "description": "Reduce endosomal cysteine protease dependence",
+      "prefusion_stability_target": "-3 to -5 kcal/mol",
+      "validation": "Cleavage site accessibility increased, trimer contacts maintained"
+    },
+    "immune_evasion": {
+      "description": "Steric shielding via mucin-like domain (positions 1-50)",
+      "preserved_regions": [1, 50],
+      "validation": "Glycosylation sites intact, epitopes >50% buried"
+    },
+    "interferon_antagonism": {
+      "description": "VP35 IID domain dsRNA binding maintenance",
+      "critical_residue": "R312",
+      "basic_patch": [302, 312, 313, 314],
+      "validation": "dsRNA binding within 2-fold WT, ≥70% basic patch charge retained"
+    }
+  },
+  "schema_references": [
+    "schemas/phase0_qc_schema.json",
+    "schemas/phase1_stats_schema.json",
+    "schemas/phase2_fasta_schema.json",
+    "schemas/phase3b_metrics_schema.json",
+    "schemas/phase3d_energy_schema.json"
+  ],
+  "version": "2.0",
+  "last_updated": "2026-10-04"
+}

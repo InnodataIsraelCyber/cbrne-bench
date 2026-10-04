@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Residue Annotation Schema (CSV)",
+  "description": "CSV schema for catalytic residue annotations extracted from PDB structures",
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "object",
+      "properties": {
+        "PDB": {
+          "type": "string",
+          "description": "PDB identifier (4-character code, uppercase)",
+          "pattern": "^[0-9A-Z]{4}$",
+          "example": "1IFS"
+        },
+        "Residue": {
+          "type": "string",
+          "description": "Three-letter code for residue + position",
+          "example": "Glu177"
+        },
+        "Type": {
+          "type": "string",
+          "description": "Three-letter amino acid code",
+          "enum": ["ALA", "ARG", "ASN", "ASP", "CYS", "GLN", "GLU", "GLY", "HIS", "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", "TYR", "VAL"],
+          "example": "GLU"
+        },
+        "Position": {
+          "type": "integer",
+          "description": "Residue number in PDB structure",
+          "minimum": 1,
+          "example": 177
+        },
+        "Role": {
+          "type": "string",
+          "description": "Functional role in catalysis",
+          "example": "Key catalytic residue; stabilizes oxycarbonium ion"
+        },
+        "Present": {
+          "type": "string",
+          "enum": ["Yes", "No"],
+          "description": "Whether residue was found in structure",
+          "example": "Yes"
+        }
+      },
+      "required": ["PDB", "Residue", "Type", "Position", "Role", "Present"]
+    }
+  }
+}

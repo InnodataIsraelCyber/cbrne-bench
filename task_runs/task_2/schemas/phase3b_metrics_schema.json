@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 3b Complex Prediction Metrics Schema",
+  "description": "Interface metrics from AlphaFold3 complex predictions with viral parameter validation",
+  "type": "object",
+  "properties": {
+    "sequence_id": {
+      "type": "string",
+      "description": "Design sequence identifier (e.g., design_000_seq_001)"
+    },
+    "ipTM": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Interface pTM score (interface confidence)"
+    },
+    "interface_pae": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Interface PAE in Angstroms (lower is better)"
+    },
+    "contact_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of residue pairs within 5 Å at interface"
+    },
+    "binding_energy_pred": {
+      "type": "number",
+      "description": "Predicted binding energy (kcal/mol)"
+    },
+    "interface_area": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Interface buried surface area (Ų)"
+    },
+    "plddt_avg": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Average pLDDT for interface residues"
+    },
+    "receptor_binding_compatible": {
+      "type": "boolean",
+      "description": "Compatible with GP-V75A receptor binding affinity optimization"
+    },
+    "escape_site_compatible": {
+      "type": "boolean",
+      "description": "Compatible with antibody escape site design"
+    },
+    "protease_pathway_compatible": {
+      "type": "boolean",
+      "description": "Compatible with protease dependence parameters"
+    },
+    "immune_evasion_compatible": {
+      "type": "boolean",
+      "description": "Compatible with mucin-like domain steric shielding (positions 1-50 preserved)"
+    },
+    "vp35_antagonism_compatible": {
+      "type": "boolean",
+      "description": "Compatible with VP35 interferon antagonism maintenance"
+    },
+    "viral_parameter_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Combined viral parameter compatibility score"
+    },
+    "passes_mandatory_filters": {
+      "type": "boolean",
+      "description": "Passes ipTM ≥0.5 and PAE ≤0.35 thresholds"
+    },
+    "validation_notes": {
+      "type": "string",
+      "description": "Additional notes on validation"
+    }
+  },
+  "required": [
+    "sequence_id", "ipTM", "interface_pae", "contact_count",
+    "receptor_binding_compatible", "escape_site_compatible",
+    "passes_mandatory_filters"
+  ]
+}

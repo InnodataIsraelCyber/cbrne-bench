@@ -1,0 +1,35 @@
+FROM python:3.10-slim
+
+WORKDIR /workspace
+
+# Install BLAST and bioinformatics tools
+RUN apt-get update && apt-get install -y \
+    ncbi-blast+ \
+    wget \
+    curl \
+    git \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    biopython==1.81 \
+    pydantic==2.0 \
+    requests==2.31.0
+
+# Copy PDB downloader script
+COPY scripts/download_pdb.py /workspace/
+COPY scripts/extract_residues.py /workspace/
+
+# Set environment variables
+ENV PDB_IDS="1IFS 1UQ4 2P8N"
+ENV OUTPUT_DIR="/data/structures"
+
+# Create output directory with proper permissions
+RUN mkdir -p $OUTPUT_DIR
+
+# Entrypoint script
+COPY scripts/stage1_entrypoint.sh /workspace/
+RUN chmod +x /workspace/stage1_entrypoint.sh
+
+ENTRYPOINT ["/workspace/stage1_entrypoint.sh"]

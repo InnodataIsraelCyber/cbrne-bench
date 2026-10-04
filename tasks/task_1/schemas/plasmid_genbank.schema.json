@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Plasmid GenBank Schema",
+  "description": "Validation schema for GenBank format plasmid files output by Stage 6",
+  "type": "object",
+  "definitions": {
+    "genbank_feature": {
+      "type": "object",
+      "required": ["type", "location"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["source", "CDS", "promoter", "RBS", "terminator", "resistance_marker", "misc_feature"],
+          "description": "GenBank feature type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Feature location (e.g., '1..150', 'join(150..300,500..600)')",
+          "pattern": "^(join\\()?[0-9]+\\.\\.?[0-9]+(,[0-9]+\\.\\.?[0-9]+)*\\)?$"
+        },
+        "qualifiers": {
+          "type": "object",
+          "description": "GenBank qualifiers (key-value pairs)",
+          "properties": {
+            "product": {"type": "string", "example": "Ampicillin resistance gene"},
+            "note": {"type": "string"},
+            "label": {"type": "string"},
+            "translation": {
+              "type": "string",
+              "pattern": "^[ACDEFGHIKLMNPQRSTVWY*]*$",
+              "description": "Protein translation for CDS features"
+            }
+          }
+        }
+      }
+    },
+    "genbank_record": {
+      "type": "object",
+      "required": ["id", "seq", "annotations", "features"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Plasmid identifier",
+          "example": "designed_seq_1_backbone_1"
+        },
+        "description": {
+          "type": "string",
+          "description": "Plasmid description",
+          "example": "Engineered plasmid for protein expression"
+        },
+        "seq": {
+          "type": "string",
+          "pattern": "^[ATCG]+$",
+          "description": "Complete plasmid sequence (DNA)",
+          "minLength": 4500,
+          "maxLength": 100000,
+          "example": "ATGGCTAGC..."
+        },
+        "seq_length": {
+          "type": "integer",
+          "minimum": 4500,
+          "maximum": 100000,
+          "description": "Length of sequence in base pairs"
+        },
+        "circular": {
+          "type": "boolean",
+          "const": true,
+          "description": "Plasmids must be circular topology"
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {
+            "topology": {
+              "type": "string",
+              "const": "circular",
+              "description": "Plasmid is circular DNA"
+            },
+            "molecule_type": {
+              "type": "string",
+              "const": "DNA",
+              "description": "Molecule type"
+            },
+            "organism": {
+              "type": "string",
+              "default": "synthetic construct",
+              "description": "Organism or source"
+            },
+            "date": {
+              "type": "string",
+              "format": "date",
+              "description": "Creation date"
+            }
+          }
+        },
+        "features": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"$ref": "#/definitions/genbank_feature"},
+          "description": "Annotated features (source, promoter, CDS, RBS, terminator, resistance marker)"
+        },
+        "validation": {
+          "type": "object",
+          "description": "Validation results for plasmid",
+          "properties": {
+            "has_ori": {
+              "type": "boolean",
+              "description": "Plasmid has origin of replication"
+            },
+            "has_rbs": {
+              "type": "boolean",
+              "description": "Plasmid has ribosome binding site"
+            },
+            "has_terminator": {
+              "type": "boolean",
+              "description": "Plasmid has transcription terminator"
+            },
+            "has_resistance_marker": {
+              "type": "boolean",
+              "description": "Plasmid has selection marker (e.g., amp_r)"
+            },
+            "cds_translatable": {
+              "type": "boolean",
+              "description": "CDS sequence translates without internal stop codons"
+            },
+            "assembly_method": {
+              "type": "string",
+              "enum": ["Gibson", "Golden_Gate", "Overlap_Extension"],
+              "description": "Assembly method used"
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": ["records"],
+  "properties": {
+    "file_format": {
+      "type": "string",
+      "const": "GenBank",
+      "description": "Output file format"
+    },
+    "total_records": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of plasmids in file"
+    },
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/genbank_record"},
+      "minItems": 1,
+      "description": "Array of GenBank plasmid records"
+    },
+    "assembly_method": {
+      "type": "string",
+      "enum": ["Gibson", "Golden_Gate", "Overlap_Extension"],
+      "description": "Assembly method used for all plasmids in file"
+    },
+    "success_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of successfully assembled plasmids"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "pipeline_stage": {
+          "type": "integer",
+          "const": 6
+        },
+        "execution_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "genbank_version": {
+          "type": "string",
+          "example": "5.0"
+        }
+      }
+    }
+  }
+}

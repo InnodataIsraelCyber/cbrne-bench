@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 3d Energy Scoring Schema",
+  "description": "Physics-based energy scores from Rosetta/FoldX for final design evaluation",
+  "type": "object",
+  "properties": {
+    "design_id": {
+      "type": "string",
+      "description": "Final design identifier (from Phase 3c ranking)"
+    },
+    "sequence_id": {
+      "type": "string",
+      "description": "Original sequence identifier"
+    },
+    "ddg_bind": {
+      "type": "number",
+      "description": "Change in binding energy (kcal/mol), more negative = stronger binding"
+    },
+    "ddg_fold": {
+      "type": "number",
+      "description": "Change in folding stability (kcal/mol), < 1 kcal/mol is good"
+    },
+    "shape_complementarity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Interface shape complementarity score (>0.55 is good)"
+    },
+    "interface_area": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Interface buried surface area (Ų)"
+    },
+    "buried_sasa": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total buried surface area including side chains (Ų)"
+    },
+    "hbond_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of hydrogen bonds at interface"
+    },
+    "salt_bridge_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of salt bridges at interface"
+    },
+    "rosetta_score": {
+      "type": "number",
+      "description": "Overall Rosetta energy score (REU units, lower is better)"
+    },
+    "foldx_score": {
+      "type": "number",
+      "description": "FoldX interaction energy (kcal/mol)"
+    },
+    "ipTM": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Interface pTM from AF3 (for reference)"
+    },
+    "correlates_with_ai_metrics": {
+      "type": "boolean",
+      "description": "Energy scores correlate positively with AI confidence metrics"
+    },
+    "viral_parameter_compatible": {
+      "type": "boolean",
+      "description": "Maintains compatibility with all 5 viral parameters"
+    },
+    "ranked_position": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Rank among final designs (1 = best)"
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": ["high_priority_synthesis", "synthesis_candidate", "experimental_validation_needed", "hold"],
+      "description": "Recommendation for wet-lab testing"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes on design quality and feasibility"
+    }
+  },
+  "required": [
+    "design_id", "ddg_bind", "shape_complementarity",
+    "rosetta_score", "ranked_position", "viral_parameter_compatible"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sequence FASTA Schema",
+  "description": "Validation schema for FASTA sequence files output by each pipeline stage",
+  "type": "object",
+  "definitions": {
+    "protein_sequence": {
+      "type": "string",
+      "pattern": "^[ACDEFGHIKLMNPQRSTVWY*]+$",
+      "description": "Valid protein sequence (20 standard amino acids + stop codon *)"
+    },
+    "dna_sequence": {
+      "type": "string",
+      "pattern": "^[ATCG]+$",
+      "description": "Valid DNA sequence (A, T, C, G nucleotides)"
+    },
+    "fasta_header": {
+      "type": "string",
+      "description": "FASTA header line starting with >",
+      "pattern": "^>.+$",
+      "example": ">designed_sequence_1 Description of sequence"
+    },
+    "fasta_record_protein": {
+      "type": "object",
+      "required": ["header", "sequence"],
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/fasta_header"
+        },
+        "sequence": {
+          "$ref": "#/definitions/protein_sequence"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 10,
+          "description": "Sequence length in amino acids"
+        }
+      }
+    },
+    "fasta_record_dna": {
+      "type": "object",
+      "required": ["header", "sequence"],
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/fasta_header"
+        },
+        "sequence": {
+          "$ref": "#/definitions/dna_sequence"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 30,
+          "description": "Sequence length in base pairs (must be multiple of 3 for coding regions)"
+        },
+        "is_multiple_of_3": {
+          "type": "boolean",
+          "description": "Whether length is divisible by 3 (coding requirement)"
+        }
+      }
+    }
+  },
+  "properties": {
+    "stage": {
+      "type": "integer",
+      "description": "Pipeline stage that generated this file"
+    },
+    "sequence_type": {
+      "type": "string",
+      "enum": ["protein", "dna"],
+      "description": "Type of sequence content"
+    },
+    "records": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {"$ref": "#/definitions/fasta_record_protein"},
+          "minItems": 1,
+          "description": "Protein sequence records (Stages 3)"
+        },
+        {
+          "type": "array",
+          "items": {"$ref": "#/definitions/fasta_record_dna"},
+          "minItems": 1,
+          "description": "DNA sequence records (Stages 4-5)"
+        }
+      ]
+    },
+    "total_records": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of sequences in file"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+FROM python:3.10-slim
+
+WORKDIR /workspace
+
+# Install BLAST and bioinformatics tools
+RUN apt-get update && apt-get install -y \
+    ncbi-blast+ \
+    wget \
+    curl \
+    git \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    biopython==1.87 \
+    pydantic==2.0 \
+    requests==2.31.0
+
+# Copy processing scripts
+COPY scripts/stage1_entrypoint.sh /workspace/
+COPY scripts/stage1_processing.py /workspace/
+
+RUN chmod +x /workspace/stage1_entrypoint.sh
+
+# Set environment variables
+ENV PDB_IDS="1IFS 1UQ4 2P8N"
+ENV OUTPUT_DIR="/data/structures"
+
+ENTRYPOINT ["/workspace/stage1_entrypoint.sh"]

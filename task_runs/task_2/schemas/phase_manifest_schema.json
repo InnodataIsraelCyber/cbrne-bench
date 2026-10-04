@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase Manifest Schema",
+  "description": "Manifest file for each phase (0-3d) in protein design pipeline",
+  "type": "object",
+  "required": ["phase", "status", "timestamp", "viral_parameters_applied"],
+  "properties": {
+    "phase": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Pipeline phase number"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success", "partial", "failure"],
+      "description": "Phase execution status"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Phase execution timestamp (ISO8601)"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Phase execution duration"
+    },
+    "viral_parameters_applied": {
+      "type": "object",
+      "description": "Which viral design parameters were used",
+      "properties": {
+        "receptor_binding_affinity": { "type": "boolean" },
+        "antibody_escape_sites": { "type": "boolean" },
+        "protease_dependence": { "type": "boolean" },
+        "immune_evasion": { "type": "boolean" },
+        "interferon_antagonism": { "type": "boolean" }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Output files generated",
+      "properties": {
+        "primary_output": { "type": "string" },
+        "secondary_outputs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "total_files": { "type": "integer" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Phase-specific validation results",
+      "properties": {
+        "passed": { "type": "boolean" },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "container_info": {
+      "type": "object",
+      "description": "Docker container execution details",
+      "properties": {
+        "image": { "type": "string" },
+        "image_version": { "type": "string" },
+        "container_id": { "type": "string" },
+        "gpu_used": { "type": "boolean" },
+        "gpu_memory_mb": { "type": "number" }
+      }
+    }
+  },
+  "additionalProperties": true
+}

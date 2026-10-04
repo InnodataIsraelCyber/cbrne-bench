@@ -1,0 +1,45 @@
+FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
+
+WORKDIR /workspace
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    curl \
+    build-essential \
+    conda \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone RFdiffusion repository
+RUN git clone https://github.com/jwolynes/RFdiffusion.git /workspace/RFdiffusion
+
+WORKDIR /workspace/RFdiffusion
+
+# Copy environment specification
+COPY environment_rfdiffusion.yml /workspace/
+
+# Install conda environment
+RUN apt-get update && apt-get install -y conda && \
+    conda env create -f /workspace/environment_rfdiffusion.yml && \
+    rm -rf /var/lib/apt/lists/*
+
+# Activate environment for subsequent RUN commands
+SHELL ["conda", "run", "-n", "diffusion", "/bin/bash", "-c"]
+
+# Download model weights (placeholder - should be mounted or pre-downloaded)
+RUN mkdir -p /workspace/models && \
+    echo "Note: Model weights should be pre-downloaded to /workspace/models/"
+
+# Copy configuration and scripts
+COPY scripts/stage2_entrypoint.sh /workspace/
+COPY scripts/run_rfdiffusion.py /workspace/
+
+RUN chmod +x /workspace/stage2_entrypoint.sh
+
+# Set environment
+ENV PYTHONPATH=/workspace/RFdiffusion:$PYTHONPATH
+ENV DATA_INPUT=/data/structures
+ENV DATA_OUTPUT=/data/scaffolds
+
+ENTRYPOINT ["/workspace/stage2_entrypoint.sh"]

@@ -1,0 +1,261 @@
+{
+  "tools": [
+    {
+      "name": "docker_build",
+      "description": "Build Docker image from Dockerfile",
+      "required_params": [
+        "dockerfile_path",
+        "tag",
+        "context"
+      ],
+      "optional_params": [
+        "build_args",
+        "no_cache"
+      ],
+      "example": {
+        "dockerfile_path": "Dockerfile.stage1",
+        "tag": "harbor.innodata.local/protein-engineering/stage1:latest",
+        "context": ".",
+        "no_cache": false
+      },
+      "tool_interface": "cli: docker build -f {dockerfile_path} -t {tag} {context}",
+      "output_schema": {
+        "success": "boolean",
+        "image_id": "string (SHA256)",
+        "size_mb": "number"
+      }
+    },
+    {
+      "name": "docker_login",
+      "description": "Authenticate with Harbor container registry",
+      "required_params": [
+        "registry_url",
+        "username",
+        "password"
+      ],
+      "optional_params": [],
+      "example": {
+        "registry_url": "harbor.innodata.local",
+        "username": "admin",
+        "password": "***"
+      },
+      "tool_interface": "cli: docker login {registry_url} -u {username} -p {password}",
+      "output_schema": {
+        "success": "boolean",
+        "message": "string"
+      }
+    },
+    {
+      "name": "docker_push",
+      "description": "Push Docker image to Harbor registry",
+      "required_params": [
+        "image_tag"
+      ],
+      "optional_params": [],
+      "example": {
+        "image_tag": "harbor.innodata.local/protein-engineering/stage1:latest"
+      },
+      "tool_interface": "cli: docker push {image_tag}",
+      "output_schema": {
+        "success": "boolean",
+        "digest": "string (SHA256)",
+        "pushed_layers": "number"
+      }
+    },
+    {
+      "name": "docker_compose_up",
+      "description": "Orchestrate multi-container pipeline execution",
+      "required_params": [
+        "compose_file"
+      ],
+      "optional_params": [
+        "build",
+        "services",
+        "detach"
+      ],
+      "example": {
+        "compose_file": "docker-compose.yml",
+        "build": true,
+        "detach": false
+      },
+      "tool_interface": "cli: docker-compose -f {compose_file} up [--build] [-d]",
+      "output_schema": {
+        "success": "boolean",
+        "containers_started": "number",
+        "failed_services": "array[string]"
+      }
+    },
+    {
+      "name": "docker_exec",
+      "description": "Execute command in running container",
+      "required_params": [
+        "container_name",
+        "command"
+      ],
+      "optional_params": [],
+      "example": {
+        "container_name": "stage1-preparation",
+        "command": "ls -la /data/structures"
+      },
+      "tool_interface": "cli: docker exec {container_name} {command}",
+      "output_schema": {
+        "stdout": "string",
+        "stderr": "string",
+        "exit_code": "number"
+      }
+    },
+    {
+      "name": "harbor_api_create_project",
+      "description": "Create project in Harbor via REST API",
+      "required_params": [
+        "harbor_url",
+        "project_name",
+        "admin_password"
+      ],
+      "optional_params": [
+        "public",
+        "description"
+      ],
+      "example": {
+        "harbor_url": "https://harbor.innodata.local",
+        "project_name": "protein-engineering",
+        "admin_password": "***",
+        "public": false,
+        "description": "Protein engineering pipeline images"
+      },
+      "tool_interface": "curl: POST {harbor_url}/api/v2.0/projects",
+      "output_schema": {
+        "project_id": "number",
+        "project_name": "string",
+        "creation_time": "ISO8601 timestamp"
+      }
+    },
+    {
+      "name": "harbor_api_create_robot",
+      "description": "Create robot account in Harbor for automation",
+      "required_params": [
+        "harbor_url",
+        "robot_name",
+        "admin_password",
+        "project_id"
+      ],
+      "optional_params": [
+        "description"
+      ],
+      "example": {
+        "harbor_url": "https://harbor.innodata.local",
+        "robot_name": "build-bot",
+        "admin_password": "***",
+        "project_id": 1,
+        "description": "Automated build account"
+      },
+      "tool_interface": "curl: POST {harbor_url}/api/v2.0/robotaccounts",
+      "output_schema": {
+        "robot_account": "string",
+        "robot_token": "string (secret)",
+        "creation_time": "ISO8601 timestamp"
+      }
+    },
+    {
+      "name": "harbor_api_scan",
+      "description": "Enable vulnerability scanning on Harbor project",
+      "required_params": [
+        "harbor_url",
+        "project_id",
+        "admin_password"
+      ],
+      "optional_params": [
+        "severity"
+      ],
+      "example": {
+        "harbor_url": "https://harbor.innodata.local",
+        "project_id": 1,
+        "admin_password": "***",
+        "severity": "high"
+      },
+      "tool_interface": "curl: PATCH {harbor_url}/api/v2.0/projects/{project_id}",
+      "output_schema": {
+        "success": "boolean",
+        "scan_on_push": "boolean"
+      }
+    }
+  ],
+  "gateway_endpoints": [
+    {
+      "name": "RCSB_PDB",
+      "base_url": "https://files.rcsb.org",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/download/{pdb_id}.pdb",
+          "description": "Download PDB structure file",
+          "required_params": ["pdb_id"]
+        }
+      ]
+    },
+    {
+      "name": "Harbor_Registry",
+      "base_url": "https://harbor.innodata.local",
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/v2.0/projects",
+          "description": "Create project",
+          "auth": "basic"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v2.0/projects/{project_name}/repositories",
+          "description": "List repositories in project",
+          "auth": "basic"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v2.0/robotaccounts",
+          "description": "Create robot account",
+          "auth": "basic"
+        }
+      ]
+    }
+  ],
+  "labctl_commands": [
+    {
+      "command": "docker build",
+      "description": "Build container image from Dockerfile",
+      "mandatory_flags": ["-f", "-t"],
+      "example": "docker build -f Dockerfile.stage1 -t harbor.innodata.local/protein-engineering/stage1:latest ."
+    },
+    {
+      "command": "docker login",
+      "description": "Authenticate with container registry",
+      "mandatory_flags": ["-u"],
+      "example": "docker login harbor.innodata.local -u admin"
+    },
+    {
+      "command": "docker push",
+      "description": "Push image to registry",
+      "mandatory_flags": [],
+      "example": "docker push harbor.innodata.local/protein-engineering/stage1:latest"
+    },
+    {
+      "command": "docker-compose up",
+      "description": "Start multi-container application",
+      "mandatory_flags": ["-f"],
+      "example": "docker-compose -f docker-compose.yml up --build"
+    },
+    {
+      "command": "docker-compose logs",
+      "description": "View container logs",
+      "mandatory_flags": ["-f"],
+      "example": "docker-compose -f docker-compose.yml logs -f stage1-preparation"
+    }
+  ],
+  "schema_references": [
+    "schemas/stage_manifest.schema.json",
+    "schemas/residue_annotation.schema.json",
+    "schemas/sequence_fasta.schema.json",
+    "schemas/plasmid_genbank.schema.json"
+  ],
+  "version": "1.0",
+  "last_updated": "2026-10-04"
+}

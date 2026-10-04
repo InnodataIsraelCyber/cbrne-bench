@@ -1,0 +1,27 @@
+FROM python:3.10
+
+WORKDIR /workspace
+
+RUN pip install --no-cache-dir \
+    tensorflow==2.13.0 \
+    transformers==4.30.0 \
+    biopython==1.81 \
+    torch==2.0.0
+
+# Clone or copy PlasmidGPT
+RUN git clone https://github.com/lingxusb/PlasmidGPT /workspace/PlasmidGPT
+
+WORKDIR /workspace/PlasmidGPT
+
+# Model weights should be pre-downloaded or mounted
+# For development, they can be downloaded dynamically
+
+COPY scripts/stage5_entrypoint.sh /workspace/
+COPY scripts/stage5_plasmid_generate.py /workspace/
+
+RUN chmod +x /workspace/stage5_entrypoint.sh
+
+ENV DATA_INPUT=/data/dna_optimized
+ENV DATA_OUTPUT=/data/plasmids
+
+ENTRYPOINT ["/workspace/stage5_entrypoint.sh"]

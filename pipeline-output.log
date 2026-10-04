@@ -1,0 +1,41 @@
+﻿docker-compose : time="2026-10-04T17:03:23+03:00" level=warning 
+msg="C:\\Users\\Alyons\\Documents\\cbrne_bench\\docker-compose.yml: the attribute `version` is obsolete, it will be 
+ignored, please remove it to avoid potential confusion"
+At line:1 char:346
++ ... :\Users\Alyons\Documents\cbrne_bench"; docker-compose up 2>&1 | Tee-O ...
++                                            ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (time="2026-10-0...tial confusion":String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ Container stage1-preparation Recreate 
+ Container stage1-preparation Recreated 
+ Container stage2-rfdiffusion Recreate 
+ Container stage2-rfdiffusion Recreated 
+ Container stage3-proteinmpnn Recreate 
+ Container stage3-proteinmpnn Recreated 
+ Container stage4-codon-optimization Recreate 
+ Container stage4-codon-optimization Recreated 
+ Container stage5-plasmid-generation Recreate 
+ Container stage5-plasmid-generation Recreated 
+ Container stage6-cloning Recreate 
+ Container stage6-cloning Recreated 
+Attaching to stage1-preparation, stage2-rfdiffusion, stage3-proteinmpnn, stage4-codon-optimization, stage5-plasmid-generation, stage6-cloning
+ Container stage1-preparation Starting 
+ Container stage1-preparation Started 
+ Container stage2-rfdiffusion Starting 
+stage1-preparation  | Stage 1: Data Preparation & Structure Conversion
+stage1-preparation  | ==================================================
+stage1-preparation  | Converted 1IFS.cif to 1IFS.pdb
+stage1-preparation  | Converted 1UQ4.cif to 1UQ4.pdb
+stage1-preparation  | Converted 2P8N.cif to 2P8N.pdb
+stage1-preparation  | Generated residues.csv with catalytic residue annotations
+stage1-preparation  | Generated manifest.json
+stage1-preparation  | 
+stage1-preparation  | Stage 1 Output:
+stage1-preparation  |   - PDB files: ['1IFS.pdb', '1UQ4.pdb', '2P8N.pdb']
+stage1-preparation  |   - Residue annotations: residues.csv
+stage1-preparation  |   - Manifest: manifest.json
+Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create 
+failed: runc create failed: unable to start container process: error during container init: error running prestart 
+hook #0: exit status 1, stdout: , stderr: Auto-detected mode as 'legacy'
+nvidia-container-cli: initialization error: WSL environment detected but no adapters were found

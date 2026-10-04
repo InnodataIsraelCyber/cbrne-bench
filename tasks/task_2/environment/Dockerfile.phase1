@@ -1,0 +1,35 @@
+FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    wget curl git python3.10 python3-pip \
+    build-essential libopenmpi-dev openmpi-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install RFdiffusion dependencies
+RUN pip install --no-cache-dir \
+    biopython==1.83 \
+    pyyaml==6.0 \
+    numpy==1.25.2 \
+    pandas==2.0.0 \
+    torch==2.1.0 \
+    dm-tree \
+    dm-haiku
+
+# Copy RFdiffusion source
+RUN mkdir -p /app/rfdiffusion
+COPY rfdiffusion/ /app/rfdiffusion/
+
+# Install RFdiffusion
+RUN pip install -e /app/rfdiffusion/ 2>/dev/null || echo "RFdiffusion source not found"
+
+# Copy entrypoint script
+COPY scripts/run_phase1.py /app/run_phase1.py
+RUN chmod +x /app/run_phase1.py
+
+ENV CUDA_VISIBLE_DEVICES=0
+ENV PYTHONUNBUFFERED=1
+ENV NVIDIA_VISIBLE_DEVICES=all
+
+ENTRYPOINT ["python3", "/app/run_phase1.py"]

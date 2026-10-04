@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+WORKDIR /workspace
+
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+    pydna==5.5.16 \
+    biopython==1.87 \
+    pandas==1.5.0
+
+COPY scripts/stage6_entrypoint.sh /workspace/
+COPY scripts/stage6_simulate_cloning.py /workspace/
+
+RUN chmod +x /workspace/stage6_entrypoint.sh
+
+ENV DATA_INPUT_GENE=/data/dna_optimized
+ENV DATA_INPUT_BACKBONE=/data/plasmids
+ENV DATA_OUTPUT=/data/assembled_plasmids
+
+ENTRYPOINT ["/workspace/stage6_entrypoint.sh"]

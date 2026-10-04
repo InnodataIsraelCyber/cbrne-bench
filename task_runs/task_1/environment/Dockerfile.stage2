@@ -1,0 +1,32 @@
+FROM python:3.10-slim
+
+WORKDIR /workspace
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    biopython==1.87 \
+    numpy==1.24.0 \
+    scipy==1.10.0 \
+    pandas==1.5.0
+
+# Copy configuration and scripts
+COPY scripts/stage2_entrypoint.sh /workspace/
+COPY scripts/stage2_scaffolding.py /workspace/
+
+RUN chmod +x /workspace/stage2_entrypoint.sh
+
+# Set environment
+ENV DATA_INPUT=/data/structures
+ENV DATA_OUTPUT=/data/scaffolds
+ENV FIXED_POSITIONS="80 123 177 180 209"
+ENV NUM_DESIGNS=10
+
+ENTRYPOINT ["/workspace/stage2_entrypoint.sh"]

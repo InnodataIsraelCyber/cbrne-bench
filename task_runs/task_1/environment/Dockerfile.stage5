@@ -1,0 +1,20 @@
+FROM python:3.10-slim
+
+WORKDIR /workspace
+
+RUN pip install --no-cache-dir \
+    biopython==1.87 \
+    pandas==1.5.0
+
+# Copy scripts
+COPY scripts/stage5_entrypoint.sh /workspace/
+COPY scripts/stage5_plasmid_generate.py /workspace/
+
+RUN chmod +x /workspace/stage5_entrypoint.sh
+
+ENV DATA_INPUT=/data/dna_optimized
+ENV DATA_OUTPUT=/data/plasmids
+ENV BACKBONE_VARIANTS=3
+ENV MIN_LENGTH_BP=4500
+
+ENTRYPOINT ["/workspace/stage5_entrypoint.sh"]

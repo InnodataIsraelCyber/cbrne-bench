@@ -1,0 +1,40 @@
+FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wget curl git python3.10 python3-pip \
+    build-essential libopenmpi-dev openmpi-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir \
+    biopython==1.83 \
+    pyyaml==6.0 \
+    numpy==1.25.2 \
+    pandas==2.0.0 \
+    dm-tree \
+    dm-haiku \
+    dm-sonnet \
+    ml-collections \
+    jax[cuda12_cudnn82]==0.4.20 \
+    protobuf==3.20.0
+
+# Copy AlphaFold3 source (if available)
+# In practice, this would be obtained from Deepmind/official sources
+RUN mkdir -p /app/alphafold3
+COPY alphafold3/ /app/alphafold3/
+
+# Install package
+RUN pip install -e /app/alphafold3/ 2>/dev/null || echo "AlphaFold3 source not found; will use pre-built image"
+
+# Copy entrypoint scripts
+COPY scripts/run_phase0.py /app/run_phase0.py
+RUN chmod +x /app/run_phase0.py
+
+ENV CUDA_VISIBLE_DEVICES=0
+ENV PYTHONUNBUFFERED=1
+ENV NVIDIA_VISIBLE_DEVICES=all
+
+ENTRYPOINT ["python3", "/app/run_phase0.py"]

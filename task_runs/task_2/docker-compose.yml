@@ -1,0 +1,214 @@
+version: '3.8'
+
+services:
+  phase0-target-prep:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase0
+    image: harbor.internal.domain/protein-design/phase0:latest
+    container_name: phase0-target-prep
+    volumes:
+      - ./alphafold_inputs:/data/targets:ro
+      - ./results/phase_0:/data/phase_0
+      - ./logs:/data/logs
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      PYTHONUNBUFFERED: "1"
+      NVIDIA_VISIBLE_DEVICES: all
+      MODEL: "alphafold3"
+      NUM_RECYCLES: "3"
+      DIFFUSION_STEPS: "50"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /app
+    command: >
+      python run_phase0.py
+      --sequence_file /data/targets/VP35_EBOZM.fasta
+      --output_dir /data/phase_0
+
+  phase1-backbone-gen:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase1
+    image: harbor.internal.domain/protein-design/phase1:latest
+    container_name: phase1-backbone-gen
+    depends_on:
+      phase0-target-prep:
+        condition: service_completed_successfully
+    volumes:
+      - ./alphafold_inputs:/data/targets:ro
+      - ./results/phase_0:/data/phase_0:ro
+      - ./results/phase_1:/data/phase_1
+      - ./logs:/data/logs
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      PYTHONUNBUFFERED: "1"
+      NUM_DESIGNS: "50"
+      BINDER_LENGTH_MIN: "50"
+      BINDER_LENGTH_MAX: "150"
+      NUM_DIFFUSION_STEPS: "50"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /app
+    command: >
+      python run_phase1.py
+      --target_pdb /data/phase_0/result_model_1.pdb
+      --hotspots '["A71","A75"]'
+      --num_designs 50
+      --viral_params /data/targets/VP35_EBOZM_viral_params.yaml
+      --output_dir /data/phase_1
+
+  phase2-seq-design:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase2
+    image: harbor.internal.domain/protein-design/phase2:latest
+    container_name: phase2-seq-design
+    depends_on:
+      phase1-backbone-gen:
+        condition: service_completed_successfully
+    volumes:
+      - ./results/phase_1:/data/phase_1:ro
+      - ./results/phase_2:/data/phase_2
+      - ./logs:/data/logs
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      PYTHONUNBUFFERED: "1"
+      DESIGN_CHAIN: "B"
+      NUM_SEQ_PER_STRUCT: "15"
+      SAMPLING_TEMP: "0.1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /app
+    command: >
+      python run_phase2.py
+      --backbone_dir /data/phase_1
+      --output_dir /data/phase_2
+      --num_seq_per_struct 15
+
+  phase3a-monomer:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase3
+    image: harbor.internal.domain/protein-design/phase3:latest
+    container_name: phase3a-monomer
+    depends_on:
+      phase2-seq-design:
+        condition: service_completed_successfully
+    volumes:
+      - ./results/phase_2:/data/phase_2:ro
+      - ./results/phase_3:/data/phase_3
+      - ./logs:/data/logs
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      PYTHONUNBUFFERED: "1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /app
+    command: >
+      python run_phase3a.py
+      --sequences /data/phase_2/sequences_design.fasta
+      --output_dir /data/phase_3/step_3a_monomer
+
+  phase3b-complex:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase3
+    image: harbor.internal.domain/protein-design/phase3:latest
+    container_name: phase3b-complex
+    depends_on:
+      phase3a-monomer:
+        condition: service_completed_successfully
+    volumes:
+      - ./alphafold_inputs:/data/targets:ro
+      - ./results/phase_2:/data/phase_2:ro
+      - ./results/phase_3:/data/phase_3
+      - ./logs:/data/logs
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      PYTHONUNBUFFERED: "1"
+      IPTM_THRESHOLD: "0.5"
+      PAE_THRESHOLD: "0.35"
+      CONTACT_THRESHOLD: "15"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    working_dir: /app
+    command: >
+      python run_phase3b.py
+      --sequences /data/phase_2/sequences_design.fasta
+      --target_sequence /data/targets/VP35_EBOZM.fasta
+      --viral_params /data/targets/VP35_EBOZM_viral_params.yaml
+      --output_dir /data/phase_3/step_3b_complex
+
+  phase3c-ranking:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase3
+    image: harbor.internal.domain/protein-design/phase3:latest
+    container_name: phase3c-ranking
+    depends_on:
+      phase3b-complex:
+        condition: service_completed_successfully
+    volumes:
+      - ./results/phase_3:/data/phase_3
+      - ./logs:/data/logs
+    environment:
+      PYTHONUNBUFFERED: "1"
+    working_dir: /app
+    command: >
+      python run_phase3c.py
+      --input_dir /data/phase_3
+      --output_dir /data/phase_3/step_3c_ranking
+
+  phase3d-energy:
+    build:
+      context: .
+      dockerfile: environment/Dockerfile.phase3
+    image: harbor.internal.domain/protein-design/phase3:latest
+    container_name: phase3d-energy
+    depends_on:
+      phase3c-ranking:
+        condition: service_completed_successfully
+    volumes:
+      - ./results/phase_3:/data/phase_3
+      - ./logs:/data/logs
+    environment:
+      PYTHONUNBUFFERED: "1"
+    working_dir: /app
+    command: >
+      python run_phase3d.py
+      --pdb_dir /data/phase_3/step_3c_ranking
+      --output_dir /data/phase_3/step_3d_energy_scoring
+
+volumes:
+  results:
+  logs:
+
+networks:
+  default:
+    name: protein-design-network

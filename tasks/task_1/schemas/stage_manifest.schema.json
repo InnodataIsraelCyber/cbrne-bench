@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Stage Manifest Schema",
+  "description": "JSON schema for stage manifest files in the protein engineering pipeline",
+  "type": "object",
+  "definitions": {
+    "stage1_manifest": {
+      "type": "object",
+      "required": ["pdb_files", "residues", "stage", "timestamp"],
+      "properties": {
+        "pdb_files": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of downloaded PDB files",
+          "example": ["1IFS.pdb", "1UQ4.pdb", "2P8N.pdb"]
+        },
+        "residues": {
+          "type": "string",
+          "description": "Path to residue annotation CSV file",
+          "example": "residues.csv"
+        },
+        "stage": {"type": "integer", "const": 1},
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of execution"
+        }
+      }
+    },
+    "stage2_manifest": {
+      "type": "object",
+      "required": ["scaffolds", "stage", "num_designs", "catalytic_residues", "contig_spec", "timestamp"],
+      "properties": {
+        "scaffolds": {
+          "type": "string",
+          "description": "Glob pattern for scaffold files",
+          "example": "scaffolds_*.pdb"
+        },
+        "stage": {"type": "integer", "const": 2},
+        "num_designs": {
+          "type": "integer",
+          "minimum": 1,
+          "example": 10
+        },
+        "catalytic_residues": {
+          "type": "string",
+          "description": "Space-separated residue positions with chain",
+          "example": "A177 A180 A80 A123 A209"
+        },
+        "contig_spec": {
+          "type": "string",
+          "description": "RFdiffusion contig specification",
+          "example": "A177-177/0 50-150"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "stage3_manifest": {
+      "type": "object",
+      "required": ["sequences_fasta", "stage", "sampling_temperature", "fixed_positions", "num_sequences", "timestamp"],
+      "properties": {
+        "sequences_fasta": {
+          "type": "string",
+          "description": "Output FASTA file with designed sequences",
+          "example": "designed_sequences.fasta"
+        },
+        "stage": {"type": "integer", "const": 3},
+        "sampling_temperature": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 1.0,
+          "example": 0.1
+        },
+        "fixed_positions": {
+          "type": "string",
+          "description": "Space-separated fixed residue positions",
+          "example": "80 123 177 180 209"
+        },
+        "num_sequences": {
+          "type": "integer",
+          "minimum": 1,
+          "example": 16
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "stage4_manifest": {
+      "type": "object",
+      "required": ["optimized_sequences", "stage", "target_species", "timestamp"],
+      "properties": {
+        "optimized_sequences": {
+          "type": "string",
+          "description": "Codon-optimized DNA sequences in FASTA format",
+          "example": "optimized_sequences.fasta"
+        },
+        "stage": {"type": "integer", "const": 4},
+        "target_species": {
+          "type": "string",
+          "enum": ["e_coli", "yeast", "mammalian", "plant"],
+          "example": "e_coli"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "stage5_manifest": {
+      "type": "object",
+      "required": ["plasmid_backbones", "stage", "timestamp"],
+      "properties": {
+        "plasmid_backbones": {
+          "type": "string",
+          "description": "Glob pattern for generated plasmid backbones",
+          "example": "backbones_*.fasta"
+        },
+        "stage": {"type": "integer", "const": 5},
+        "num_backbones_per_sequence": {
+          "type": "integer",
+          "example": 3
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "stage6_manifest": {
+      "type": "object",
+      "required": ["final_plasmids", "stage", "assembly_method", "timestamp"],
+      "properties": {
+        "final_plasmids": {
+          "type": "string",
+          "description": "Output GenBank file with assembled plasmids",
+          "example": "assembled_plasmids.gb"
+        },
+        "stage": {"type": "integer", "const": 6},
+        "assembly_method": {
+          "type": "string",
+          "enum": ["Gibson", "Golden_Gate", "Overlap_Extension"],
+          "example": "Gibson"
+        },
+        "num_successful_assemblies": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/definitions/stage1_manifest"},
+    {"$ref": "#/definitions/stage2_manifest"},
+    {"$ref": "#/definitions/stage3_manifest"},
+    {"$ref": "#/definitions/stage4_manifest"},
+    {"$ref": "#/definitions/stage5_manifest"},
+    {"$ref": "#/definitions/stage6_manifest"}
+  ]
+}

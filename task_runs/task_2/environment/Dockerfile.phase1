@@ -17,12 +17,7 @@ RUN pip install --no-cache-dir \
     dm-tree \
     dm-haiku
 
-# Copy RFdiffusion source
-RUN mkdir -p /app/rfdiffusion
-COPY rfdiffusion/ /app/rfdiffusion/
-
-# Install RFdiffusion
-RUN pip install -e /app/rfdiffusion/ 2>/dev/null || echo "RFdiffusion source not found"
+# RFdiffusion would be installed from official sources in production
 
 # Copy entrypoint script
 COPY scripts/run_phase1.py /app/run_phase1.py

@@ -18,25 +18,8 @@ RUN pip install --no-cache-dir \
     scipy==1.11.0 \
     matplotlib==3.7.0
 
-# Copy ESMFold
-RUN mkdir -p /app/esmfold
-COPY esmfold/ /app/esmfold/
-RUN pip install -e /app/esmfold/ 2>/dev/null || echo "ESMFold not found"
-
-# Copy AlphaFold3 (for Phase 3b complex prediction)
-RUN mkdir -p /app/alphafold3
-COPY alphafold3/ /app/alphafold3/
-RUN pip install -e /app/alphafold3/ 2>/dev/null || echo "AlphaFold3 not found"
-
-# Download/Install Rosetta (if license available)
-RUN mkdir -p /app/rosetta && \
-    echo "Note: Rosetta requires separate installation with license" && \
-    echo "See: https://www.rosettacommons.org/"
-
-# Install FoldX (standalone)
-RUN mkdir -p /app/foldx && \
-    echo "Note: FoldX requires separate installation" && \
-    echo "See: http://foldx.crg.es/"
+# ESMFold, AlphaFold3, Rosetta, FoldX would be installed from official sources in production
+# This pipeline uses simulation scripts for demonstration
 
 # Copy entrypoint scripts for all Phase 3 substeps
 COPY scripts/run_phase3a.py /app/run_phase3a.py

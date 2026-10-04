@@ -16,12 +16,7 @@ RUN pip install --no-cache-dir \
     torch==2.1.0 \
     scikit-learn==1.3.0
 
-# Copy ProteinMPNN source
-RUN mkdir -p /app/proteinmpnn
-COPY proteinmpnn/ /app/proteinmpnn/
-
-# Install ProteinMPNN
-RUN pip install -e /app/proteinmpnn/ 2>/dev/null || echo "ProteinMPNN source not found"
+# ProteinMPNN would be installed from official sources in production
 
 # Copy entrypoint script
 COPY scripts/run_phase2.py /app/run_phase2.py

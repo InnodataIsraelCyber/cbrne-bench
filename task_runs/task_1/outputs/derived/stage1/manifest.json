@@ -1,0 +1,15 @@
+{
+  "pdb_files": [
+    "1IFS.pdb",
+    "1UQ4.pdb",
+    "2P8N.pdb"
+  ],
+  "residues": "residues.csv",
+  "stage": 1,
+  "timestamp": "2026-10-04T16:38:15.860893Z",
+  "input_cif_files": [
+    "1IFS.cif",
+    "1UQ4.cif",
+    "2P8N.cif"
+  ]
+}

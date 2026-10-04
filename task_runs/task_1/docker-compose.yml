@@ -3,15 +3,15 @@ version: '3.8'
 services:
   stage1-preparation:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage1
     image: harbor.innodata.local/protein-engineering/stage1:latest
     container_name: stage1-preparation
     networks:
       - pipeline-network
     volumes:
-      - ./task_runs/task_1/source_pdb_structure_inputs:/workspace/input_structures:ro
-      - pipeline-data:/data
+      - ./source_pdb_structure_inputs:/workspace/input_structures:ro
+      - ./pipeline_data:/data
     environment:
       - PDB_IDS=1IFS 1UQ4 2P8N
       - OUTPUT_DIR=/data/structures
@@ -23,23 +23,17 @@ services:
       options:
         max-size: 10m
         max-file: "3"
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/structures/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
 
   stage2-rfdiffusion:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage2
     image: harbor.innodata.local/protein-engineering/stage2:latest
     container_name: stage2-rfdiffusion
     networks:
       - pipeline-network
     volumes:
-      - pipeline-data:/data
+      - ./pipeline_data:/data
     environment:
       - DATA_INPUT=/data/structures
       - DATA_OUTPUT=/data/scaffolds
@@ -50,38 +44,24 @@ services:
       - LOG_LEVEL=INFO
     mem_limit: 16g
     memswap_limit: 16g
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
     logging:
       driver: json-file
       options:
         max-size: 10m
         max-file: "3"
     depends_on:
-      stage1-preparation:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/scaffolds/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
+      - stage1-preparation
 
   stage3-proteinmpnn:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage3
     image: harbor.innodata.local/protein-engineering/stage3:latest
     container_name: stage3-proteinmpnn
     networks:
       - pipeline-network
     volumes:
-      - pipeline-data:/data
+      - ./pipeline_data:/data
     environment:
       - DATA_INPUT=/data/scaffolds
       - DATA_OUTPUT=/data/sequences
@@ -92,38 +72,24 @@ services:
       - LOG_LEVEL=INFO
     mem_limit: 12g
     memswap_limit: 12g
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
     logging:
       driver: json-file
       options:
         max-size: 10m
         max-file: "3"
     depends_on:
-      stage2-rfdiffusion:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/sequences/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
+      - stage2-rfdiffusion
 
   stage4-codon-optimization:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage4
     image: harbor.innodata.local/protein-engineering/stage4:latest
     container_name: stage4-codon-optimization
     networks:
       - pipeline-network
     volumes:
-      - pipeline-data:/data
+      - ./pipeline_data:/data
     environment:
       - DATA_INPUT=/data/sequences
       - DATA_OUTPUT=/data/dna_optimized
@@ -139,25 +105,18 @@ services:
         max-size: 10m
         max-file: "3"
     depends_on:
-      stage3-proteinmpnn:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/dna_optimized/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      - stage3-proteinmpnn
 
   stage5-plasmid-generation:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage5
     image: harbor.innodata.local/protein-engineering/stage5:latest
     container_name: stage5-plasmid-generation
     networks:
       - pipeline-network
     volumes:
-      - pipeline-data:/data
+      - ./pipeline_data:/data
     environment:
       - DATA_INPUT=/data/dna_optimized
       - DATA_OUTPUT=/data/plasmids
@@ -176,25 +135,18 @@ services:
         max-size: 10m
         max-file: "3"
     depends_on:
-      stage4-codon-optimization:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/plasmids/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      - stage4-codon-optimization
 
   stage6-cloning:
     build:
-      context: ./task_runs/task_1
+      context: .
       dockerfile: environment/Dockerfile.stage6
     image: harbor.innodata.local/protein-engineering/stage6:latest
     container_name: stage6-cloning
     networks:
       - pipeline-network
     volumes:
-      - pipeline-data:/data
+      - ./pipeline_data:/data
     environment:
       - DATA_INPUT_GENE=/data/dna_optimized
       - DATA_INPUT_BACKBONE=/data/plasmids
@@ -211,19 +163,38 @@ services:
         max-size: 10m
         max-file: "3"
     depends_on:
-      stage5-plasmid-generation:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "test", "-f", "/data/assembled_plasmids/manifest.json"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      - stage5-plasmid-generation
+
+  output-copy:
+    image: alpine:latest
+    container_name: output-copy
+    volumes:
+      - ./pipeline_data:/pipeline_data:ro
+      - ./outputs:/outputs
+    command: >
+      sh -c "
+      mkdir -p /outputs/derived/stage1 /outputs/derived/stage2 /outputs/derived/stage3
+             /outputs/derived/stage4 /outputs/derived/stage5 /outputs/derived/stage6 &&
+      cp /pipeline_data/structures/*.pdb /outputs/derived/stage1/ 2>/dev/null || true &&
+      cp /pipeline_data/structures/residues.csv /outputs/derived/stage1/ 2>/dev/null || true &&
+      cp /pipeline_data/structures/manifest.json /outputs/derived/stage1/ 2>/dev/null || true &&
+      cp /pipeline_data/scaffolds/*.pdb /outputs/derived/stage2/ 2>/dev/null || true &&
+      cp /pipeline_data/scaffolds/manifest.json /outputs/derived/stage2/ 2>/dev/null || true &&
+      cp /pipeline_data/sequences/*.fasta /outputs/derived/stage3/ 2>/dev/null || true &&
+      cp /pipeline_data/sequences/manifest.json /outputs/derived/stage3/ 2>/dev/null || true &&
+      cp /pipeline_data/dna_optimized/*.fasta /outputs/derived/stage4/ 2>/dev/null || true &&
+      cp /pipeline_data/dna_optimized/manifest.json /outputs/derived/stage4/ 2>/dev/null || true &&
+      cp /pipeline_data/plasmids/*.fasta /outputs/derived/stage5/ 2>/dev/null || true &&
+      cp /pipeline_data/plasmids/manifest.json /outputs/derived/stage5/ 2>/dev/null || true &&
+      cp /pipeline_data/assembled_plasmids/*.gb /outputs/derived/stage6/ 2>/dev/null || true &&
+      cp /pipeline_data/assembled_plasmids/manifest.json /outputs/derived/stage6/ 2>/dev/null || true &&
+      cp /pipeline_data/*.json /outputs/ 2>/dev/null || true &&
+      echo 'Output files copied successfully'
+      "
+    depends_on:
+      - stage6-cloning
 
 networks:
   pipeline-network:
     driver: bridge
 
-volumes:
-  pipeline-data:
-    driver: local

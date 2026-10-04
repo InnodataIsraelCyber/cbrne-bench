@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /workspace
 
@@ -6,14 +6,20 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     curl \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir \
-    biopython==1.87 \
-    numpy==1.24.0 \
-    scipy==1.10.0 \
-    pandas==1.5.0 \
-    torch==2.0.0
+    biopython \
+    numpy \
+    scipy \
+    pandas
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
+# ProteinMPNN installation
+# Clone or download ProteinMPNN (model weights should be mounted)
+RUN mkdir -p /workspace/models
+RUN mkdir -p /workspace/ProteinMPNN
 
 # Copy scripts
 COPY scripts/stage3_entrypoint.sh /workspace/
@@ -26,5 +32,7 @@ ENV DATA_INPUT=/data/scaffolds
 ENV DATA_OUTPUT=/data/sequences
 ENV SAMPLING_TEMPERATURE=0.1
 ENV NUM_SEQUENCES=16
+ENV CUDA_VISIBLE_DEVICES=0
 
 ENTRYPOINT ["/workspace/stage3_entrypoint.sh"]
+

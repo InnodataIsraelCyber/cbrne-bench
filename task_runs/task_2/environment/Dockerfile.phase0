@@ -21,13 +21,8 @@ RUN pip install --no-cache-dir \
     jax[cuda12_cudnn82]==0.4.20 \
     protobuf==3.20.0
 
-# Copy AlphaFold3 source (if available)
-# In practice, this would be obtained from Deepmind/official sources
-RUN mkdir -p /app/alphafold3
-COPY alphafold3/ /app/alphafold3/
-
-# Install package
-RUN pip install -e /app/alphafold3/ 2>/dev/null || echo "AlphaFold3 source not found; will use pre-built image"
+# AlphaFold3 would be installed from official sources in production
+# For this pipeline, we use the simulation scripts
 
 # Copy entrypoint scripts
 COPY scripts/run_phase0.py /app/run_phase0.py

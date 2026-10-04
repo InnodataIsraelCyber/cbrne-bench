@@ -56,6 +56,8 @@ if HAS_BIOPYTHON:
                 # Create a dummy PDB file
                 with open(pdb_file, 'w') as f:
                     f.write(f"HEADER    {pdb_id}\nEND\n")
+        else:
+            print(f"Warning: {pdb_id}.cif not found in {OUTPUT_DIR}")
 else:
     # Without BioPython, create dummy PDB files
     for pdb_id in PDB_IDS:

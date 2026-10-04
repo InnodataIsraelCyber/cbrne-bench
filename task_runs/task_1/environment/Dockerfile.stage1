@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 WORKDIR /workspace
 
@@ -13,9 +13,9 @@ RUN apt-get update && apt-get install -y \
 
 # Install Python dependencies
 RUN pip install --no-cache-dir \
-    biopython==1.87 \
-    pydantic==2.0 \
-    requests==2.31.0
+    biopython \
+    pydantic \
+    requests
 
 # Copy processing scripts
 COPY scripts/stage1_entrypoint.sh /workspace/
@@ -28,3 +28,4 @@ ENV PDB_IDS="1IFS 1UQ4 2P8N"
 ENV OUTPUT_DIR="/data/structures"
 
 ENTRYPOINT ["/workspace/stage1_entrypoint.sh"]
+

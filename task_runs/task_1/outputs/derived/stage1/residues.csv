@@ -1,0 +1,6 @@
+PDB,Residue,Type,Position,Role,Present
+1IFS,Glu177,GLU,177,Key catalytic residue; stabilizes oxycarbonium ion,True
+1UQ4,Arg180,ARG,180,Substrate binding,True
+1UQ4,Tyr123,TYR,123,Transition state stabilization,True
+2P8N,Tyr80,TYR,80,Nucleophile activation,True
+2P8N,Asn209,ASN,209,Product release,True

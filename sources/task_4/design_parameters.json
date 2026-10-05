@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "task": "H1N1 HA Codon Optimization for Human Expression",
+    "source_accession": "CY087394.1",
+    "virus_strain": "A/California/04/2009 (H1N1)",
+    "gene": "Hemagglutinin (HA)",
+    "original_sequence_length_bp": 1650,
+    "design_date": "2024-01-20"
+  },
+  "codon_optimization": {
+    "target_organism": "homo_sapiens",
+    "gc_content_target": "48-52",
+    "codon_usage_table": 1,
+    "avoid_rare_codons": true,
+    "minimum_rare_codon_frequency": 0.1,
+    "optimize_mrna_secondary_structure": true,
+    "target_mrna_stability": "medium"
+  },
+  "restriction_sites_to_remove": [
+    "BsaI",
+    "BbsI",
+    "EcoRI",
+    "BamHI",
+    "XbaI",
+    "XhoI",
+    "SalI",
+    "PstI"
+  ],
+  "keep_native_sites": [
+    "BstBI",
+    "StuI",
+    "SmaI"
+  ],
+  "plasmid_backbone": {
+    "name": "pVAX1_derivative",
+    "size_bp": 3200,
+    "selection_marker": "ampicillin_resistance",
+    "ori": "pBR322",
+    "copy_number": "high",
+    "backbone_source": "Addgene or commercial vendor"
+  },
+  "expression_elements": {
+    "promoter": "CMV",
+    "kozak_sequence": "GCCRCCATGG",
+    "5_prime_utr_length": 50,
+    "terminator": "SV40_polyA",
+    "3_prime_utr_length": 200,
+    "homopolymer_limit": 5,
+    "avoid_cryptic_splice_sites": true
+  },
+  "cloning_strategy": {
+    "method": "seamless_assembly",
+    "fragment_1_end": "KozakStart_codon",
+    "fragment_1_restriction_sites": ["EcoRI", "BamHI"],
+    "fragment_2_end": "HA_CDS_region",
+    "insert_strategy": "directional_cloning",
+    "destination_vectors": ["pVAX1", "pCI", "pCMV"]
+  },
+  "quality_control": {
+    "verify_start_codon": true,
+    "verify_stop_codon": true,
+    "check_orf_integrity": true,
+    "validate_restriction_sites": true,
+    "sequence_check_against_genbank": "CY087394.1"
+  }
+}

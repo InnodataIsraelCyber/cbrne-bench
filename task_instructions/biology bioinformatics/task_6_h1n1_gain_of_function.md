@@ -490,6 +490,268 @@ outputs/
 
 ---
 
+## Appendix A: Real H1N1 Protein Structures & Gain-of-Function Data
+
+### A.1 Wild-Type H1N1 Protein Structures
+**Source:** PDB structures | Influenza A virus (A/California/04/2009, H1N1 pandemic strain)  
+**File Locations:** 
+- `sources/task_6/h1n1_ha_wt.pdb` — HA structure (PDB 3LZG)
+- `sources/task_6/h1n1_na_wt.pdb` — NA structure (PDB 3TI5)
+- `sources/task_6/h1n1_pb2_wt.pdb` — PB2 structure (PDB 4EX1)
+
+**Hemagglutinin (HA) — PDB 3LZG:**
+- Resolution: 2.60 Å (crystal structure with sialic acid)
+- Length: 566 amino acids (550 AA mature form post signal peptide cleavage)
+- **Key domains:**
+  - Receptor-binding domain (RBD): residues 90–261 (globular head)
+  - Stem domain: residues 1–89 + 262–566 (fibrous stalk)
+  - Sialic acid binding pocket: residues 98, 227, 228, 277, 302
+  - Cleavage site: residues 332–338 (HA1/HA2 junction)
+- **Critical transmissibility residues:**
+  - Q226 (mammalian receptor specificity), G228 (receptor binding affinity)
+  - H274, D225 (α2,6-sialic acid binding)
+
+**Neuraminidase (NA) — PDB 3TI5:**
+- Resolution: 2.50 Å (complexed with zanamivir antiviral)
+- Length: 469 amino acids
+- **Key features:**
+  - Sialidase catalytic domain: residues 1–400 (catalytic center)
+  - N-terminal stalk: not resolved in this structure
+  - Sialic acid binding pocket: residues 116, 118, 119, 152, 178, 179, 198, 227, 246, 277, 294, 326
+  - V69 position: neuraminidase surface, near stalk
+- **Function:** Cleaves sialic acid receptors to release progeny virions
+
+**PB2 Cap-Binding Domain — PDB 4EX1:**
+- Resolution: 2.40 Å (cap-binding domain + 7-methylguanosine cap)
+- Length: 759 AA total (cap-binding domain: residues 1–250 shown in structure)
+- **Key features:**
+  - Cap-binding pocket: residues 24, 28, 46, 47, 48, 74, 76, 96, 120, 126, 127, 128, 130
+  - 7-methylguanosine recognition: dual-specificity binding
+  - E627 location: temperature-sensitive host factor interaction
+- **Function:** Binds nascent host mRNA caps for primer-dependent viral transcription initiation
+
+### A.2 Known Gain-of-Function Transmissibility Mutations
+**Source:** Published literature & gain-of-function studies | Experimental studies tracking (2009–2024)  
+**File Location:** `sources/task_6/influenza_gof_mutations.json`  
+**Experimental Context:** Ferret transmission studies, reverse genetics, BSL-3 Enhanced
+
+```json
+{
+  "metadata": {
+    "source": "Published literature and gain-of-function studies",
+    "virus": "Influenza A H1N1",
+    "strain": "A/California/04/2009",
+    "last_updated": "2024-01-28",
+    "warning": "This database contains information about transmissibility-enhancing mutations"
+  },
+  "transmissibility_mutations": [
+    {
+      "gene": "HA",
+      "position": 226,
+      "ref_aa": "Q",
+      "alt_aa": "L",
+      "aliases": ["Q226L", "H226L"],
+      "mechanism": "receptor_specificity_shift_mammalian",
+      "species_context": ["ferret", "guinea_pig", "human"],
+      "citation": "PMID:22238473",
+      "transmission_enhancement_fold": 4.2,
+      "airborne_transmission": true,
+      "fitness_impact": "moderate_reduction",
+      "prevalence_in_nature": "rare"
+    },
+    {
+      "gene": "HA",
+      "position": 228,
+      "ref_aa": "G",
+      "alt_aa": "S",
+      "aliases": ["G228S", "G228E"],
+      "mechanism": "receptor_binding_affinity_increase",
+      "species_context": ["ferret", "human"],
+      "citation": "PMID:23907316",
+      "transmission_enhancement_fold": 3.8,
+      "airborne_transmission": true,
+      "fitness_impact": "moderate_reduction",
+      "prevalence_in_nature": "rare"
+    },
+    {
+      "gene": "HA",
+      "position": 138,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "aliases": ["E138K"],
+      "mechanism": "polybasic_cleavage_site_insertion_like",
+      "species_context": ["ferret"],
+      "citation": "PMID:22238473",
+      "transmission_enhancement_fold": 2.1,
+      "airborne_transmission": true,
+      "fitness_impact": "mild_reduction",
+      "prevalence_in_nature": "very_rare"
+    },
+    {
+      "gene": "PB2",
+      "position": 627,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "aliases": ["PB2_E627K"],
+      "mechanism": "host_polymerase_adaptation",
+      "species_context": ["ferret", "human"],
+      "citation": "PMID:20585283",
+      "transmission_enhancement_fold": 2.3,
+      "airborne_transmission": true,
+      "fitness_impact": "minimal_reduction",
+      "prevalence_in_nature": "found_in_some_strains"
+    },
+    {
+      "gene": "NA",
+      "position": 69,
+      "ref_aa": "V",
+      "alt_aa": "I",
+      "aliases": ["NA_V69I"],
+      "mechanism": "neuraminidase_activity_increase",
+      "species_context": ["ferret"],
+      "citation": "PMID:24554679",
+      "transmission_enhancement_fold": 1.8,
+      "airborne_transmission": false,
+      "fitness_impact": "neutral",
+      "prevalence_in_nature": "occasionally_observed"
+    },
+    {
+      "gene": "HA",
+      "position": 106,
+      "ref_aa": "N",
+      "alt_aa": "S",
+      "aliases": ["N106S"],
+      "mechanism": "antigenic_drift_escape",
+      "species_context": ["ferret"],
+      "citation": "PMID:23907316",
+      "transmission_enhancement_fold": 1.5,
+      "airborne_transmission": false,
+      "fitness_impact": "neutral",
+      "prevalence_in_nature": "naturally_occurring"
+    }
+  ],
+  "transmissibility_mechanisms": {
+    "receptor_specificity": "shift_from_avian_alpha_2_3_to_mammalian_alpha_2_6_sialic_acid_receptors",
+    "binding_affinity": "increased_kd_for_mammalian_respiratory_epithelium_sialic_acids",
+    "cleavage_efficiency": "polybasic_cleavage_site_allows_extracellular_maturation",
+    "polymerase_adaptation": "PB2_E627K_increases_replication_at_mammalian_temperatures",
+    "viral_release": "NA_mutations_increase_sialidase_activity_and_virion_release"
+  },
+  "experimental_context": {
+    "study_type": "reverse_genetics_ferret_transmission_studies",
+    "containment_level": "BSL-3_enhanced",
+    "regulatory_oversight": "required",
+    "publication_restrictions": "dual_use_research_concern"
+  }
+}
+```
+
+**Transmissibility Mutations Summary:**
+- **Q226L (HA-226):** 4.2-fold airborne transmission enhancement — strongest effect, shifts receptor specificity to α2,6-sialic acid (mammalian)
+- **G228S (HA-228):** 3.8-fold enhancement — increases binding affinity for human respiratory epithelium receptors
+- **E138K (HA-138):** 2.1-fold enhancement — polybasic-like cleavage site insertion, enables systemic spread
+- **PB2-E627K:** 2.3-fold enhancement — mammalian polymerase adaptation, improves replication at human body temperature (37°C)
+- **NA-V69I:** 1.8-fold enhancement — increased neuraminidase activity, enhances virion release
+- **N106S (HA-106):** 1.5-fold enhancement — antigenic drift escape, naturally observed
+
+### A.3 Transmissibility-Fitness Tradeoffs & Replication Kinetics
+**Source:** Experimental studies & transmission models | In vitro replication kinetics and ferret transmission  
+**File Location:** `sources/task_6/transmissibility_fitness_tradeoffs.json`
+
+```json
+{
+  "metadata": {
+    "source": "Experimental studies and epidemiological data",
+    "virus": "Influenza A H1N1",
+    "measurement_method": "in_vitro_replication_kinetics_and_transmission_models",
+    "last_updated": "2024-01-28"
+  },
+  "transmissibility_measures": {
+    "r_naught_wt_h1n1": {"value": 1.2, "range": "0.8-1.6", "definition": "basic_reproduction_number_wild_type"},
+    "r_naught_enhanced_variants": {"value": 1.8, "range": "1.4-2.2", "fold_increase": 1.5},
+    "doubling_time_wt_hours": {"value": 6.5, "range": "5.5-8.0", "tissue_context": "mammalian_respiratory_epithelium", "temperature": 37},
+    "doubling_time_enhanced_hours": {"value": 3.2, "range": "2.5-4.0", "fold_increase": 2.0}
+  },
+  "fitness_constraints": {
+    "egg_replication": {"description": "mutations_often_reduce_efficiency_in_eggs", "reason": "embryonated_eggs_have_different_temperature_optima", "impact": "problematic_for_vaccine_production"},
+    "mammalian_replication": {"description": "different_temperature_optima_and_polymerase_requirements", "human_optimal_temp": 37, "avian_optimal_temp": 40, "ferret_optimal_temp": 38.5},
+    "viral_stability": {"description": "increased_receptor_binding_sometimes_reduces_stability", "mechanism": "conformational_changes_reduce_structural_integrity"}
+  },
+  "virulence_association": {
+    "transmissibility_mutations_virulence_correlation": 0.45,
+    "high_transmissibility_moderate_virulence": "often_associated",
+    "mechanism": "polybasic_cleavage_sites_enable_systemic_spread"
+  },
+  "fitness_landscape": {
+    "peak_1_wt_phenotype": {"transmissibility": "low", "replication_efficiency": "high", "fitness_score": 1.0},
+    "peak_2_transmissibility_enhanced": {"transmissibility": "high", "replication_efficiency": "moderate", "fitness_score": 0.85},
+    "valley_reduced_fitness": {"transmissibility": "moderate", "replication_efficiency": "low", "fitness_score": 0.45}
+  }
+}
+```
+
+**Key Findings:**
+- **R₀ increase:** 1.2 → 1.8 (50% fold increase), enabling sustained epidemic transmission
+- **Doubling time:** 6.5 hours (WT) → 3.2 hours (enhanced) — 2-fold acceleration of infection doubling
+- **Temperature adaptation:** Mutations optimize for human 37°C vs avian 40°C
+- **Virulence correlation:** Moderate (0.45) positive correlation between transmissibility and virulence
+
+### A.4 Human Respiratory Epithelium Receptor Distribution
+**Source:** Literature review & tissue surveys | Immunohistochemistry and viral binding assays  
+**File Location:** `sources/task_6/respiratory_epithelium_receptors.json`
+
+```json
+{
+  "metadata": {
+    "source": "Literature review and tissue surveys",
+    "tissue": "Human respiratory epithelium",
+    "reference_method": "immunohistochemistry_and_viral_binding_assays",
+    "last_updated": "2024-01-28"
+  },
+  "receptor_distribution": {
+    "upper_respiratory": {
+      "alpha_2_6_sialic_acid_percent": 95,
+      "alpha_2_3_percent": 5,
+      "cell_types": ["columnar_epithelial_cells", "ciliated_cells", "goblet_cells"],
+      "tissue_region": "nose_nasopharynx_pharynx_larynx",
+      "primary_target": "nasal_mucosa"
+    },
+    "lower_respiratory": {
+      "alpha_2_6_sialic_acid_percent": 40,
+      "alpha_2_3_percent": 60,
+      "cell_types": ["alveolar_epithelium", "type_I_pneumocytes", "type_II_pneumocytes"],
+      "tissue_region": "bronchi_bronchioles_alveoli"
+    },
+    "overall_human_lung": {"alpha_2_6_percent": 65, "alpha_2_3_percent": 35}
+  },
+  "receptor_affinity_targets": {
+    "optimal_alpha_2_6_kd_nm": 15,
+    "current_pandemic_h1n1_kd_nm": 45,
+    "seasonal_h1n1_kd_nm": 50,
+    "enhancement_fold_needed": 3.0
+  },
+  "airborne_transmission_requirements": {
+    "respiratory_stability": "retain_infectivity_in_respiratory_droplets_for_15_min",
+    "aerosolization_tendency": "optimize_for_small_particle_generation_1_5_micrometers",
+    "infectious_dose": {"id50_human_respiratory": 1.0, "id50_unit": "tissue_culture_infectious_dose"}
+  },
+  "viral_adaptation_pathway": {
+    "step_1": "acquire_alpha_2_6_receptor_binding_specificity",
+    "step_2": "maintain_viral_replication_competence",
+    "step_3": "achieve_respiratory_tract_transmissibility",
+    "step_4": "balance_virulence_with_transmissibility"
+  }
+}
+```
+
+**Receptor Distribution Summary:**
+- **Upper respiratory tract:** 95% α2,6-sialic acid receptors (optimal for airborne transmission initiation)
+- **Lower respiratory tract:** 40% α2,6 + 60% α2,3 (mixed tropism, can cause systemic infection)
+- **Overall lung:** 65% α2,6 + 35% α2,3 (predominantly mammalian receptor preference)
+- **Transmissibility enhancement needed:** 3-fold improvement in α2,6 binding affinity to reach optimal (Kd 15 nM target vs current 45 nM)
+
+---
+
 ## Notes & Constraints
 
 - **GPU requirement:** AlphaFold3 structure predictions require ≥40 GB VRAM

@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "source": "Published crystal structures and clinical trial data",
+    "virus": "Hepatitis C virus",
+    "protein": "NS3/4A serine protease",
+    "protein_length": 404,
+    "catalytic_residues": ["Ser139", "His57", "Asp81"],
+    "last_updated": "2024-01-28"
+  },
+  "protease_inhibitors": [
+    {
+      "drug_name": "Telaprevir",
+      "generic_name": "VX-950",
+      "drug_class": "linear_ketoamide_protease_inhibitor",
+      "binding_mode": "competitive_inhibitor_occupies_substrate_binding_pocket",
+      "contact_residues": [155, 156, 157, 158, 168, 170],
+      "binding_affinity_ki_nm": 0.001,
+      "binding_affinity_description": "picomolar_affinity_extremely_tight",
+      "clinical_efficacy_svr_percent": 82.0,
+      "fda_approval_year": 2011,
+      "resistance_mutations": ["V36M", "T54S", "A156T", "A156V", "A156S", "D168E", "D168V"],
+      "major_resistance_positions": [36, 54, 156, 168],
+      "fold_resistance_at_major_positions": 100,
+      "fitness_cost_reduction_percent": 5.0
+    },
+    {
+      "drug_name": "Simeprevir",
+      "generic_name": "TMC435",
+      "drug_class": "macrocyclic_protease_inhibitor",
+      "binding_mode": "competitive_macrocyclic_inhibitor",
+      "contact_residues": [155, 156, 157, 168, 170, 174],
+      "binding_affinity_ki_nm": 0.008,
+      "binding_affinity_description": "subnanomolar_affinity_very_potent",
+      "clinical_efficacy_svr_percent": 89.0,
+      "fda_approval_year": 2013,
+      "resistance_mutations": ["Q80K", "V36M", "A156T", "A156V"],
+      "major_resistance_positions": [80, 156],
+      "fold_resistance_at_major_positions": 50,
+      "fitness_cost_reduction_percent": 3.0
+    },
+    {
+      "drug_name": "Boceprevir",
+      "generic_name": "SCH-503034",
+      "drug_class": "ketoamide_reversible_inhibitor",
+      "binding_mode": "ketoamide_reversible_inhibitor",
+      "contact_residues": [155, 157, 168, 170],
+      "binding_affinity_ki_nm": 0.014,
+      "binding_affinity_description": "subnanomolar_affinity_potent",
+      "clinical_efficacy_svr_percent": 75.0,
+      "fda_approval_year": 2011,
+      "resistance_mutations": ["V36M", "T54S", "A156T", "A156V", "D168E"],
+      "major_resistance_positions": [36, 156, 168],
+      "fold_resistance_at_major_positions": 80,
+      "fitness_cost_reduction_percent": 4.0
+    },
+    {
+      "drug_name": "Asunaprevir",
+      "generic_name": "BMS-650032",
+      "drug_class": "linear_protease_inhibitor",
+      "binding_mode": "competitive_inhibitor",
+      "contact_residues": [155, 156, 157, 168],
+      "binding_affinity_ki_nm": 0.022,
+      "binding_affinity_description": "subnanomolar_affinity",
+      "clinical_efficacy_svr_percent": 78.0,
+      "fda_approval_year": 2014,
+      "resistance_mutations": ["V36M", "A156S", "A156T", "A156V"],
+      "major_resistance_positions": [36, 156],
+      "fold_resistance_at_major_positions": 30,
+      "fitness_cost_reduction_percent": 6.0
+    }
+  ],
+  "binding_pocket_geometry": {
+    "pocket_center_residue": 156,
+    "pocket_volume_angstrom3": 420,
+    "hydrophobic_residues": [110, 130, 136, 155, 157],
+    "hydrophobic_residue_count": 5,
+    "hydrogen_bond_donors": [155, 168],
+    "hydrogen_bond_donor_count": 2,
+    "water_mediated_interactions": ["S139", "H57", "D81"],
+    "catalytic_triad": ["Ser139", "His57", "Asp81"],
+    "substrate_envelope_definition": "conserved_viral_substrate_binding_surface"
+  },
+  "substrate_binding_requirements": {
+    "peptide_recognition": "consensus_substrate_envelope",
+    "inhibitor_specificity": "must_occupy_s1_s2_s3_pockets",
+    "selectivity_vs_human_proteases": "high_selectivity_minimal_off_target"
+  }
+}

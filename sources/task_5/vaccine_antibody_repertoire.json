@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "vaccine_type": "mRNA_BNT162b2_Pfizer_or_mRNA_1273_Moderna",
+    "study_population": "adults_18_65",
+    "timepoint": "4_weeks_post_booster",
+    "number_of_subjects": 47,
+    "source": "published_studies_and_databases",
+    "reference": "Cell 2021, Nat Commun 2022"
+  },
+  "dominant_antibody_clones": [
+    {
+      "clone_id": "VH3_23_DP_JH4",
+      "frequency_percent": 12.3,
+      "target_epitope": "RBD",
+      "specific_residues": [345, 371, 405],
+      "somatic_hypermutation_rate": 8.2,
+      "dna_insert": "TGTCAGCAGTAC",
+      "heavy_chain_usage": "VH3-23",
+      "light_chain_usage": "DPL1"
+    },
+    {
+      "clone_id": "VH4_31_JH6",
+      "frequency_percent": 8.7,
+      "target_epitope": "RBD",
+      "specific_residues": [449, 456, 486, 489],
+      "somatic_hypermutation_rate": 6.5,
+      "dna_insert": "TGTCAGCAGTAC",
+      "heavy_chain_usage": "VH4-31",
+      "light_chain_usage": "JH6"
+    },
+    {
+      "clone_id": "VH3_53_JH5",
+      "frequency_percent": 7.4,
+      "target_epitope": "RBD",
+      "specific_residues": [365, 371, 375, 386, 391],
+      "somatic_hypermutation_rate": 7.1,
+      "dna_insert": "TGTCAGCAGTAC",
+      "heavy_chain_usage": "VH3-53",
+      "light_chain_usage": "JH5"
+    },
+    {
+      "clone_id": "VH1_69_JH4",
+      "frequency_percent": 6.2,
+      "target_epitope": "RBD",
+      "specific_residues": [394, 405, 408, 415],
+      "somatic_hypermutation_rate": 5.8,
+      "dna_insert": "TGTCAGCAGTAC",
+      "heavy_chain_usage": "VH1-69",
+      "light_chain_usage": "JH4"
+    },
+    {
+      "clone_id": "VH3_30_JH3",
+      "frequency_percent": 5.9,
+      "target_epitope": "RBD",
+      "specific_residues": [338, 345, 365, 371],
+      "somatic_hypermutation_rate": 6.9,
+      "dna_insert": "TGTCAGCAGTAC",
+      "heavy_chain_usage": "VH3-30",
+      "light_chain_usage": "JH3"
+    }
+  ],
+  "antibody_maturation": {
+    "primary_response_median_ic50_nm": 5.2,
+    "booster_response_median_ic50_nm": 0.3,
+    "fold_improvement": 17.3,
+    "breadth_estimate_percent": 75.0,
+    "coverage_vs_vocs": {
+      "alpha": 92,
+      "beta": 78,
+      "gamma": 85,
+      "delta": 88,
+      "omicron": 45
+    }
+  },
+  "response_kinetics": {
+    "primary_dose_peak_day": 14,
+    "primary_dose_half_life_days": 45,
+    "booster_dose_peak_day": 7,
+    "booster_dose_half_life_days": 60,
+    "waning_rate_percent_per_month": 3.5
+  },
+  "epitope_targeting": {
+    "rbd_epitopes_targeted_percent": 78.5,
+    "nmda_epitopes_targeted_percent": 12.3,
+    "spike_sd1_targeted_percent": 5.2,
+    "off_target_percent": 3.8
+  },
+  "vaccine_efficacy": {
+    "symptomatic_infection_reduction": 95,
+    "hospitalization_reduction": 98,
+    "severe_disease_reduction": 99,
+    "against_variant_omicron": 70,
+    "notes": "Efficacy wanes over time; booster restores high efficacy"
+  },
+  "biases_and_patterns": {
+    "preferential_vgene_usage": ["VH3-23", "VH4-31", "VH3-53"],
+    "mean_somatic_hypermutation_count": 7.1,
+    "median_cdr3_length": 11,
+    "jh_segment_bias": "JH4/JH5 over-represented"
+  }
+}

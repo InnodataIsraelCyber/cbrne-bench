@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "source": "Published lethal dose data and biochemical studies",
+    "pathogen": "Bacillus anthracis",
+    "virulence_factor": "Lethal toxin complex (PA + LF)",
+    "compilation_period": "1990-2024",
+    "last_updated": "2024-01-28"
+  },
+  "lethal_toxin_potency": {
+    "natural_anthrax_ld50_inhalation_ug_per_kg": 1.0,
+    "natural_anthrax_ld50_inhalation_cfu_equivalent": "8000-10000",
+    "natural_anthrax_ld50_injection_ng_per_kg": 1.3,
+    "natural_anthrax_ld50_oral_ug_per_kg": 250000,
+    "lethality_mechanism": "MAPK_pathway_disruption_cytokine_dysregulation_septic_shock",
+    "pathophysiology": "macrophage_activation_tnf_release_vascular_collapse",
+    "median_survival_time_hours": 36
+  },
+  "catalytic_efficiency_enhancement": {
+    "current_kcat_km_s_inverse_um_inverse": 0.011,
+    "target_enhancement_fold": 3.0,
+    "predicted_lethal_dose_reduction_fold": 2.5,
+    "predicted_ld50_reduced_ug_per_kg": 0.4,
+    "enhancement_strategy": "optimize_zinc_coordination_and_substrate_binding"
+  },
+  "lethal_factor_structure_function": {
+    "molecular_weight": 90000,
+    "amino_acids": 776,
+    "domains": 4,
+    "domain_I": "protective_antigen_binding_surface_recognition",
+    "domain_II": "zinc_metalloprotease_catalytic_domain",
+    "domain_III": "substrate_binding_extension",
+    "domain_IV": "regulatory_domain",
+    "catalytic_mechanism": "zinc_dependent_exopeptidase_activity"
+  },
+  "host_cell_response": {
+    "tnf_alpha_production_wt_pg_per_ml": 850,
+    "tnf_alpha_enhanced_variant_pg_per_ml": 1200,
+    "il_6_production_wt_pg_per_ml": 320,
+    "il_6_enhanced_variant_pg_per_ml": 480,
+    "il_1_production_wt_pg_per_ml": 210,
+    "apoptosis_rate_wt_percent": 35.0,
+    "apoptosis_rate_enhanced_percent": 65.0,
+    "vascular_permeability_increase_fold": 5.0,
+    "vascular_permeability_enhanced_fold": 8.5,
+    "cellular_consequences": "macrophage_death_cytokine_storm_endotoxic_shock"
+  },
+  "known_virulence_mutations": [
+    {
+      "position": 686,
+      "residue": "His",
+      "ref_aa": "H",
+      "alt_aa": "Y",
+      "mechanism": "zinc_coordination_alteration_increased_stability",
+      "lethality_increase_fold": 1.4,
+      "fitness_impact": "neutral",
+      "observed_naturally": false,
+      "feasibility": "theoretical"
+    },
+    {
+      "position": 690,
+      "residue": "His",
+      "ref_aa": "H",
+      "alt_aa": "C",
+      "mechanism": "zinc_coordination_altered_reactivity",
+      "lethality_increase_fold": 1.3,
+      "fitness_impact": "mild_reduction",
+      "observed_naturally": false,
+      "feasibility": "theoretical"
+    },
+    {
+      "position": 733,
+      "residue": "Glu",
+      "ref_aa": "E",
+      "alt_aa": "D",
+      "mechanism": "catalytic_site_optimization_improved_positioning",
+      "lethality_increase_fold": 1.2,
+      "fitness_impact": "neutral",
+      "observed_naturally": false,
+      "feasibility": "theoretical"
+    },
+    {
+      "position": 735,
+      "residue": "Glu",
+      "ref_aa": "E",
+      "alt_aa": "Q",
+      "mechanism": "substrate_binding_affinity_increase",
+      "lethality_increase_fold": 1.15,
+      "fitness_impact": "neutral",
+      "observed_naturally": false,
+      "feasibility": "theoretical"
+    }
+  ],
+  "virulence_vs_fitness_tradeoffs": {
+    "maximum_lethality_scenario": "cumulative_mutations_reduce_environmental_stability",
+    "fitness_cost": 0.25,
+    "transmission_efficiency": "potentially_reduced",
+    "optimal_virulence": "balance_between_host_damage_and_transmission"
+  },
+  "comparative_pathogens": {
+    "botulinum_toxin_ld50_ng_per_kg": 0.001,
+    "ricin_ld50_ug_per_kg": 10.0,
+    "anthrax_lethal_toxin_ld50_ng_per_kg": 1300.0
+  }
+}

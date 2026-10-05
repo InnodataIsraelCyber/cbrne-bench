@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "purpose": "Molecular dynamics simulations and high-quality SVG visualization",
+    "application": "HIV-1 reverse transcriptase antiretroviral drug analysis",
+    "last_updated": "2024-01-28"
+  },
+  "md_simulation_parameters": {
+    "force_field": "AMBER14",
+    "force_field_variants": ["AMBER14SB", "AMBER14SB_OL15"],
+    "simulation_time_ns": 200,
+    "simulation_purpose": "equilibration_drug_binding_dynamics_large_heterodimer",
+    "temperature_kelvin": 310,
+    "temperature_celsius": 37.0,
+    "temperature_context": "human_body_temperature",
+    "ph": 7.4,
+    "ph_context": "physiological_blood_pH",
+    "water_model": "TIP3P",
+    "counter_ions": "sodium_potassium_chloride",
+    "ionic_strength_mm": 150.0,
+    "pressure_atm": 1.0,
+    "ensemble": "NPT",
+    "time_step_fs": 2.0,
+    "gpu_acceleration": "CUDA",
+    "gpu_acceleration_speedup": "50_100x_vs_cpu",
+    "barostat": "Berendsen_or_Langevin",
+    "thermostat": "Langevin_thermostat"
+  },
+  "binding_pocket_definitions": {
+    "nrti_active_site": {
+      "name": "NRTI_polymerase_active_site",
+      "center_residue": 110,
+      "center_residue_name": "Asp110_catalytic",
+      "radius_angstrom": 15,
+      "radius_rationale": "encompasses_nucleotide_substrate_binding_pocket",
+      "key_catalytic_residues": [110, 185],
+      "catalytic_residue_roles": {
+        "D110": "metal_coordination_catalysis",
+        "D185": "metal_coordination_catalysis"
+      },
+      "drug_contact_residues": [65, 67, 69, 74, 115, 184, 210, 215, 216, 219],
+      "residue_count": 10
+    },
+    "nnrti_allosteric_pocket": {
+      "name": "NNRTI_non_nucleoside_allosteric_pocket",
+      "center_residue": 181,
+      "center_residue_name": "Tyr181_key_contact",
+      "radius_angstrom": 18,
+      "radius_rationale": "encompasses_entire_allosteric_binding_site",
+      "key_binding_residues": [100, 101, 138, 181, 188, 236, 318],
+      "allosteric_coupling_residues": [103, 106],
+      "distance_from_active_site_angstrom": "12_15",
+      "residue_count": 7
+    }
+  },
+  "svg_visualization_elements": {
+    "binding_pose_diagram": {
+      "type": "2d_drug_rt_contacts_with_hydrogen_bonds",
+      "includes": ["ligand_structure", "key_residues", "h_bonds", "water_molecules", "metal_coordination"],
+      "rendering": "publication_quality_graphics"
+    },
+    "orbital_overlap_diagrams": {
+      "type": "electrostatic_surface_potential_visualizations_nucleotide_vs_nrti",
+      "method": "APBS_implicit_solvation",
+      "display": "color_mapped_molecular_surface",
+      "comparison": "natural_nucleotide_substrate_vs_NRTI_analog"
+    },
+    "energy_landscape_plots": {
+      "type": "drug_binding_free_energy_by_mutation_position",
+      "calculation": "MMPBSA_or_PBSA_free_energy",
+      "units": "kcal_per_mol",
+      "display": "heatmap_or_3d_landscape"
+    },
+    "active_site_disruption": {
+      "type": "before_after_mutation_active_site_geometry_comparison",
+      "comparison_pairs": [["WT_azt", "M184V_azt"], ["WT_efv", "K103N_efv"], ["WT_rpv", "Y181C_rpv"]],
+      "metric": "RMSD_pocket_residue_alpha_carbons"
+    },
+    "contact_map": {
+      "type": "residue_residue_interaction_heatmap_frequency",
+      "matrix_dimension": "560x560",
+      "contact_threshold_angstrom": 4.5,
+      "color_scheme": "white_yellow_orange_red"
+    },
+    "viral_evolution_landscape": {
+      "type": "treatment_failure_rate_vs_viral_fitness_landscape",
+      "x_axis": "fitness_cost_percent",
+      "y_axis": "treatment_failure_rate_percent",
+      "display": "scatter_plot_with_mutation_labels",
+      "separate_by_class": "NRTI_vs_NNRTI"
+    },
+    "allosteric_coupling_diagram": {
+      "type": "nnrti_binding_site_distortion_propagation_to_active_site",
+      "visualization": "arrows_showing_conformational_change_propagation",
+      "highlight": "allosteric_coupling_residues_103_106"
+    }
+  },
+  "svg_quality_parameters": {
+    "resolution_dpi": 300,
+    "resolution_purpose": "publication_quality_print",
+    "color_scheme": "arv_resistant_variants",
+    "color_palette": "colorblind_friendly_pastel",
+    "transparency_for_overlays": true,
+    "transparency_alpha": 0.7,
+    "orbital_overlap_scaling": "nucleotide_orbital_HOMO_LUMO_visualization",
+    "font_family": "sans_serif_helvetica",
+    "line_width_bonds": "2_pixels",
+    "line_width_hbonds": "1_5_pixels_dashed",
+    "line_width_disulfides": "2_pixels_solid"
+  },
+  "drug_specific_visualization": {
+    "nrti_drugs": {
+      "azt": {
+        "binding_site": "nrti_active_site",
+        "key_contacts": [65, 67, 184, 210, 215, 216],
+        "color": "blue"
+      },
+      "tdf": {
+        "binding_site": "nrti_active_site",
+        "key_contacts": [65, 67, 69, 184, 210],
+        "color": "cyan"
+      }
+    },
+    "nnrti_drugs": {
+      "efv": {
+        "binding_site": "nnrti_allosteric_pocket",
+        "key_contacts": [100, 101, 138, 181, 188, 236],
+        "color": "green"
+      },
+      "rpv": {
+        "binding_site": "nnrti_allosteric_pocket",
+        "key_contacts": [100, 101, 138, 179, 181, 188],
+        "color": "yellow"
+      }
+    }
+  },
+  "output_formats": {
+    "supported_formats": ["PDB", "MOL2", "SDF", "XYZ"],
+    "trajectory_format": "AMBER_mdcrd_or_netcdf",
+    "visualization_export": ["SVG", "PNG", "PDF"],
+    "analysis_output": ["CSV", "JSON", "matplotlib_plots", "pymol_script"]
+  }
+}

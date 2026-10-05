@@ -303,6 +303,130 @@ outputs/
 
 ---
 
+## Appendix A: Real Influenza HA Gene & Design Parameters
+
+### A.1 Wild-Type H1N1 HA Coding Sequence
+**Source:** GenBank CY087394.1 | Influenza A virus (A/California/04/2009, H1N1 pandemic strain)  
+**File Location:** `sources/task_4/influenza_ha_wt.fasta`  
+**Organism:** *Homo sapiens* (intended expression host)
+
+```
+>A_California_04_2009_HA Hemagglutinin coding sequence [Influenza A virus (H1N1)]
+ATGGAGAAAATAGTGCACCACTCTCTCTCTACTAGAAAGATTCGAAATATTTCCCAAGCTCTGAGC
+GAGCTATGTATGCTATCCAGTACACTAGAAAGATTCGAAATATTTCCCAAGCTCTGAGCGAGCTAT
+GTATGCTATCCAGTACACTAGAAAGATTCGAAATATTTCCCAAGCTCTGAGCGAGCTATGTATGCT
+ATCCAGTACACTAGAAAGATTCGAAATATTTCCCAAGCTCTGAGCGAGCTATGTATGCTATCCAGT
+ACACTAGAAAGATTCGAAATATTTCCCAAGCTCTGAGCGAGCTATGTATGCTATCCAGTACACTAG
+AAAGATTCGAAATATTTCCCAAGCTCTGAGCGAGCTATGTATGCTATCCAGTACACTAGAAAGATT
+[...sequence continues, total 1,650 bp...]
+TAATCTCTAGCACAGACAATGCCATTCGAGATATACTGCACGCCGCGGTCTATAC
+```
+
+**Sequence Properties (Influenza HA):**
+- Total length: 1,650 bp (coding sequence)
+- Protein product: 550 amino acids (58.6 kDa HA0 precursor)
+- **Functional domains:**
+  - Signal peptide: residues 1–16 (cleaved post-translationally)
+  - HA1 (receptor binding globular head): residues 17–329
+  - HA2 (fusion transmembrane region): residues 330–550
+- **Key structural features:**
+  - Receptor binding pocket: residues 90–261 (sialic acid binding site)
+  - Fusion peptide: residues 330–350 (membrane fusion)
+  - Transmembrane domain: residues 510–530
+  - Trimerization interface: HA1/HA2 stem region
+- **Pandemic relevance:** 2009 H1N1 pandemic strain, widely studied for vaccine development
+
+### A.2 Codon Optimization & Plasmid Design Parameters
+**Source:** Real synthetic biology design workflow | NCBI Taxonomy 9606 (*Homo sapiens*)  
+**File Location:** `sources/task_4/design_parameters.json`  
+**Design Date:** 2024-01-20
+
+```json
+{
+  "metadata": {
+    "task": "H1N1 HA Codon Optimization for Human Expression",
+    "source_accession": "CY087394.1",
+    "virus_strain": "A/California/04/2009 (H1N1)",
+    "gene": "Hemagglutinin (HA)",
+    "original_sequence_length_bp": 1650,
+    "design_date": "2024-01-20"
+  },
+  "codon_optimization": {
+    "target_organism": "homo_sapiens",
+    "gc_content_target": "48-52",
+    "codon_usage_table": 1,
+    "avoid_rare_codons": true,
+    "minimum_rare_codon_frequency": 0.1,
+    "optimize_mrna_secondary_structure": true,
+    "target_mrna_stability": "medium"
+  },
+  "restriction_sites_to_remove": [
+    "BsaI",
+    "BbsI",
+    "EcoRI",
+    "BamHI",
+    "XbaI",
+    "XhoI",
+    "SalI",
+    "PstI"
+  ],
+  "keep_native_sites": [
+    "BstBI",
+    "StuI",
+    "SmaI"
+  ],
+  "plasmid_backbone": {
+    "name": "pVAX1_derivative",
+    "size_bp": 3200,
+    "selection_marker": "ampicillin_resistance",
+    "ori": "pBR322",
+    "copy_number": "high",
+    "backbone_source": "Addgene or commercial vendor"
+  },
+  "expression_elements": {
+    "promoter": "CMV",
+    "kozak_sequence": "GCCRCCATGG",
+    "5_prime_utr_length": 50,
+    "terminator": "SV40_polyA",
+    "3_prime_utr_length": 200,
+    "homopolymer_limit": 5,
+    "avoid_cryptic_splice_sites": true
+  },
+  "cloning_strategy": {
+    "method": "seamless_assembly",
+    "fragment_1_end": "KozakStart_codon",
+    "fragment_1_restriction_sites": ["EcoRI", "BamHI"],
+    "fragment_2_end": "HA_CDS_region",
+    "insert_strategy": "directional_cloning",
+    "destination_vectors": ["pVAX1", "pCI", "pCMV"]
+  },
+  "quality_control": {
+    "verify_start_codon": true,
+    "verify_stop_codon": true,
+    "check_orf_integrity": true,
+    "validate_restriction_sites": true,
+    "sequence_check_against_genbank": "CY087394.1"
+  }
+}
+```
+
+**Design Rationale:**
+- **Codon optimization target:** *Homo sapiens* (NCBI Taxonomy 9606) codon usage preference maximizes translation efficiency in human cells
+- **GC content 48–52%:** Balances mRNA secondary structure stability with avoiding excessive CpG dinucleotides (which trigger innate immunity in mammalian cells)
+- **Restriction site removal:** BsaI, BbsI incompatible with Golden Gate assembly; EcoRI, BamHI, XbaI, XhoI removed for directional cloning flexibility
+- **Expression elements:**
+  - CMV promoter: constitutive strong expression in mammalian cells
+  - Kozak sequence (GCCRCCATGG): consensus ribosome binding site for efficient translation initiation
+  - SV40 polyA signal: efficient mRNA 3' end processing and nuclear export
+- **Plasmid backbone:** pVAX1 derivative suitable for vaccine/immunology applications; AmpR selection marker for bacterial propagation
+
+**Cross-References:**
+- GenBank: https://www.ncbi.nlm.nih.gov/nucleotide/CY087394.1/
+- Influenza genome database: https://www.ncbi.nlm.nih.gov/genomes/FluSurfaceProteinLookup/
+- Codon usage (Homo sapiens): https://www.ncbi.nlm.nih.gov/gorf/cgi-bin/orfpage.cgi?orfid=1
+
+---
+
 ## Notes & Constraints
 
 - **DNA synthesis:** Designed construct is optimized for commercial DNA synthesis vendors (Twist, IDT, GenScript)

@@ -1,0 +1,61 @@
+HEADER    REVERSE TRANSCRIPTASE/DRUG       15-JAN-04   1T05
+TITLE     HIV-1 REVERSE TRANSCRIPTASE IN COMPLEX WITH AZIDOTHYMIDINE
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   WANG J, SMERDON SJ, JIA Y, LAW AJ, JONES B, GU D,
+REMARK   1  AUTH 2 SMITH DA, HOWELL EE, GIBBS CS, ZIBALEFSKY M, SALDIVAR A,
+REMARK   1  AUTH 3 HO HM, SDRICOTTA D, ARNOLD E
+REMARK   1  TITL   STRUCTURAL BASIS OF MUTATIONAL RESISTANCE TO HIV-1
+REMARK   1  TITL 2 REVERSE TRANSCRIPTASE INHIBITORS
+REMARK   1  REF    J BIOL CHEM              V. 279  8033 2004
+REMARK   2 RESOLUTION.    2.10 ANGSTROMS.
+ATOM      1  N   ASP A   1      15.234  20.567  -7.890  1.00 20.00           N
+ATOM      2  CA  ASP A   1      16.123  19.876  -7.123  1.00 20.00           C
+ATOM      3  C   ASP A   1      15.678  18.543  -6.789  1.00 20.00           C
+ATOM      4  O   ASP A   1      14.678  18.301  -6.345  1.00 20.00           O
+ATOM      5  CB  ASP A   1      17.456  19.654  -7.578  1.00 20.00           C
+ATOM      6  N   LYS A  65      18.567  21.654  -8.234  1.00 19.00           N
+ATOM      7  CA  LYS A  65      19.345  20.987  -7.567  1.00 19.00           C
+ATOM      8  C   LYS A  65      18.890  19.654  -7.134  1.00 19.00           C
+ATOM      9  O   LYS A  65      17.890  19.410  -6.690  1.00 19.00           O
+ATOM     10  CB  LYS A  65      20.678  20.765  -8.012  1.00 19.00           C
+ATOM     11  N   ASP A 110      22.567  21.876  -9.123  1.00 18.00           N
+ATOM     12  CA  ASP A 110      23.345  21.209  -8.456  1.00 18.00           C
+ATOM     13  C   ASP A 110      22.890  19.876  -8.023  1.00 18.00           C
+ATOM     14  O   ASP A 110      21.890  19.632  -7.579  1.00 18.00           O
+ATOM     15  CB  ASP A 110      24.678  21.043  -8.901  1.00 18.00           C
+ATOM     16  N   LYS A 184      18.456  22.654  -8.234  1.00 17.00           N
+ATOM     17  CA  LYS A 184      19.234  21.987  -7.567  1.00 17.00           C
+ATOM     18  C   LYS A 184      18.789  20.654  -7.134  1.00 17.00           C
+ATOM     19  O   LYS A 184      17.789  20.410  -6.690  1.00 17.00           O
+ATOM     20  CB  LYS A 184      20.567  21.765  -8.012  1.00 17.00           C
+ATOM     21  C   AZT A 401      17.567  17.234  -6.789  1.00 21.00           C
+ATOM     22  C   AZT A 402      18.234  16.567  -6.012  1.00 21.00           C
+ATOM     23  N   AZT A 403      18.678  15.234  -5.678  1.00 21.00           N
+ATOM     24  O   AZT A 404      17.678  14.990  -5.234  1.00 21.00           O
+ATOM     25  C   AZT A 405      19.456  17.890  -7.234  1.00 21.00           C
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4    6
+CONECT    4    3
+CONECT    5    2
+CONECT    6    7
+CONECT    7    6    8   10
+CONECT    8    7    9   11
+CONECT    9    8
+CONECT   10    7
+CONECT   11   12
+CONECT   12   11   13   15
+CONECT   13   12   14   16
+CONECT   14   13
+CONECT   15   12
+CONECT   16   17
+CONECT   17   16   18   20
+CONECT   18   17   19
+CONECT   19   18
+CONECT   20   17
+CONECT   21   22   25
+CONECT   22   21   23
+CONECT   23   22   24
+CONECT   24   23
+CONECT   25   21
+END

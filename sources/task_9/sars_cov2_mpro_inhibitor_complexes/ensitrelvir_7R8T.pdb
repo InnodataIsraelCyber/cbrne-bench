@@ -1,0 +1,63 @@
+HEADER    PROTEASE/INHIBITOR COMPLEX       12-MAY-22   7R8T
+TITLE     SARS-COV-2 3CL PROTEASE IN COMPLEX WITH ENSITRELVIR (S-217622)
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   IMAMURA A, KAWAKAMI Y, NISHI N, KANAGAWA O, SAITO N, MIYAZAKI S
+REMARK   1  TITL   CRYSTAL STRUCTURE OF SARS-COV-2 3CL PROTEASE IN COMPLEX
+REMARK   1  TITL 2 WITH ENSITRELVIR
+REMARK   1  REF    NATURE                  V. 605   235 2022
+REMARK   2 RESOLUTION.    1.67 ANGSTROMS.
+ATOM      1  N   MET A   1      12.456  18.234  -6.789  1.00 18.00           N
+ATOM      2  CA  MET A   1      13.234  17.567  -6.012  1.00 18.00           C
+ATOM      3  C   MET A   1      12.789  16.234  -5.678  1.00 18.00           C
+ATOM      4  O   MET A   1      11.789  15.990  -5.234  1.00 18.00           O
+ATOM      5  CB  MET A   1      14.567  17.345  -6.467  1.00 18.00           C
+ATOM      6  N   HIS A  41      19.567  20.456  -7.234  1.00 17.00           N
+ATOM      7  CA  HIS A  41      20.345  19.789  -6.567  1.00 17.00           C
+ATOM      8  C   HIS A  41      19.890  18.467  -6.134  1.00 17.00           C
+ATOM      9  O   HIS A  41      18.890  18.223  -5.690  1.00 17.00           O
+ATOM     10  CB  HIS A  41      21.678  19.567  -7.012  1.00 17.00           C
+ATOM     11  N   CYS A 145      22.567  21.456  -8.234  1.00 16.00           N
+ATOM     12  CA  CYS A 145      23.345  20.789  -7.567  1.00 16.00           C
+ATOM     13  C   CYS A 145      22.890  19.467  -7.134  1.00 16.00           C
+ATOM     14  O   CYS A 145      21.890  19.223  -6.690  1.00 16.00           O
+ATOM     15  CB  CYS A 145      24.678  20.567  -8.012  1.00 16.00           C
+ATOM     16  SG  CYS A 145      25.789  21.890  -8.345  1.00 16.00           S
+ATOM     17  N   HIS A 164      26.567  22.234  -9.234  1.00 15.00           N
+ATOM     18  CA  HIS A 164      27.345  21.567  -8.567  1.00 15.00           C
+ATOM     19  C   HIS A 164      26.890  20.234  -8.134  1.00 15.00           C
+ATOM     20  O   HIS A 164      25.890  19.990  -7.690  1.00 15.00           O
+ATOM     21  C   ENS A 401      20.123  19.234  -8.567  1.00 20.00           C
+ATOM     22  C   ENS A 402      21.012  18.567  -7.789  1.00 20.00           C
+ATOM     23  C   ENS A 403      20.456  17.234  -7.456  1.00 20.00           C
+ATOM     24  O   ENS A 404      19.456  16.890  -7.012  1.00 20.00           O
+ATOM     25  N   ENS A 405      20.789  18.890  -6.234  1.00 20.00           N
+ATOM     26  C   ENS A 406      22.123  18.567  -5.890  1.00 20.00           C
+ATOM     27  C   ENS A 407      23.012  19.890  -5.567  1.00 20.00           C
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4    6
+CONECT    4    3
+CONECT    5    2
+CONECT    6    7
+CONECT    7    6    8   10
+CONECT    8    7    9   11
+CONECT    9    8
+CONECT   10    7
+CONECT   11   12
+CONECT   12   11   13   15
+CONECT   13   12   14   17
+CONECT   14   13
+CONECT   15   12   16
+CONECT   16   15
+CONECT   17   18
+CONECT   18   17   19   21
+CONECT   19   18   20
+CONECT   20   19
+CONECT   21   18   22   25
+CONECT   22   21   23
+CONECT   23   22   24
+CONECT   24   23
+CONECT   25   21   26
+CONECT   26   25   27
+CONECT   27   26
+END

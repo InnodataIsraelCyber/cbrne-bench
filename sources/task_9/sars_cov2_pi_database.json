@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "source": "Published crystal structures and clinical trial data",
+    "virus": "SARS-CoV-2",
+    "protein": "3CL protease (main protease/Mpro)",
+    "protein_structure": "homodimeric_2x153_aa_catalytic_domains",
+    "catalytic_residues": ["His41", "Cys145", "His164"],
+    "mechanism": "cysteine_protease",
+    "last_updated": "2024-01-28"
+  },
+  "protease_inhibitors": [
+    {
+      "drug_name": "Nirmatrelvir",
+      "brand_name": "Paxlovid",
+      "developer": "Pfizer",
+      "binding_mode": "covalent_inhibitor_carbonyl_coordination_to_cys145",
+      "covalent_mechanism": "forms_thiohemiacetal_adduct_with_catalytic_cysteine",
+      "contact_residues": [49, 54, 140, 141, 145, 163, 164, 165, 166],
+      "binding_affinity_ki_nm": 0.040,
+      "binding_affinity_ic50_nm": 0.015,
+      "clinical_efficacy_hospitalization_reduction_percent": 89.0,
+      "fda_approval_date": "2021-12-22",
+      "resistance_mutations": ["M49I", "L50F", "E166V", "L167F", "M169I", "Q192R"],
+      "major_resistance_positions": [49, 166, 169],
+      "fold_resistance_at_major_positions": [50, 80, 120],
+      "fitness_cost_reduction_percent": 8.0
+    },
+    {
+      "drug_name": "Ensitrelvir",
+      "brand_name": "Xocova",
+      "developer": "Shionogi",
+      "binding_mode": "non_covalent_inhibitor_hydrogen_bonding",
+      "reversible_binding": "tight_but_non_covalent_interactions",
+      "contact_residues": [49, 54, 140, 141, 164, 165, 166],
+      "binding_affinity_ki_nm": 0.007,
+      "binding_affinity_ic50_nm": 0.003,
+      "clinical_efficacy_hospitalization_reduction_percent": 79.0,
+      "fda_approval_date": "2023-03-24",
+      "resistance_mutations": ["M49L", "L50F", "E166K", "L167F"],
+      "major_resistance_positions": [49, 166],
+      "fold_resistance_at_major_positions": [30, 60],
+      "fitness_cost_reduction_percent": 5.0
+    }
+  ],
+  "binding_pocket_geometry": {
+    "pocket_volume_angstrom3": 530,
+    "pocket_center_residue": 145,
+    "hydrophobic_residues": [49, 54, 140, 141, 165, 169],
+    "catalytic_residues": [41, 145, 164],
+    "water_mediated_interactions": ["H41", "C145", "H164"],
+    "substrate_binding_sites": ["S1", "S1_prime", "S2", "S4"],
+    "inhibitor_contact_surface_area": 450
+  },
+  "viral_substrate_recognition": {
+    "scissile_bond": "Gln_Ser",
+    "cleavage_position": "between_P1_and_P1_prime",
+    "substrate_specificity": "recognizes_polyprotein_junctions",
+    "canonical_sequence": "Leu_Gln_Ser_Gly_Ala"
+  }
+}

@@ -1,0 +1,59 @@
+HEADER    PROTEASE/SERINE PROTEASE        10-JAN-02   1CU7
+TITLE     HEPATITIS C VIRUS NS3 SERINE PROTEASE IN COMPLEX WITH NS4A
+TITLE    2 COFACTOR
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   YUSUPOV MM, JENNINGS JL, YUSUPOVA GZ, BUCHKOVICH KJ,
+REMARK   1  AUTH 2 BLINKOVA RF, KHROPYCHEV AY, KORLEV SE, SPIRIN AS
+REMARK   1  TITL   THE STRUCTURE OF THE 70S RIBOSOME FROM THERMUS AQUATICUS
+REMARK   1  TITL 2 AT 3.8 ANGSTROM RESOLUTION
+REMARK   1  REF    NATURE                  V. 408   493 2000
+REMARK   2 RESOLUTION.    2.10 ANGSTROMS.
+ATOM      1  N   SER A   1      10.234  15.678  -5.432  1.00 22.00           N
+ATOM      2  CA  SER A   1      11.123  14.987  -4.765  1.00 22.00           C
+ATOM      3  C   SER A   1      10.678  13.654  -4.345  1.00 22.00           C
+ATOM      4  O   SER A   1       9.678  13.412  -3.901  1.00 22.00           O
+ATOM      5  CB  SER A   1      12.456  14.765  -5.234  1.00 22.00           C
+ATOM      6  OG  SER A   1      12.987  16.089  -5.456  1.00 22.00           O
+ATOM      7  N   HIS A  57      14.567  17.234  -6.789  1.00 20.00           N
+ATOM      8  CA  HIS A  57      15.345  16.567  -6.012  1.00 20.00           C
+ATOM      9  C   HIS A  57      14.890  15.234  -5.678  1.00 20.00           C
+ATOM     10  O   HIS A  57      13.890  14.990  -5.234  1.00 20.00           O
+ATOM     11  CB  HIS A  57      16.678  16.345  -6.467  1.00 20.00           C
+ATOM     12  N   ASP A  81      17.567  18.456  -7.234  1.00 21.00           N
+ATOM     13  CA  ASP A  81      18.345  17.789  -6.567  1.00 21.00           C
+ATOM     14  C   ASP A  81      17.890  16.467  -6.134  1.00 21.00           C
+ATOM     15  O   ASP A  81      16.890  16.223  -5.690  1.00 21.00           O
+ATOM     16  CB  ASP A  81      19.678  17.567  -7.012  1.00 21.00           C
+ATOM     17  CG  ASP A  81      20.567  18.789  -7.345  1.00 21.00           C
+ATOM     18  OD1 ASP A  81      20.234  19.901  -7.012  1.00 21.00           O
+ATOM     19  OD2 ASP A  81      21.567  18.567  -7.901  1.00 21.00           O
+ATOM     20  N   ALA A 156      22.567  20.456  -8.234  1.00 19.00           N
+ATOM     21  CA  ALA A 156      23.345  19.789  -7.567  1.00 19.00           C
+ATOM     22  C   ALA A 156      22.890  18.467  -7.134  1.00 19.00           C
+ATOM     23  O   ALA A 156      21.890  18.223  -6.690  1.00 19.00           O
+ATOM     24  CB  ALA A 156      24.678  19.567  -8.012  1.00 19.00           C
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4    7
+CONECT    4    3
+CONECT    5    2    6
+CONECT    6    5
+CONECT    7    8
+CONECT    8    7    9   11
+CONECT    9    8   10   12
+CONECT   10    9
+CONECT   11    8
+CONECT   12   13
+CONECT   13   12   14   16
+CONECT   14   13   15   20
+CONECT   15   14
+CONECT   16   13   17
+CONECT   17   16   18   19
+CONECT   18   17
+CONECT   19   17
+CONECT   20   14   21
+CONECT   21   20   22   24
+CONECT   22   21   23
+CONECT   23   22
+CONECT   24   21
+END

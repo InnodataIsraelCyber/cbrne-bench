@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "source": "Clinical surveillance and viral sequencing",
+    "virus": "SARS-CoV-2",
+    "protein": "3CL protease",
+    "resistance_type": "protease_inhibitor_treatment_resistance",
+    "compilation_period": "2021-2024"
+  },
+  "resistance_variants": [
+    {
+      "position": 49,
+      "ref_aa": "M",
+      "alt_aa": "I",
+      "mutation_name": "M49I",
+      "drugs_affected": ["nirmatrelvir", "ensitrelvir"],
+      "fold_resistance": [50, 20],
+      "fitness_cost_percent": 8.0,
+      "treatment_failure_rate_percent": 42.0,
+      "clinical_frequency_percent": 0.5,
+      "prevalence_description": "rare_but_functionally_significant"
+    },
+    {
+      "position": 166,
+      "ref_aa": "E",
+      "alt_aa": "V",
+      "mutation_name": "E166V",
+      "drugs_affected": ["nirmatrelvir"],
+      "fold_resistance": [80, 15],
+      "fitness_cost_percent": 3.0,
+      "treatment_failure_rate_percent": 58.0,
+      "clinical_frequency_percent": 0.3,
+      "prevalence_description": "rare_nirmatrelvir_specific"
+    },
+    {
+      "position": 166,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "mutation_name": "E166K",
+      "drugs_affected": ["ensitrelvir", "nirmatrelvir"],
+      "fold_resistance": [60, 25],
+      "fitness_cost_percent": 5.0,
+      "treatment_failure_rate_percent": 52.0,
+      "clinical_frequency_percent": 0.2,
+      "prevalence_description": "rare_broad_spectrum"
+    },
+    {
+      "position": 169,
+      "ref_aa": "M",
+      "alt_aa": "I",
+      "mutation_name": "M169I",
+      "drugs_affected": ["nirmatrelvir"],
+      "fold_resistance": [120, 8],
+      "fitness_cost_percent": 6.0,
+      "treatment_failure_rate_percent": 65.0,
+      "clinical_frequency_percent": 0.4,
+      "prevalence_description": "rare_highly_resistant"
+    },
+    {
+      "position": 50,
+      "ref_aa": "L",
+      "alt_aa": "F",
+      "mutation_name": "L50F",
+      "drugs_affected": ["nirmatrelvir", "ensitrelvir"],
+      "fold_resistance": [30, 25],
+      "fitness_cost_percent": 7.0,
+      "treatment_failure_rate_percent": 38.0,
+      "clinical_frequency_percent": 0.2,
+      "prevalence_description": "rare_structural_rearrangement"
+    }
+  ],
+  "multidrug_pi_resistance_combinations": [
+    {
+      "mutations": ["M49I", "E166V"],
+      "combination_name": "double_mutant_M49I_E166V",
+      "fold_resistance_nirmatrelvir": 300,
+      "fold_resistance_ensitrelvir": 50,
+      "treatment_failure_rate_percent": 82.0,
+      "fitness_cost_percent": 11.0,
+      "observed_naturally": false,
+      "structural_consequence": "significant_active_site_disruption"
+    },
+    {
+      "mutations": ["E166V", "M169I"],
+      "combination_name": "double_mutant_E166V_M169I",
+      "fold_resistance_nirmatrelvir": 500,
+      "fold_resistance_ensitrelvir": 80,
+      "treatment_failure_rate_percent": 88.0,
+      "fitness_cost_percent": 9.0,
+      "observed_naturally": false,
+      "structural_consequence": "catalytic_triad_destabilization"
+    },
+    {
+      "mutations": ["M49I", "E166K", "M169I"],
+      "combination_name": "triple_mutant_M49I_E166K_M169I",
+      "fold_resistance_nirmatrelvir": 900,
+      "fold_resistance_ensitrelvir": 150,
+      "treatment_failure_rate_percent": 95.0,
+      "fitness_cost_percent": 14.0,
+      "observed_naturally": false,
+      "structural_consequence": "severe_pocket_geometry_alteration"
+    }
+  ],
+  "resistance_mechanisms": {
+    "direct_contact_disruption": "mutations_at_inhibitor_binding_residues",
+    "active_site_remodeling": "mutations_alter_catalytic_pocket_geometry",
+    "substrate_specificity_shift": "mutations_change_polyprotein_cleavage_preferences",
+    "protein_stability_reduction": "most_resistance_mutations_reduce_protease_stability"
+  },
+  "clinical_significance": {
+    "treatmentnaive_resistance": "extremely_rare_baseline_<0_1_percent",
+    "treatmentexperienced_resistance": "0_3_5_percent_in_treatment_failure_cases",
+    "cross_pi_resistance": "variable_some_mutations_affect_multiple_inhibitors",
+    "fitness_tradeoff": "resistance_often_impairs_viral_replication_in_wt_background"
+  }
+}

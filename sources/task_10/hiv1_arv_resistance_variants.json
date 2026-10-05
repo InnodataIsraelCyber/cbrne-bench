@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "source": "Clinical surveillance and drug-resistance studies",
+    "virus": "HIV-1",
+    "protein": "Reverse transcriptase",
+    "resistance_type": "antiretroviral_treatment_resistance",
+    "compilation_period": "1987-2024"
+  },
+  "resistance_variants": [
+    {
+      "position": 184,
+      "ref_aa": "M",
+      "alt_aa": "V",
+      "mutation_name": "M184V",
+      "drugs_affected": ["AZT", "3TC", "TDF"],
+      "fold_resistance": [200, 150, 80],
+      "fitness_cost_percent": 5.0,
+      "treatment_failure_rate_percent": 55.0,
+      "clinical_frequency_percent": 45.0,
+      "prevalence": "very_common"
+    },
+    {
+      "position": 215,
+      "ref_aa": "T",
+      "alt_aa": "Y",
+      "mutation_name": "T215Y",
+      "drugs_affected": ["AZT"],
+      "fold_resistance": [300, 5, 8],
+      "fitness_cost_percent": 3.0,
+      "treatment_failure_rate_percent": 62.0,
+      "clinical_frequency_percent": 38.0,
+      "prevalence": "common"
+    },
+    {
+      "position": 65,
+      "ref_aa": "K",
+      "alt_aa": "R",
+      "mutation_name": "K65R",
+      "drugs_affected": ["TDF", "ddI"],
+      "fold_resistance": [100, 40, 12],
+      "fitness_cost_percent": 8.0,
+      "treatment_failure_rate_percent": 48.0,
+      "clinical_frequency_percent": 2.0,
+      "prevalence": "rare"
+    },
+    {
+      "position": 103,
+      "ref_aa": "K",
+      "alt_aa": "N",
+      "mutation_name": "K103N",
+      "drugs_affected": ["EFV", "RPV"],
+      "fold_resistance": [50, 200, 8],
+      "fitness_cost_percent": 1.0,
+      "treatment_failure_rate_percent": 72.0,
+      "clinical_frequency_percent": 28.0,
+      "prevalence": "common"
+    },
+    {
+      "position": 181,
+      "ref_aa": "Y",
+      "alt_aa": "C",
+      "mutation_name": "Y181C",
+      "drugs_affected": ["EFV", "RPV"],
+      "fold_resistance": [200, 120, 15],
+      "fitness_cost_percent": 2.0,
+      "treatment_failure_rate_percent": 68.0,
+      "clinical_frequency_percent": 22.0,
+      "prevalence": "common"
+    },
+    {
+      "position": 138,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "mutation_name": "E138K",
+      "drugs_affected": ["EFV", "RPV"],
+      "fold_resistance": [30, 80, 10],
+      "fitness_cost_percent": 3.0,
+      "treatment_failure_rate_percent": 58.0,
+      "clinical_frequency_percent": 8.0,
+      "prevalence": "less_common"
+    },
+    {
+      "position": 67,
+      "ref_aa": "D",
+      "alt_aa": "N",
+      "mutation_name": "D67N",
+      "drugs_affected": ["AZT", "TDF"],
+      "fold_resistance": [50, 30, 20],
+      "fitness_cost_percent": 2.0,
+      "treatment_failure_rate_percent": 35.0,
+      "clinical_frequency_percent": 12.0,
+      "prevalence": "less_common"
+    }
+  ],
+  "multidrug_arv_resistance_combinations": [
+    {
+      "mutations": ["M184V", "T215Y"],
+      "combination_name": "TAM_thymidine_associated_mutations",
+      "fold_resistance_azt": 600,
+      "fold_resistance_efv": 8,
+      "fold_resistance_tdf": 150,
+      "treatment_failure_rate_percent": 75.0,
+      "fitness_cost_percent": 8.0,
+      "prevalence": "common_in_azt_treated_patients"
+    },
+    {
+      "mutations": ["K103N", "Y181C"],
+      "combination_name": "dual_NNRTI_resistance",
+      "fold_resistance_efv": 400,
+      "fold_resistance_rpv": 200,
+      "fold_resistance_azt": 8,
+      "treatment_failure_rate_percent": 85.0,
+      "fitness_cost_percent": 3.0,
+      "prevalence": "common_in_NNRTI_treated_patients"
+    },
+    {
+      "mutations": ["M184V", "K103N", "T215Y"],
+      "combination_name": "triple_mutant_multi_class_resistance",
+      "fold_resistance_azt": 900,
+      "fold_resistance_efv": 500,
+      "fold_resistance_tdf": 300,
+      "treatment_failure_rate_percent": 92.0,
+      "fitness_cost_percent": 11.0,
+      "prevalence": "rare_but_clinically_important"
+    },
+    {
+      "mutations": ["K65R", "M184V"],
+      "combination_name": "dual_NRTI_resistance",
+      "fold_resistance_tdf": 400,
+      "fold_resistance_azt": 300,
+      "fold_resistance_efv": 12,
+      "treatment_failure_rate_percent": 80.0,
+      "fitness_cost_percent": 13.0,
+      "prevalence": "uncommon_high_fitness_cost"
+    }
+  ],
+  "resistance_mechanisms": {
+    "NRTI_resistance": {
+      "mechanism_1": "increased_pyrophosphorolysis_chain_terminator_removal",
+      "mechanism_2": "altered_nucleotide_binding_pocket_steric_hindrance",
+      "mechanism_3": "reduced_drug_binding_affinity",
+      "example_mutations": ["M184V", "T215Y", "K65R"]
+    },
+    "NNRTI_resistance": {
+      "mechanism_1": "disrupted_allosteric_pocket_binding",
+      "mechanism_2": "altered_conformational_equilibrium",
+      "mechanism_3": "reduced_allosteric_inhibition_efficacy",
+      "example_mutations": ["K103N", "Y181C", "E138K"]
+    }
+  },
+  "clinical_significance": {
+    "treatment_naive_prevalence": "5_15_percent_transmitted_resistance",
+    "treatment_experienced_prevalence": "30_80_percent_depending_on_treatment_duration",
+    "cross_resistance": "NRTI_resistance_patterns_differ_from_NNRTI",
+    "fitness_landscape": "most_resistance_mutations_impair_replication_fitness",
+    "genetic_barrier": "single_mutations_sufficient_for_NNRTI_resistance_multiple_needed_for_NRTI"
+  }
+}

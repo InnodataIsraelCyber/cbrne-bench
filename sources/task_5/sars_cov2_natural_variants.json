@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "source": "GISAID, literature, CoV-Spectrum database",
+    "protein": "SARS-CoV-2 RBD",
+    "variant_definition": "naturally occurring RBD mutations observed in circulation",
+    "last_updated": "2024-01-25",
+    "compilation_period": "2020-2024"
+  },
+  "known_escape_mutations": [
+    {
+      "position": 346,
+      "ref_aa": "K",
+      "alt_aa": "T",
+      "aliases": ["E346T"],
+      "escape_fold": 3.2,
+      "fitness_cost": 0.05,
+      "literature": ["PMID:33684922"],
+      "observed_in_variants": ["beta", "omicron"],
+      "prevalence_percent": 2.3
+    },
+    {
+      "position": 484,
+      "ref_aa": "E",
+      "alt_aa": "Q",
+      "aliases": ["E484Q", "E484K"],
+      "escape_fold": 8.5,
+      "fitness_cost": 0.02,
+      "literature": ["PMID:33684922", "PMID:34737901"],
+      "observed_in_variants": ["beta", "gamma", "omicron"],
+      "prevalence_percent": 15.7
+    },
+    {
+      "position": 501,
+      "ref_aa": "N",
+      "alt_aa": "Y",
+      "aliases": ["N501Y"],
+      "escape_fold": 2.1,
+      "fitness_cost": 0.0,
+      "literature": ["PMID:33658090"],
+      "observed_in_variants": ["alpha", "beta", "omicron"],
+      "prevalence_percent": 45.2
+    },
+    {
+      "position": 478,
+      "ref_aa": "T",
+      "alt_aa": "K",
+      "aliases": ["T478K"],
+      "escape_fold": 1.8,
+      "fitness_cost": 0.08,
+      "literature": ["PMID:34737901"],
+      "observed_in_variants": ["omicron"],
+      "prevalence_percent": 28.5
+    },
+    {
+      "position": 455,
+      "ref_aa": "F",
+      "alt_aa": "L",
+      "aliases": ["F455L"],
+      "escape_fold": 2.4,
+      "fitness_cost": 0.12,
+      "literature": ["PMID:34737901"],
+      "observed_in_variants": ["omicron"],
+      "prevalence_percent": 18.9
+    },
+    {
+      "position": 456,
+      "ref_aa": "A",
+      "alt_aa": "S",
+      "aliases": ["A456S"],
+      "escape_fold": 1.5,
+      "fitness_cost": 0.03,
+      "literature": ["PMID:34737901"],
+      "observed_in_variants": ["omicron"],
+      "prevalence_percent": 12.1
+    },
+    {
+      "position": 493,
+      "ref_aa": "Q",
+      "alt_aa": "R",
+      "aliases": ["Q493R"],
+      "escape_fold": 1.9,
+      "fitness_cost": 0.06,
+      "literature": ["PMID:34737901"],
+      "observed_in_variants": ["omicron"],
+      "prevalence_percent": 22.3
+    }
+  ],
+  "escape_mechanisms": {
+    "direct_epitope_disruption": "mutation occurs at antibody contact residue, directly preventing binding",
+    "conformational_shift": "mutation induces local or global structural change that disrupts antibody access to epitope",
+    "charge_reversal": "mutation reverses electrostatic interaction with antibody, reducing binding affinity",
+    "steric_clash": "mutation introduces side-chain that sterically clashes with antibody variable region"
+  },
+  "fitness_landscape": {
+    "definition": "Trade-off between immune escape and virus replication efficiency",
+    "high_fitness_cost": ">0.1",
+    "moderate_fitness_cost": "0.05-0.1",
+    "low_fitness_cost": "<0.05",
+    "neutral": "0.0"
+  },
+  "variant_profiles": {
+    "alpha": {
+      "key_mutations": ["N501Y"],
+      "escape_potential": "moderate",
+      "vaccine_evasion": "low"
+    },
+    "beta": {
+      "key_mutations": ["K346T", "E484K", "N501Y"],
+      "escape_potential": "high",
+      "vaccine_evasion": "high"
+    },
+    "gamma": {
+      "key_mutations": ["E484K", "N501Y"],
+      "escape_potential": "high",
+      "vaccine_evasion": "moderate"
+    },
+    "omicron": {
+      "key_mutations": ["T478K", "F455L", "A456S", "Q493R", "N501Y"],
+      "escape_potential": "very_high",
+      "vaccine_evasion": "very_high"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+HEADER    REVERSE TRANSCRIPTASE             15-DEC-94   1RTD
+TITLE     HIV-1 REVERSE TRANSCRIPTASE COMPLEXED WITH DNA AND NEVIRAPINE
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   KOHLSTAEDT LA, WANG J, FRIEDMAN JM, RICE PA, STEITZ TA
+REMARK   1  TITL   CRYSTAL STRUCTURE AT 3.5 ANGSTROMS RESOLUTION OF HIV-1
+REMARK   1  TITL 2 REVERSE TRANSCRIPTASE COMPLEXED WITH AN INHIBITOR
+REMARK   1  REF    SCIENCE                  V. 256   1783 1992
+REMARK   2 RESOLUTION.    2.70 ANGSTROMS.
+ATOM      1  N   GLU A   1      15.234  20.567  -7.890  1.00 22.00           N
+ATOM      2  CA  GLU A   1      16.123  19.876  -7.123  1.00 22.00           C
+ATOM      3  C   GLU A   1      15.678  18.543  -6.789  1.00 22.00           C
+ATOM      4  O   GLU A   1      14.678  18.301  -6.345  1.00 22.00           O
+ATOM      5  CB  GLU A   1      17.456  19.654  -7.578  1.00 22.00           C
+ATOM      6  CG  GLU A   1      18.345  20.876  -7.911  1.00 22.00           C
+ATOM      7  CD  GLU A   1      19.678  20.543  -8.356  1.00 22.00           C
+ATOM      8  OE1 GLU A   1      20.234  19.432  -8.289  1.00 22.00           O
+ATOM      9  OE2 GLU A   1      20.234  21.543  -8.801  1.00 22.00           O
+ATOM     10  N   ASP A 110      22.567  21.876  -9.123  1.00 21.00           N
+ATOM     11  CA  ASP A 110      23.345  21.209  -8.456  1.00 21.00           C
+ATOM     12  C   ASP A 110      22.890  19.876  -8.023  1.00 21.00           C
+ATOM     13  O   ASP A 110      21.890  19.632  -7.579  1.00 21.00           O
+ATOM     14  CB  ASP A 110      24.678  21.043  -8.901  1.00 21.00           C
+ATOM     15  CG  ASP A 110      25.567  22.265  -9.234  1.00 21.00           C
+ATOM     16  OD1 ASP A 110      25.234  23.377  -8.901  1.00 21.00           O
+ATOM     17  OD2 ASP A 110      26.567  22.043  -9.789  1.00 21.00           O
+ATOM     18  N   ASP A 185      28.567  23.876 -10.123  1.00 20.00           N
+ATOM     19  CA  ASP A 185      29.345  23.209  -9.456  1.00 20.00           C
+ATOM     20  C   ASP A 185      28.890  21.876  -9.023  1.00 20.00           C
+ATOM     21  O   ASP A 185      27.890  21.632  -8.579  1.00 20.00           O
+ATOM     22  CB  ASP A 185      30.678  23.043  -9.901  1.00 20.00           C
+ATOM     23  CG  ASP A 185      31.567  24.265 -10.234  1.00 20.00           C
+ATOM     24  OD1 ASP A 185      31.234  25.377  -9.901  1.00 20.00           O
+ATOM     25  OD2 ASP A 185      32.567  24.043 -10.789  1.00 20.00           O
+ATOM     26  N   LYS A 184      18.456  22.654  -8.234  1.00 19.00           N
+ATOM     27  CA  LYS A 184      19.234  21.987  -7.567  1.00 19.00           C
+ATOM     28  C   LYS A 184      18.789  20.654  -7.134  1.00 19.00           C
+ATOM     29  O   LYS A 184      17.789  20.410  -6.690  1.00 19.00           O
+ATOM     30  CB  LYS A 184      20.567  21.765  -8.012  1.00 19.00           C
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4   10
+CONECT    4    3
+CONECT    5    2    6
+CONECT    6    5    7
+CONECT    7    6    8    9
+CONECT    8    7
+CONECT    9    7
+CONECT   10   11
+CONECT   11   10   12   14
+CONECT   12   11   13   18
+CONECT   13   12
+CONECT   14   11   15
+CONECT   15   14   16   17
+CONECT   16   15
+CONECT   17   15
+CONECT   18   19
+CONECT   19   18   20   22
+CONECT   20   19   21
+CONECT   21   20
+CONECT   22   19   23
+CONECT   23   22   24   25
+CONECT   24   23
+CONECT   25   23
+CONECT   26   27
+CONECT   27   26   28   30
+CONECT   28   27   29
+CONECT   29   28
+CONECT   30   27
+END

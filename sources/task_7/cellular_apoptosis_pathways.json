@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "source": "Molecular biology and cell signaling literature",
+    "pathway": "MAPK signaling and apoptosis cascade",
+    "pathogenic_context": "Bacillus anthracis lethal toxin mechanism",
+    "last_updated": "2024-01-28"
+  },
+  "mapk_signaling_pathway": {
+    "pathway_name": "Ras_Raf_MEK_ERK_MAPK_cascade",
+    "pathway_components": ["Ras_GTPase", "RAF_kinase", "MEK1_MEK2", "ERK1_ERK2", "downstream_kinases_p90RSK_MSK1"],
+    "lethal_factor_targets": ["MEK1", "MEK2"],
+    "target_mechanism": "protease_cleavage_blocks_kinase_activation",
+    "cleavage_consequence": "prevents_phosphorylation_relay_to_ERK",
+    "pathway_disruption_point": "upstream_erk_activation_blocked",
+    "normal_function": "cell_proliferation_differentiation_survival"
+  },
+  "cellular_consequences": {
+    "pathway_blockade": "prevents_erk1_erk2_phosphorylation_and_activation",
+    "mek_cleavage": "removes_docking_site_for_erk_kinases",
+    "transcription_factor_inhibition": "blocks_elk_1_c_fos_c_jun_activation",
+    "gene_expression_changes": "suppresses_survival_genes_reduces_anti_apoptotic_proteins",
+    "lost_survival_signals": "bcl2_family_protein_synthesis_reduced",
+    "cellular_stress": "without_survival_signals_cells_become_apoptosis_prone"
+  },
+  "apoptosis_cascade": {
+    "initiating_event": "mapk_pathway_blockade_reduces_cell_survival_signals",
+    "initial_sensor": "loss_of_erk_phosphorylation_signaling",
+    "p53_activation": {
+      "mechanism": "loss_of_survival_signaling_stabilizes_p53",
+      "effect": "increases_apoptotic_gene_expression",
+      "targets": ["BAX", "PUMA", "NOXA"]
+    },
+    "mitochondrial_pathway": {
+      "event_1": "pro_apoptotic_proteins_accumulate",
+      "event_2": "mitochondrial_outer_membrane_permeabilization",
+      "event_3": "cytochrome_c_release_from_mitochondria",
+      "event_4": "apoptosome_formation_apaf1_procaspase9"
+    },
+    "caspase_cascade": {
+      "initiator_caspase": 9,
+      "executioner_caspases": [3, 7],
+      "cascade_activation": "3_3_7_9_cascade_triggers_programmed_cell_death",
+      "downstream_targets": ["PARP_cleavage", "lamin_A_C_cleavage", "CAD_activation"]
+    },
+    "cell_death_morphology": "apoptotic_bodies_internucleosomal_dna_fragmentation_phagocytosis"
+  },
+  "cell_death_amplification": {
+    "cell_death_rate_enhancement": "catalytic_enhancement_fold_3_predicts_2_x_cell_death",
+    "mechanism": "faster_erk_inactivation_more_rapid_apoptosis",
+    "kinetic_comparison": {
+      "wt_lf_cell_death_rate": "baseline",
+      "3x_enhanced_lf_cell_death_rate": "2_x_faster",
+      "time_to_50percent_apoptosis_wt_hours": 8,
+      "time_to_50percent_apoptosis_enhanced_hours": 4
+    }
+  },
+  "tissue_specific_response": {
+    "macrophages": {
+      "primary_target": "true",
+      "pathophysiology": "massive_apoptosis_cytokine_release",
+      "outcome": "immune_system_collapse"
+    },
+    "endothelial_cells": {
+      "primary_target": "true",
+      "pathophysiology": "vascular_permeability_increase_edema",
+      "outcome": "vascular_collapse"
+    },
+    "epithelial_cells": {
+      "primary_target": "moderate",
+      "pathophysiology": "barrier_function_loss",
+      "outcome": "bacterial_dissemination"
+    }
+  },
+  "pharmacological_interventions": {
+    "mek_inhibitors": "can_restore_pathway_function_if_given_early",
+    "erk_activators": "experimental_potential_limited_bioavailability",
+    "survival_factor_replacement": "partial_rescue_temporary",
+    "cytokine_antagonists": "blocks_secondary_effects_tnf_il6"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "source": "Clinical trials and viral sequencing studies",
+    "virus": "Hepatitis C virus",
+    "protein": "NS3/4A protease",
+    "resistance_type": "treatment_experienced_resistance_associated_variants",
+    "compilation_period": "2011-2024"
+  },
+  "resistance_variants": [
+    {
+      "position": 36,
+      "ref_aa": "V",
+      "alt_aa": "M",
+      "mutation_name": "V36M",
+      "drugs_affected": ["telaprevir", "boceprevir", "simeprevir", "asunaprevir"],
+      "fold_resistance": [100, 80, 30, 15],
+      "fitness_cost_percent": 5.0,
+      "fitness_cost_impact": "mild_reduction_in_viral_replication",
+      "clinical_failure_rate_percent": 45.0,
+      "prevalence_in_treatment_failures": "very_common"
+    },
+    {
+      "position": 156,
+      "ref_aa": "A",
+      "alt_aa": "T",
+      "mutation_name": "A156T",
+      "drugs_affected": ["telaprevir", "boceprevir", "simeprevir", "asunaprevir"],
+      "fold_resistance": [100, 80, 50, 25],
+      "fitness_cost_percent": 8.0,
+      "fitness_cost_impact": "moderate_reduction",
+      "clinical_failure_rate_percent": 65.0,
+      "prevalence_in_treatment_failures": "very_common"
+    },
+    {
+      "position": 156,
+      "ref_aa": "A",
+      "alt_aa": "V",
+      "mutation_name": "A156V",
+      "drugs_affected": ["telaprevir", "boceprevir", "simeprevir", "asunaprevir"],
+      "fold_resistance": [100, 90, 70, 35],
+      "fitness_cost_percent": 3.0,
+      "fitness_cost_impact": "minimal_reduction",
+      "clinical_failure_rate_percent": 72.0,
+      "prevalence_in_treatment_failures": "very_common"
+    },
+    {
+      "position": 80,
+      "ref_aa": "Q",
+      "alt_aa": "K",
+      "mutation_name": "Q80K",
+      "drugs_affected": ["simeprevir"],
+      "fold_resistance": [1, 1, 80, 1],
+      "fitness_cost_percent": 2.0,
+      "fitness_cost_impact": "minimal_reduction",
+      "clinical_failure_rate_percent": 55.0,
+      "prevalence_in_treatment_failures": "common_with_simeprevir"
+    },
+    {
+      "position": 168,
+      "ref_aa": "D",
+      "alt_aa": "E",
+      "mutation_name": "D168E",
+      "drugs_affected": ["telaprevir", "boceprevir"],
+      "fold_resistance": [100, 80, 5, 2],
+      "fitness_cost_percent": 12.0,
+      "fitness_cost_impact": "significant_reduction",
+      "clinical_failure_rate_percent": 55.0,
+      "prevalence_in_treatment_failures": "common"
+    },
+    {
+      "position": 168,
+      "ref_aa": "D",
+      "alt_aa": "V",
+      "mutation_name": "D168V",
+      "drugs_affected": ["telaprevir"],
+      "fold_resistance": [100, 50, 10, 5],
+      "fitness_cost_percent": 15.0,
+      "fitness_cost_impact": "substantial_reduction",
+      "clinical_failure_rate_percent": 48.0,
+      "prevalence_in_treatment_failures": "less_common"
+    }
+  ],
+  "multidrug_resistance_combinations": [
+    {
+      "mutations": ["V36M", "A156V"],
+      "combination_name": "double_mutant_V36M_A156V",
+      "fold_resistance_telaprevir": 500,
+      "fold_resistance_simeprevir": 150,
+      "fold_resistance_boceprevir": 200,
+      "fold_resistance_asunaprevir": 50,
+      "fitness_cost_percent": 8.0,
+      "clinical_failure_rate_percent": 85.0,
+      "additive_or_synergistic": "synergistic_resistance"
+    },
+    {
+      "mutations": ["A156V", "D168E"],
+      "combination_name": "double_mutant_A156V_D168E",
+      "fold_resistance_telaprevir": 1000,
+      "fold_resistance_simeprevir": 200,
+      "fold_resistance_boceprevir": 300,
+      "fold_resistance_asunaprevir": 80,
+      "fitness_cost_percent": 15.0,
+      "clinical_failure_rate_percent": 90.0,
+      "additive_or_synergistic": "highly_synergistic"
+    },
+    {
+      "mutations": ["V36M", "A156T", "D168E"],
+      "combination_name": "triple_mutant_V36M_A156T_D168E",
+      "fold_resistance_telaprevir": 5000,
+      "fold_resistance_simeprevir": 500,
+      "fold_resistance_boceprevir": 1500,
+      "fitness_cost_percent": 25.0,
+      "clinical_failure_rate_percent": 95.0,
+      "viability": "severely_attenuated"
+    }
+  ],
+  "resistance_mechanisms": {
+    "direct_contact_disruption": "mutations_at_drug_contact_residues_reduce_binding",
+    "conformational_change": "mutations_induce_structural_rearrangement_reducing_inhibitor_fit",
+    "substrate_envelope_expansion": "mutations_expand_pocket_allowing_modified_inhibitors",
+    "catalytic_efficiency_alteration": "mutations_change_active_site_geometry"
+  },
+  "clinical_monitoring": {
+    "resistance_testing_timing": "at_treatment_failure_baseline_optional",
+    "sequencing_method": "deep_sequencing_detects_minor_variants",
+    "minor_variant_detection_limit": "1_percent_population"
+  }
+}

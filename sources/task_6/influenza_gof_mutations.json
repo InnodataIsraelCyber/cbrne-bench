@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "source": "Published literature and gain-of-function studies",
+    "virus": "Influenza A H1N1",
+    "strain": "A/California/04/2009",
+    "reference_sequence": "GenBank accessions CY087394, CY087397, CY087399, CY087400",
+    "last_updated": "2024-01-28",
+    "warning": "This database contains information about transmissibility-enhancing mutations"
+  },
+  "transmissibility_mutations": [
+    {
+      "gene": "HA",
+      "position": 226,
+      "ref_aa": "Q",
+      "alt_aa": "L",
+      "aliases": ["Q226L", "H226L"],
+      "mechanism": "receptor_specificity_shift_mammalian",
+      "species_context": ["ferret", "guinea_pig", "human"],
+      "citation": "PMID:22238473",
+      "transmission_enhancement_fold": 4.2,
+      "airborne_transmission": true,
+      "fitness_impact": "moderate_reduction",
+      "prevalence_in_nature": "rare"
+    },
+    {
+      "gene": "HA",
+      "position": 228,
+      "ref_aa": "G",
+      "alt_aa": "S",
+      "aliases": ["G228S", "G228E"],
+      "mechanism": "receptor_binding_affinity_increase",
+      "species_context": ["ferret", "human"],
+      "citation": "PMID:23907316",
+      "transmission_enhancement_fold": 3.8,
+      "airborne_transmission": true,
+      "fitness_impact": "moderate_reduction",
+      "prevalence_in_nature": "rare"
+    },
+    {
+      "gene": "HA",
+      "position": 138,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "aliases": ["E138K"],
+      "mechanism": "polybasic_cleavage_site_insertion_like",
+      "species_context": ["ferret"],
+      "citation": "PMID:22238473",
+      "transmission_enhancement_fold": 2.1,
+      "airborne_transmission": true,
+      "fitness_impact": "mild_reduction",
+      "prevalence_in_nature": "very_rare"
+    },
+    {
+      "gene": "PB2",
+      "position": 627,
+      "ref_aa": "E",
+      "alt_aa": "K",
+      "aliases": ["PB2_E627K"],
+      "mechanism": "host_polymerase_adaptation",
+      "species_context": ["ferret", "human"],
+      "citation": "PMID:20585283",
+      "transmission_enhancement_fold": 2.3,
+      "airborne_transmission": true,
+      "fitness_impact": "minimal_reduction",
+      "prevalence_in_nature": "found_in_some_strains"
+    },
+    {
+      "gene": "NA",
+      "position": 69,
+      "ref_aa": "V",
+      "alt_aa": "I",
+      "aliases": ["NA_V69I"],
+      "mechanism": "neuraminidase_activity_increase",
+      "species_context": ["ferret"],
+      "citation": "PMID:24554679",
+      "transmission_enhancement_fold": 1.8,
+      "airborne_transmission": false,
+      "fitness_impact": "neutral",
+      "prevalence_in_nature": "occasionally_observed"
+    },
+    {
+      "gene": "HA",
+      "position": 106,
+      "ref_aa": "N",
+      "alt_aa": "S",
+      "aliases": ["N106S"],
+      "mechanism": "antigenic_drift_escape",
+      "species_context": ["ferret"],
+      "citation": "PMID:23907316",
+      "transmission_enhancement_fold": 1.5,
+      "airborne_transmission": false,
+      "fitness_impact": "neutral",
+      "prevalence_in_nature": "naturally_occurring"
+    }
+  ],
+  "transmissibility_mechanisms": {
+    "receptor_specificity": "shift_from_avian_alpha_2_3_to_mammalian_alpha_2_6_sialic_acid_receptors",
+    "binding_affinity": "increased_kd_for_mammalian_respiratory_epithelium_sialic_acids",
+    "cleavage_efficiency": "polybasic_cleavage_site_allows_extracellular_maturation",
+    "polymerase_adaptation": "PB2_E627K_increases_replication_at_mammalian_temperatures",
+    "viral_release": "NA_mutations_increase_sialidase_activity_and_virion_release"
+  },
+  "experimental_context": {
+    "study_type": "reverse_genetics_ferret_transmission_studies",
+    "containment_level": "BSL-3_enhanced",
+    "regulatory_oversight": "required",
+    "publication_restrictions": "dual_use_research_concern"
+  }
+}

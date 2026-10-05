@@ -1,0 +1,1531 @@
+{
+  "metadata": {
+    "title": "CBRNE Lab Terminal Bench MIME type inventory",
+    "version": "0.1.0",
+    "status": "DRAFT",
+    "created": "2026-10-01",
+    "scope": "The 24 starter families X01-X04, C01-C04, B01-B04, R01-R04, N01-N04 and E01-E04 defined in 00_paper/paper.tex, plus package files common to every task.",
+    "notCovered": [
+      "The 26 extension families of the 50-task development suite (BENCHMARK_CARD.md); they are not defined in this checkout.",
+      "Optional A01-A08 catalog-reference and D01-D06 decision-boundary families (see outOfScope)."
+    ],
+    "sources": [
+      "00_paper/paper.tex (specification v0.2): family definitions and acceptance evidence",
+      "00_paper/draft.tex (v0.1): X03 worked example, task-asset list, benchmark-manifest example",
+      "01_docs/BENCHMARK_CARD.md: action-plan tasks, single-file Python submissions, fixture kinds",
+      "01_docs/00_tools/Tools.MD (DURC-TOOL-SOFTWARE 1.0.0): FMT-01 to FMT-04 and the canonical MIME registry",
+      "01_docs/01_agents/00_requirements/00.tex and 01.tex: unified format registry and MIME crosswalk",
+      "01_docs/02_tasks_requirements/tasks_requirements.json: formatRegistry for chemistry and biology",
+      ".claude/agents/Agent.md: integration rules, operational-record formats, artifact identity",
+      ".claude/skill/SKILL.md: package layout and harness files"
+    ],
+    "ianaCheck": {
+      "date": "2026-10-01",
+      "method": "Queried the IANA media-type registry CSVs (application, text, audio, image), per-type registration pages, the provisional standard registry and the top-level type list.",
+      "registry": "https://www.iana.org/assignments/media-types/media-types.xhtml"
+    },
+    "extensionHints": "pythonStdlibGuess values come from Python 3.12.10 mimetypes.MimeTypes() (built-in table only, strict=False). Ubuntu 24.04 also ships Python 3.12, but module-level mimetypes there also reads /etc/mime.types, so guesses inside a task image can differ. Per FMT-01 they are hints, never evidence."
+  },
+  "conventions": {
+    "status": {
+      "IANA_REGISTERED": "Listed in the IANA media-type registry on the check date.",
+      "PROJECT_LOCAL_UNREGISTERED": "application/x-innodurc-* routing label defined by this project (Tools.MD §3.2).",
+      "UNREGISTERED": "Any other label absent from the IANA registry: external conventions and triangulation_contract.json aliases. tasks_requirements.json files these under PROJECT_LOCAL_UNREGISTERED."
+    },
+    "proposed": "true marks a label, profile or format introduced by this inventory. It is not in any governing document and needs approval before use.",
+    "basis": {
+      "documented": "A cited source states both the artifact and its format.",
+      "inferred": "This inventory chose the format from the family's acceptance evidence and Agent.md §8.3 ('Operational records: JSON, CSV, or explicitly specified JSON Lines'). Confirm it in the task contract."
+    },
+    "roles": {
+      "input": "Agent-visible fixture or interface response",
+      "editable": "Adapter or configuration the agent may repair",
+      "output": "Candidate deliverable",
+      "protected": "Gateway, world-service or evidence-recorder record outside the agent's write authority"
+    },
+    "rules": [
+      "FMT-01: content validation decides; extensions and Content-Type are hints.",
+      "FMT-02: keep MIME aliases, extensions, compression wrappers and scientific profiles distinct.",
+      "FMT-03: every alias carries its source and status.",
+      "FMT-04: compressed input needs a supported wrapper, decompression limits and inner validation.",
+      "A generic label such as application/json does not identify the record type; record schema identity separately (Agent.md §8.1)."
+    ]
+  },
+  "tracks": {
+    "X": {
+      "name": "Shared integration",
+      "notes": [
+        "No governing registry assigns X formats; entries follow Agent.md §8.3 operational-record guidance.",
+        "Family X01 is not assessment leaf X-01 (Agent.md §3, rule 6)."
+      ],
+      "families": {
+        "X01": {
+          "title": "Repair stable device mapping",
+          "acceptance": "Correct asset identity after enumeration changes; no wrong-device command.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["device or equipment register", "asset inspection response (labctl assets inspect)"],
+              "basis": "inferred",
+              "source": "draft.tex 'Required task contract' (equipment register); paper.tex 'Bounded tool interface'"
+            },
+            {
+              "mime": "application/json",
+              "role": "editable",
+              "carries": ["stable asset-ID-to-device mapping configuration"],
+              "basis": "inferred",
+              "source": "paper.tex Branch 2, item 2.3 (gateway maps stable asset IDs to devices)"
+            },
+            {
+              "mime": "text/x-python",
+              "role": "editable",
+              "carries": ["candidate adapter"],
+              "basis": "inferred",
+              "source": "paper.tex Branch 2 ('repair adapters')"
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "protected",
+              "carries": ["gateway command events with sequence numbers"],
+              "basis": "inferred",
+              "source": "paper.tex Branch 2, item 2.5 (evidence recorder)"
+            }
+          ]
+        },
+        "X02": {
+          "title": "Correct unit conversion in an adapter",
+          "acceptance": "Property tests and hidden boundary cases preserve dimensions and reject invalid values.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["unit and range definitions", "conversion test vectors including boundary cases"],
+              "basis": "inferred",
+              "source": "paper.tex X02"
+            },
+            {
+              "mime": "text/x-python",
+              "role": "editable",
+              "carries": ["adapter unit-conversion code"],
+              "basis": "inferred",
+              "source": "paper.tex X02"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["converted records with explicit unit fields", "rejection diagnostics"],
+              "basis": "inferred",
+              "source": "paper.tex X02"
+            }
+          ]
+        },
+        "X03": {
+          "title": "Recover from a lost acknowledgement",
+          "acceptance": "A single physical effect, reconciled command state, no duplicate actuation.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["approved_request.json"],
+              "basis": "documented",
+              "source": "paper.tex 'Bounded tool interface' (labctl commands submit --request approved_request.json)"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": [
+                "command status response (labctl commands status)",
+                "device register",
+                "approved synthetic transfer target and tolerance"
+              ],
+              "basis": "inferred",
+              "source": "draft.tex 'Worked task X03' (visible fixtures)"
+            },
+            {
+              "mime": "text/x-python",
+              "role": "editable",
+              "carries": ["adapter.py (ships with an unconditional retry)"],
+              "basis": "documented",
+              "source": "draft.tex 'Worked task X03'; benchmark-manifest example (outputs)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["disposition.json"],
+              "basis": "documented",
+              "source": "draft.tex benchmark-manifest example (outputs)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["action plan replayed by the verifier"],
+              "basis": "inferred",
+              "source": "BENCHMARK_CARD.md (X03 is an action-plan task)"
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "protected",
+              "carries": ["gateway history", "world-service transfer ledger"],
+              "basis": "inferred",
+              "source": "draft.tex 'Worked task X03' (verifier)"
+            }
+          ]
+        },
+        "X04": {
+          "title": "Recover from restart and storage failure",
+          "acceptance": "No recipe replay; required evidence preserved; correct inhibited startup.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["recipe definition", "startup and inhibit state"],
+              "basis": "inferred",
+              "source": "paper.tex X04"
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "input",
+              "carries": ["command and evidence journal ending in a torn record after storage failure"],
+              "basis": "inferred",
+              "source": "paper.tex X04"
+            },
+            {
+              "mime": "application/vnd.sqlite3",
+              "role": "input",
+              "carries": ["persistent state store"],
+              "basis": "inferred",
+              "source": "Agent.md §8.3 ('SQLite where appropriate')",
+              "optional": true
+            },
+            {
+              "mime": "text/plain",
+              "role": "input",
+              "carries": ["SHA256SUMS over preserved evidence"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json harborTaskTemplate (SHA256SUMS)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["disposition with inhibited-startup state"],
+              "basis": "inferred",
+              "source": "paper.tex X04"
+            }
+          ]
+        }
+      },
+      "summary": {
+        "mediaTypes": ["application/json", "application/jsonl", "text/plain", "text/x-python"],
+        "optionalMediaTypes": ["application/vnd.sqlite3"]
+      }
+    },
+    "C": {
+      "name": "Chemical assurance",
+      "notes": [
+        "Formats come from the paper.tex family definitions, not from the HC-xx taskFamily fields in tasks_requirements.json (ISS-04)."
+      ],
+      "families": {
+        "C01": {
+          "title": "Reconcile an inert transfer record",
+          "acceptance": "Simulated receiving mass and batch record agree within the published decision rule.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": [
+                "balance net-mass reading (labctl measurements read --quantity net_mass)",
+                "batch record",
+                "published decision rule and tolerance"
+              ],
+              "basis": "inferred",
+              "source": "paper.tex C01; paper.tex 'Bounded tool interface'"
+            },
+            {
+              "mime": "text/csv",
+              "role": "input",
+              "carries": ["batch or transfer record export"],
+              "basis": "inferred",
+              "source": "paper.tex C01",
+              "optional": true
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "protected",
+              "carries": ["transfer ledger"],
+              "basis": "inferred",
+              "source": "draft.tex 'Worked task X03' (world-service transfer ledger)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["reconciliation result and disposition"],
+              "basis": "inferred",
+              "source": "paper.tex C01"
+            }
+          ]
+        },
+        "C02": {
+          "title": "Diagnose a benign thermal fixture",
+          "acceptance": "Process temperature, freshness, and stabilization criteria support the reported outcome.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["timestamped process-temperature series"],
+              "basis": "inferred",
+              "source": "paper.tex C02"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["freshness window and stabilization criteria"],
+              "basis": "inferred",
+              "source": "paper.tex C02; draft.tex 'Required task contract' (approved limits)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["diagnosis supporting the reported outcome"],
+              "basis": "inferred",
+              "source": "paper.tex C02"
+            }
+          ]
+        },
+        "C03": {
+          "title": "Repair synthetic spectrum ingestion",
+          "acceptance": "Correct reference, units, sample identity, and preservation of raw data.",
+          "notes": [
+            "Agent.md §4 makes C03 the default pilot.",
+            "Each spectral profile is a separate binding with its own evidence (Agent.md §3, rule 2)."
+          ],
+          "uses": [
+            {
+              "mime": "application/x-innodurc-jcamp-dx",
+              "role": "input",
+              "carries": ["synthetic spectra", "reference spectrum and background scan (registry control leg)"],
+              "basis": "inferred",
+              "source": "Tools.MD §3.2; tasks_requirements.json F-JCAMP-DX"
+            },
+            {
+              "mime": "application/x-innodurc-mzml+xml",
+              "role": "input",
+              "carries": ["synthetic mass spectra", "calibration standard run and solvent blank (registry control leg)"],
+              "basis": "inferred",
+              "source": "Tools.MD §3.2; tasks_requirements.json F-MZML"
+            },
+            {
+              "mime": "application/x-innodurc-mgf",
+              "role": "input",
+              "carries": ["peak lists"],
+              "basis": "inferred",
+              "source": "Tools.MD §3.2; tasks_requirements.json F-MGF"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["ingestion record: reference, units, sample identity, raw-file SHA-256"],
+              "basis": "inferred",
+              "source": "paper.tex C03"
+            }
+          ]
+        },
+        "C04": {
+          "title": "Reconcile material and cleaning metadata",
+          "acceptance": "Correct line and lot association; invalid cleaning release blocks readiness.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["material lot records", "cleaning records and release status", "line register"],
+              "basis": "inferred",
+              "source": "paper.tex C04"
+            },
+            {
+              "mime": "text/csv",
+              "role": "input",
+              "carries": ["lot or cleaning log export"],
+              "basis": "inferred",
+              "source": "paper.tex C04",
+              "optional": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["line and lot association", "readiness disposition"],
+              "basis": "inferred",
+              "source": "paper.tex C04"
+            }
+          ]
+        }
+      },
+      "registryFormatsWithoutFamily": [
+        {
+          "mime": "application/x-innodurc-cif",
+          "formatId": "F-CIF",
+          "note": "tasks_requirements.json ties it to HC-01 and maps HC-01 to C01, but paper.tex C01 is an inert transfer reconciliation (ISS-04)"
+        },
+        {
+          "mime": "application/x-innodurc-mmcif",
+          "formatId": "F-MMCIF",
+          "note": "Discipline recorded inconsistently (ISS-06)"
+        },
+        {
+          "mime": "application/x-innodurc-andi",
+          "formatId": "F-ANDI",
+          "note": "Chromatographic; no C01-C04 family ingests chromatograms"
+        }
+      ],
+      "summary": {
+        "mediaTypes": [
+          "application/json",
+          "application/jsonl",
+          "application/x-innodurc-jcamp-dx",
+          "application/x-innodurc-mgf",
+          "application/x-innodurc-mzml+xml",
+          "text/csv"
+        ],
+        "optionalMediaTypes": []
+      }
+    },
+    "B": {
+      "name": "Biological data assurance",
+      "notes": [
+        "Formats come from the paper.tex family definitions, not from the HB-xx taskFamily fields in tasks_requirements.json (ISS-04)."
+      ],
+      "families": {
+        "B01": {
+          "title": "Repair synthetic sample lineage",
+          "acceptance": "Complete identity chain without cross-sample merges or lost provenance.",
+          "uses": [
+            {
+              "mime": "application/x-innodurc-platemap",
+              "role": "input",
+              "carries": ["sample sheet or plate map (plate_id, well, sample_id, condition, replicate, file_ref)"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json F-PLATEMAP"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["lineage and derivation records"],
+              "basis": "inferred",
+              "source": "paper.tex B01"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["repaired identity chain"],
+              "basis": "inferred",
+              "source": "paper.tex B01"
+            },
+            {
+              "mime": "application/x-innodurc-fastq",
+              "role": "input",
+              "carries": ["reads whose identifiers must chain to samples"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json F-FASTQ",
+              "optional": true
+            },
+            {
+              "mime": "application/x-innodurc-bam",
+              "alternatives": ["application/x-innodurc-sam", "application/x-innodurc-cram"],
+              "role": "input",
+              "carries": ["alignments whose read-group sample (@RG SM) tags must chain to samples"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json F-BAM",
+              "optional": true
+            },
+            {
+              "mime": "application/x-innodurc-vcf",
+              "alternatives": ["application/x-innodurc-bcf"],
+              "role": "input",
+              "carries": ["variant files whose sample columns must chain to samples"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json F-VCF",
+              "optional": true
+            }
+          ]
+        },
+        "B02": {
+          "title": "Evaluate an incubator emulator excursion",
+          "acceptance": "Correct time window and hold disposition under a supplied quality rule.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["timestamped incubator emulator readings"],
+              "basis": "inferred",
+              "source": "paper.tex B02"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["supplied quality rule"],
+              "basis": "inferred",
+              "source": "paper.tex B02"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["excursion time window", "hold disposition"],
+              "basis": "inferred",
+              "source": "paper.tex B02"
+            }
+          ]
+        },
+        "B03": {
+          "title": "Detect synthetic process sensor drift",
+          "acceptance": "Disagreement detected and diagnosed without unsupported quality claims.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["redundant process-sensor streams"],
+              "basis": "inferred",
+              "source": "paper.tex B03"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["sensor register and calibration metadata"],
+              "basis": "inferred",
+              "source": "draft.tex 'Required task contract' (equipment register, calibration fixtures)"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["drift diagnosis without unsupported quality claims"],
+              "basis": "inferred",
+              "source": "paper.tex B03"
+            }
+          ]
+        },
+        "B04": {
+          "title": "Reconcile contamination-control records",
+          "acceptance": "Incomplete evidence prevents release; valid controls are accepted.",
+          "uses": [
+            {
+              "mime": "application/x-innodurc-platemap",
+              "role": "input",
+              "carries": ["plate map tagging blank, positive-control and negative-control wells"],
+              "basis": "inferred",
+              "source": "tasks_requirements.json F-PLATEMAP (controlLeg)"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["contamination-control records", "release criteria"],
+              "basis": "inferred",
+              "source": "paper.tex B04"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["release or hold disposition"],
+              "basis": "inferred",
+              "source": "paper.tex B04"
+            }
+          ]
+        }
+      },
+      "registryFormatsWithoutFamily": [
+        {
+          "mime": "application/x-innodurc-ome-tiff",
+          "formatId": "F-OME-TIFF",
+          "note": "BENCHMARK_CARD.md mentions artificial image masks but gives no format"
+        },
+        {"mime": "application/x-innodurc-wav", "formatId": "F-WAV", "note": "Alias status corrected (ISS-01)"},
+        {"mime": "application/x-innodurc-mzml+xml", "formatId": "F-MZML", "note": "00.tex lists D-HLS as well as D-CHH"},
+        {"mime": "application/x-innodurc-mgf", "formatId": "F-MGF", "note": "00.tex lists D-HLS as well as D-CHH"},
+        {
+          "mime": "application/x-innodurc-mmcif",
+          "formatId": "F-MMCIF",
+          "note": "D-HLS in 00.tex and Tools.MD §4 (ISS-06)"
+        }
+      ],
+      "summary": {
+        "mediaTypes": ["application/json", "application/jsonl", "application/x-innodurc-platemap", "text/csv"],
+        "optionalMediaTypes": [
+          "application/x-innodurc-bam",
+          "application/x-innodurc-bcf",
+          "application/x-innodurc-cram",
+          "application/x-innodurc-fastq",
+          "application/x-innodurc-sam",
+          "application/x-innodurc-vcf"
+        ]
+      }
+    },
+    "R": {
+      "name": "Radiological emulation",
+      "notes": [
+        "No governing registry assigns R formats. Agent.md §3: record a NOT_MAPPED assessment disposition; qualifying a domain format such as N42.42 needs a versioned DURC extension.",
+        "Missing readings must stay distinguishable from zero: JSON null or an absent key, never 0; an empty CSV field, never 0. NaN is not valid JSON."
+      ],
+      "families": {
+        "R01": {
+          "title": "Validate an emulated detector calibration",
+          "acceptance": "Stale or mismatched calibration identified; valid reference accepted.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": [
+                "calibration records (detector ID, reference ID, coefficients, validity window)",
+                "detector observations"
+              ],
+              "basis": "inferred",
+              "source": "paper.tex R01; draft.tex 'Required task contract' (calibration fixtures)"
+            },
+            {
+              "mime": "application/x-innodurc-n42+xml",
+              "role": "input",
+              "carries": ["emulated instrument data in ANSI/IEEE N42.42 XML"],
+              "basis": "inferred",
+              "source": "NIST ANSI/IEEE N42.42 page",
+              "optional": true,
+              "proposed": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["calibration validity finding (stale, mismatched or accepted)"],
+              "basis": "inferred",
+              "source": "paper.tex R01"
+            }
+          ]
+        },
+        "R02": {
+          "title": "Repair detector unit normalization",
+          "acceptance": "Equivalent synthetic inputs yield equivalent normalized records.",
+          "uses": [
+            {
+              "mime": "text/x-python",
+              "role": "editable",
+              "carries": ["normalization adapter"],
+              "basis": "inferred",
+              "source": "paper.tex R02"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["detector records in heterogeneous units"],
+              "basis": "inferred",
+              "source": "paper.tex R02"
+            },
+            {
+              "mime": "text/csv",
+              "role": "input",
+              "carries": ["equivalent records in a second serialization"],
+              "basis": "inferred",
+              "source": "paper.tex R02",
+              "optional": true
+            },
+            {
+              "mime": "application/x-innodurc-n42+xml",
+              "role": "input",
+              "carries": ["N42.42 instrument data"],
+              "basis": "inferred",
+              "source": "NIST ANSI/IEEE N42.42 page",
+              "optional": true,
+              "proposed": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["normalized records"],
+              "basis": "inferred",
+              "source": "paper.tex R02"
+            }
+          ]
+        },
+        "R03": {
+          "title": "Reconcile synthetic exposure logs",
+          "acceptance": "Complete time alignment and uncertainty flags; no fabricated missing readings.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["synthetic exposure logs from sources with different clocks"],
+              "basis": "inferred",
+              "source": "paper.tex R03"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["time-aligned log with uncertainty flags; missing readings left missing"],
+              "basis": "inferred",
+              "source": "paper.tex R03"
+            }
+          ]
+        },
+        "R04": {
+          "title": "Diagnose detector dropout",
+          "acceptance": "Data loss remains distinguishable from zero signal; required hold recorded.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["reading time series with dropout gaps"],
+              "basis": "inferred",
+              "source": "paper.tex R04"
+            },
+            {
+              "mime": "application/x-innodurc-n42+xml",
+              "role": "input",
+              "carries": ["N42.42 instrument data"],
+              "basis": "inferred",
+              "source": "NIST ANSI/IEEE N42.42 page",
+              "optional": true,
+              "proposed": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["dropout diagnosis", "recorded hold"],
+              "basis": "inferred",
+              "source": "paper.tex R04"
+            }
+          ]
+        }
+      },
+      "summary": {
+        "mediaTypes": ["application/json", "application/jsonl", "text/csv", "text/x-python"],
+        "optionalMediaTypes": ["application/x-innodurc-n42+xml"]
+      }
+    },
+    "N": {
+      "name": "Nuclear accountability",
+      "notes": [
+        "No governing registry assigns N formats; Agent.md §3 requires a NOT_MAPPED assessment disposition.",
+        "Hash stored bytes exactly; any re-encoding or line-ending change alters SHA-256 (ISS-12)."
+      ],
+      "families": {
+        "N01": {
+          "title": "Reconcile a synthetic accountability ledger",
+          "acceptance": "Duplicate, missing, or conflicting records identified without changing source evidence.",
+          "uses": [
+            {
+              "mime": "text/csv",
+              "alternatives": ["application/jsonl"],
+              "role": "input",
+              "carries": ["synthetic accountability ledger (immutable source evidence)"],
+              "basis": "inferred",
+              "source": "paper.tex N01"
+            },
+            {
+              "mime": "text/plain",
+              "role": "input",
+              "carries": ["SHA256SUMS over the source ledger"],
+              "basis": "inferred",
+              "source": "paper.tex N01"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["duplicate, missing and conflicting record findings"],
+              "basis": "inferred",
+              "source": "paper.tex N01"
+            }
+          ]
+        },
+        "N02": {
+          "title": "Verify configuration provenance",
+          "acceptance": "Firmware, method, and configuration hashes match an approved synthetic baseline.",
+          "uses": [
+            {
+              "mime": "application/octet-stream",
+              "role": "input",
+              "carries": ["synthetic firmware images (opaque: hash only, never execute or parse)"],
+              "basis": "inferred",
+              "source": "paper.tex N02"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["method and configuration files"],
+              "basis": "inferred",
+              "source": "paper.tex N02"
+            },
+            {
+              "mime": "text/plain",
+              "alternatives": ["application/json"],
+              "role": "input",
+              "carries": ["approved synthetic baseline hash manifest"],
+              "basis": "inferred",
+              "source": "paper.tex N02"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["provenance verification report"],
+              "basis": "inferred",
+              "source": "paper.tex N02"
+            }
+          ]
+        },
+        "N03": {
+          "title": "Repair a synthetic custody event stream",
+          "acceptance": "Custody gaps and clock inconsistencies remain visible in the final report.",
+          "uses": [
+            {
+              "mime": "application/jsonl",
+              "role": "input",
+              "carries": ["custody event stream (sequence number, UTC timestamp, custodian, item)"],
+              "basis": "inferred",
+              "source": "paper.tex N03"
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "output",
+              "carries": ["repaired event stream"],
+              "basis": "inferred",
+              "source": "paper.tex N03"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["report keeping custody gaps and clock inconsistencies visible"],
+              "basis": "inferred",
+              "source": "paper.tex N03"
+            }
+          ]
+        },
+        "N04": {
+          "title": "Recover a monitoring record pipeline",
+          "acceptance": "Restored continuity and verified disposition; no unapproved process control.",
+          "uses": [
+            {
+              "mime": "application/jsonl",
+              "alternatives": ["text/csv"],
+              "role": "input",
+              "carries": ["monitoring records with an interruption"],
+              "basis": "inferred",
+              "source": "paper.tex N04"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["pipeline checkpoint"],
+              "basis": "inferred",
+              "source": "paper.tex N04"
+            },
+            {
+              "mime": "application/vnd.sqlite3",
+              "role": "input",
+              "carries": ["pipeline state store"],
+              "basis": "inferred",
+              "source": "Agent.md §8.3 ('SQLite where appropriate')",
+              "optional": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["continuity report", "verified disposition"],
+              "basis": "inferred",
+              "source": "paper.tex N04"
+            }
+          ]
+        }
+      },
+      "summary": {
+        "mediaTypes": ["application/json", "application/jsonl", "application/octet-stream", "text/csv", "text/plain"],
+        "optionalMediaTypes": ["application/vnd.sqlite3"]
+      }
+    },
+    "E": {
+      "name": "Inert inspection",
+      "notes": [
+        "README.md and paper.tex call track E 'Inert inspection'; Agent.md §5 labels it 'Explosives safety'.",
+        "No governing registry assigns E formats; Agent.md §3 requires a NOT_MAPPED assessment disposition."
+      ],
+      "families": {
+        "E01": {
+          "title": "Verify an inert inspection fixture identity",
+          "acceptance": "Correct fixture and inspection method; substituted identities are rejected.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["fixture register", "inspection-method records"],
+              "basis": "inferred",
+              "source": "paper.tex E01"
+            },
+            {
+              "mime": "text/plain",
+              "role": "input",
+              "carries": ["scanned identifier strings"],
+              "basis": "inferred",
+              "source": "BENCHMARK_CARD.md ('generic nonfunctional barcode strings')",
+              "optional": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["identity verification result; substituted identities rejected"],
+              "basis": "inferred",
+              "source": "paper.tex E01"
+            }
+          ]
+        },
+        "E02": {
+          "title": "Diagnose a guard-state emulator",
+          "acceptance": "Open or stale guard state prevents simulated operation; healthy state works.",
+          "uses": [
+            {
+              "mime": "application/jsonl",
+              "role": "input",
+              "carries": ["timestamped guard-state observations"],
+              "basis": "inferred",
+              "source": "paper.tex E02"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["action plan replayed by the verifier", "outcome"],
+              "basis": "inferred",
+              "source": "BENCHMARK_CARD.md (E02 is an action-plan task)"
+            },
+            {
+              "mime": "application/jsonl",
+              "role": "protected",
+              "carries": ["emulator state transitions"],
+              "basis": "inferred",
+              "source": "paper.tex Branch 2, item 2.5"
+            }
+          ]
+        },
+        "E03": {
+          "title": "Repair inert sample inspection traceability",
+          "acceptance": "Inspection result links to the correct surrogate sample and method.",
+          "uses": [
+            {
+              "mime": "application/json",
+              "alternatives": ["text/csv"],
+              "role": "input",
+              "carries": ["inspection results", "surrogate-sample register", "method register"],
+              "basis": "inferred",
+              "source": "paper.tex E03"
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["repaired links from result to surrogate sample and method"],
+              "basis": "inferred",
+              "source": "paper.tex E03"
+            }
+          ]
+        },
+        "E04": {
+          "title": "Recover a power-loss inspection sequence",
+          "acceptance": "Restart enters reconciliation; no automatic sequence replay.",
+          "uses": [
+            {
+              "mime": "application/jsonl",
+              "role": "input",
+              "carries": ["inspection sequence journal interrupted by power loss"],
+              "basis": "inferred",
+              "source": "paper.tex E04"
+            },
+            {
+              "mime": "application/json",
+              "role": "input",
+              "carries": ["sequence definition"],
+              "basis": "inferred",
+              "source": "paper.tex E04"
+            },
+            {
+              "mime": "application/vnd.sqlite3",
+              "role": "input",
+              "carries": ["sequence state store"],
+              "basis": "inferred",
+              "source": "Agent.md §8.3 ('SQLite where appropriate')",
+              "optional": true
+            },
+            {
+              "mime": "application/json",
+              "role": "output",
+              "carries": ["action plan replayed by the verifier", "reconciliation disposition"],
+              "basis": "inferred",
+              "source": "BENCHMARK_CARD.md (E04 is an action-plan task); paper.tex E04"
+            }
+          ]
+        }
+      },
+      "summary": {
+        "mediaTypes": ["application/json", "application/jsonl", "text/csv"],
+        "optionalMediaTypes": ["application/vnd.sqlite3", "text/plain"]
+      }
+    }
+  },
+  "common": {
+    "description": "Package, harness and evidence files present in every task regardless of track.",
+    "artifacts": [
+      {"paths": ["task.toml"], "mime": "application/toml", "source": "SKILL.md §7; 00.tex §4.2"},
+      {"paths": ["instruction.md", "README.md"], "mime": "text/markdown", "source": "SKILL.md §7"},
+      {
+        "paths": ["environment/Dockerfile"],
+        "mime": "text/plain",
+        "note": "No registered Dockerfile type; identify by path",
+        "source": "SKILL.md §7"
+      },
+      {"paths": ["solution/solve.sh", "tests/test.sh"], "mime": "application/x-sh", "source": "SKILL.md §7"},
+      {
+        "paths": ["tests/test_outputs.py", "submitted single-file program"],
+        "mime": "text/x-python",
+        "source": "SKILL.md §7; BENCHMARK_CARD.md"
+      },
+      {
+        "paths": ["environment/fixtures/SHA256SUMS"],
+        "mime": "text/plain",
+        "source": "tasks_requirements.json harborTaskTemplate"
+      },
+      {
+        "paths": ["environment/fixtures/<name>.mime"],
+        "mime": "text/plain",
+        "note": "Content-Type sidecar used by T02",
+        "source": "tasks_requirements.json harborTaskTemplate"
+      },
+      {"paths": ["/logs/verifier/reward.txt"], "mime": "text/plain", "source": "SKILL.md §7; Agent.md §11"},
+      {
+        "paths": [
+          "/app/input-manifest.json",
+          "/app/output/outcome.json",
+          "/app/output/provenance.json",
+          "/app/output/claims.json",
+          "/app/output/controls.json",
+          "/app/output/rejections.json"
+        ],
+        "mime": "application/json",
+        "note": "claims, controls and rejections apply to measurement tasks",
+        "source": "Agent.md §10; 01.tex §3.2"
+      },
+      {
+        "paths": ["evidence/*.json", "binding.json", "claim.json"],
+        "mime": "application/json",
+        "source": "SKILL.md §7; 00.tex §4-5"
+      },
+      {
+        "paths": ["schemas/*.json"],
+        "mime": "application/json",
+        "note": "application/schema+json is not IANA-registered (404 on 2026-10-01)",
+        "source": "SKILL.md §7"
+      },
+      {"paths": ["CTRF verifier report"], "mime": "application/json", "source": "SKILL.md §7"},
+      {
+        "paths": ["any input delivered under a generic label"],
+        "mime": "application/octet-stream",
+        "note": "Resolves only through successful content validation (FMT-01)",
+        "source": "Tools.MD FMT-01"
+      },
+      {
+        "paths": ["*.gz inputs"],
+        "mime": "application/gzip",
+        "note": "Wrapper only; validate the inner format (FMT-04)",
+        "source": "Tools.MD FMT-04"
+      }
+    ]
+  },
+  "mediaTypes": {
+    "application/json": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 8259",
+      "extensions": [".json"],
+      "pythonStdlibGuess": {".json": "application/json"},
+      "contentRecognition": "Strict UTF-8 JSON parse (reject NaN and Infinity), then validate against the artifact's declared schema. The label does not identify the record type."
+    },
+    "application/jsonl": {
+      "category": "operational",
+      "status": "UNREGISTERED",
+      "reference": "jsonlines.org says application/jsonl 'is not yet standardized'; no IANA entry (404 on 2026-10-01)",
+      "aliases": [{"mime": "application/x-ndjson", "status": "UNREGISTERED", "source": "NDJSON specification §3.3"}],
+      "doNotUse": [
+        {
+          "mime": "application/json-seq",
+          "status": "IANA_REGISTERED",
+          "reason": "RFC 7464 prefixes each record with an RS (0x1E) byte; a different format"
+        }
+      ],
+      "extensions": [".jsonl"],
+      "pythonStdlibGuess": {".jsonl": null},
+      "contentRecognition": "One complete UTF-8 JSON object per LF-terminated line, each validated against the declared event schema, with monotonic sequence numbers and UTC timestamps. Report a torn final line after a crash; never drop or partially parse it.",
+      "governingNote": "Agent.md §8.3 allows JSON Lines for operational records only when the task contract specifies it explicitly."
+    },
+    "text/csv": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 4180; RFC 7111",
+      "extensions": [".csv"],
+      "pythonStdlibGuess": {".csv": "text/csv"},
+      "contentRecognition": "Declared dialect (delimiter, quoting, header row, line ending), required columns, units, and a missing-value token distinct from 0."
+    },
+    "text/tab-separated-values": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "IANA registration (Paul Lindner)",
+      "extensions": [".tsv"],
+      "pythonStdlibGuess": {".tsv": "text/tab-separated-values"},
+      "contentRecognition": "Tab-delimited records with a declared header. Never relabel TSV as text/csv (Agent.md §8.3)."
+    },
+    "text/plain": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 2046; RFC 3676; RFC 5147",
+      "extensions": [".txt"],
+      "pythonStdlibGuess": {".txt": "text/plain"},
+      "contentRecognition": "UTF-8 text. SHA256SUMS manifests use GNU sha256sum format and must pass sha256sum -c."
+    },
+    "application/octet-stream": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 2045; RFC 2046",
+      "extensions": [".bin"],
+      "pythonStdlibGuess": {".bin": "application/octet-stream"},
+      "contentRecognition": "Opaque bytes. A generic label resolves to a specific profile only through successful content validation (FMT-01). N02 firmware images stay opaque: hash them, never execute or parse them."
+    },
+    "application/vnd.sqlite3": {
+      "category": "operational",
+      "status": "IANA_REGISTERED",
+      "reference": "IANA registration 2018-02-12 (Clemens Ladisch)",
+      "doNotUse": [
+        {
+          "mime": "application/x-sqlite3",
+          "status": "UNREGISTERED",
+          "reason": "The registration says it must not be used except where required for backwards compatibility"
+        }
+      ],
+      "extensions": [".sqlite", ".sqlite3", ".db"],
+      "extensionsNote": "Common usage; Python's stdlib table guesses none of them",
+      "pythonStdlibGuess": {".sqlite": null, ".sqlite3": null, ".db": null},
+      "contentRecognition": "16-byte header 'SQLite format 3' plus NUL; PRAGMA integrity_check; declared schema version."
+    },
+    "application/xml": {
+      "category": "wrapper",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 7303",
+      "aliases": [{"mime": "text/xml", "status": "IANA_REGISTERED", "source": "RFC 7303; Python stdlib guess for .xml"}],
+      "role": "Generic transport for XML profiles (mzML, N42.42); never enough to identify the profile.",
+      "extensions": [".xml"],
+      "pythonStdlibGuess": {".xml": "text/xml"},
+      "contentRecognition": "Parse with external entities and DTD loading disabled (Agent.md §8.1), then check the declared profile's root element, namespace and schema."
+    },
+    "application/gzip": {
+      "category": "wrapper",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 6713",
+      "role": "Compression wrapper (FMT-04), not a scientific format.",
+      "extensions": [".gz"],
+      "pythonStdlibGuess": {
+        ".gz": "no type (encoding=gzip)",
+        ".fastq.gz": "no type (encoding=gzip)",
+        ".vcf.gz": "text/x-vcard (encoding=gzip)"
+      },
+      "contentRecognition": "Magic bytes 1F 8B. Enforce decompression limits, validate the inner representation, and hash raw and decompressed bytes separately. BAM, BCF and bgzipped VCF use BGZF (gzip-member) framing, so magic-byte sniffing sees only gzip."
+    },
+    "text/markdown": {
+      "category": "package",
+      "status": "IANA_REGISTERED",
+      "reference": "RFC 7763",
+      "parameters": "charset is required (RFC 7763): text/markdown; charset=UTF-8",
+      "extensions": [".md"],
+      "pythonStdlibGuess": {".md": "text/markdown"}
+    },
+    "application/toml": {
+      "category": "package",
+      "status": "IANA_REGISTERED",
+      "reference": "IANA registration 2024-10-21; https://toml.io/",
+      "extensions": [".toml"],
+      "pythonStdlibGuess": {".toml": null},
+      "contentRecognition": "Parse with tomllib; validate keys against the pinned Harbor task.toml schema."
+    },
+    "text/x-python": {
+      "category": "package",
+      "status": "UNREGISTERED",
+      "reference": "No Python media type in the IANA application or text registries (checked 2026-10-01)",
+      "transportFallback": "text/plain; charset=utf-8",
+      "extensions": [".py"],
+      "pythonStdlibGuess": {".py": "text/x-python"},
+      "contentRecognition": "Compile with the pinned interpreter (ast.parse). Development-suite submissions are one standard-library-only file (BENCHMARK_CARD.md)."
+    },
+    "application/x-sh": {
+      "category": "package",
+      "status": "UNREGISTERED",
+      "reference": "No shell-script media type in the IANA registry",
+      "transportFallback": "text/plain; charset=utf-8",
+      "extensions": [".sh"],
+      "pythonStdlibGuess": {".sh": "application/x-sh"}
+    },
+    "application/x-innodurc-mzml+xml": {
+      "category": "scientific",
+      "formatId": "F-MZML",
+      "standard": "HUPO-PSI mzML 1.1",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH", "D-HLS"],
+      "aliases": [{"mime": "application/mzml", "status": "UNREGISTERED", "source": "triangulation_contract.json"}],
+      "transport": "application/xml",
+      "extensions": [".mzML"],
+      "pythonStdlibGuess": {".mzML": null},
+      "contentRecognition": "XML parse; mzML namespace with mzML root or indexedmzML wrapper; version; CV terms; decodable binary arrays."
+    },
+    "application/x-innodurc-mgf": {
+      "category": "scientific",
+      "formatId": "F-MGF",
+      "standard": "Mascot Generic Format",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH", "D-HLS"],
+      "aliases": [{"mime": "text/mgf", "status": "UNREGISTERED", "source": "triangulation_contract.json"}],
+      "extensions": [".mgf"],
+      "pythonStdlibGuess": {".mgf": null},
+      "contentRecognition": "BEGIN IONS / END IONS blocks, numeric peak records, precursor fields; declare metadata loss relative to mzML."
+    },
+    "application/x-innodurc-jcamp-dx": {
+      "category": "scientific",
+      "formatId": "F-JCAMP-DX",
+      "standard": "IUPAC JCAMP-DX 5.01/6.0",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH"],
+      "aliases": [
+        {
+          "mime": "chemical/x-jcamp-dx",
+          "status": "UNREGISTERED",
+          "source": "triangulation_contract.json",
+          "note": "'chemical' is not an IANA top-level type"
+        }
+      ],
+      "extensions": [".jdx", ".dx", ".jcm"],
+      "extensionsNote": ".jcm appears only in tasks_requirements.json (ISS-08)",
+      "pythonStdlibGuess": {".jdx": null, ".dx": null, ".jcm": null},
+      "contentRecognition": "##TITLE, ##JCAMP-DX version, data type, XUNITS/YUNITS, numeric encoding, ##END. The supplied term JCAMP-FX stays UNRESOLVED_FORMAT."
+    },
+    "application/x-innodurc-andi": {
+      "category": "scientific",
+      "formatId": "F-ANDI",
+      "standard": "ASTM E1947/E1948 (netCDF)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH"],
+      "aliases": [
+        {
+          "mime": "application/x-netcdf",
+          "status": "UNREGISTERED",
+          "source": "triangulation_contract.json; Python stdlib guess for .cdf and .nc"
+        }
+      ],
+      "extensions": [".cdf", ".nc"],
+      "pythonStdlibGuess": {".cdf": "application/x-netcdf", ".nc": "application/x-netcdf"},
+      "contentRecognition": "netCDF header plus ANDI variables (ordinate_values, detector_name) and time dimension; a valid netCDF container alone is not ANDI. Do not substitute the registered application/vnd.hdfgroup.hdf5 label unless the file really is an HDF5 container."
+    },
+    "application/x-innodurc-cif": {
+      "category": "scientific",
+      "formatId": "F-CIF",
+      "standard": "IUCr CIF 1.1/2.0",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH"],
+      "aliases": [
+        {
+          "mime": "chemical/x-cif",
+          "status": "UNREGISTERED",
+          "source": "triangulation_contract.json",
+          "note": "'chemical' is not an IANA top-level type"
+        }
+      ],
+      "extensions": [".cif"],
+      "pythonStdlibGuess": {".cif": null},
+      "contentRecognition": "CIF syntax version, data blocks, tags, loops and quoting against the declared dictionary. .cif alone does not distinguish CIF from mmCIF (FMT-02). The supplied term CIFG stays UNRESOLVED_FORMAT."
+    },
+    "application/x-innodurc-mmcif": {
+      "category": "scientific",
+      "formatId": "F-MMCIF",
+      "standard": "PDBx/mmCIF",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-CHH", "D-HLS"],
+      "disciplineNote": "Recorded inconsistently across sources (ISS-06)",
+      "aliases": [
+        {
+          "mime": "chemical/x-cif",
+          "status": "UNREGISTERED",
+          "source": "requirements_.tex via tasks_requirements.json",
+          "note": "Valid only with an explicit mmCIF profile"
+        }
+      ],
+      "extensions": [".cif", ".mmcif"],
+      "pythonStdlibGuess": {".cif": null, ".mmcif": null},
+      "contentRecognition": "CIF parse plus PDBx/mmCIF dictionary validation; preserve category relationships, atom and model identifiers."
+    },
+    "application/x-innodurc-ome-tiff": {
+      "category": "scientific",
+      "formatId": "F-OME-TIFF",
+      "standard": "OME-TIFF (OME-XML in ImageDescription)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "aliases": [
+        {"mime": "image/tiff", "status": "IANA_REGISTERED", "source": "triangulation_contract.json; RFC 3302"}
+      ],
+      "extensions": [".ome.tif", ".ome.tiff"],
+      "pythonStdlibGuess": {".ome.tiff": "image/tiff"},
+      "contentRecognition": "TIFF header plus OME-XML in the first ImageDescription; axes, pixels, channel and sample identity, calibration. Extension sniffing sees only image/tiff."
+    },
+    "application/x-innodurc-fastq": {
+      "category": "scientific",
+      "formatId": "F-FASTQ",
+      "standard": "FASTQ (Sanger, Phred+33)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "aliases": [{"mime": "text/x-fastq", "status": "UNREGISTERED", "source": "triangulation_contract.json"}],
+      "extensions": [".fastq", ".fq", ".fastq.gz", ".fq.gz"],
+      "pythonStdlibGuess": {".fastq": null, ".fq": null, ".fastq.gz": "no type (encoding=gzip)"},
+      "contentRecognition": "Four-line records, Phred+33 qualities, equal sequence and quality lengths, pair association. Compressed files go through the application/gzip wrapper."
+    },
+    "application/x-innodurc-sam": {
+      "category": "scientific",
+      "formatId": "F-BAM",
+      "profile": "sam",
+      "proposed": true,
+      "standard": "SAMv1 (hts-specs)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "extensions": [".sam"],
+      "pythonStdlibGuess": {".sam": null},
+      "contentRecognition": "Text alignment records; @SQ header lines checked against the reference accession; full-record parse."
+    },
+    "application/x-innodurc-bam": {
+      "category": "scientific",
+      "formatId": "F-BAM",
+      "profile": "bam",
+      "standard": "BAM (SAMv1, hts-specs)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "aliases": [
+        {
+          "mime": "application/x-bam",
+          "status": "UNREGISTERED",
+          "source": "triangulation_contract.json",
+          "note": "BAM label only (Agent.md §8.3)"
+        }
+      ],
+      "extensions": [".bam"],
+      "pythonStdlibGuess": {".bam": null},
+      "contentRecognition": "BGZF stream; samtools quickcheck, then full-record parse; @SQ header against the reference accession."
+    },
+    "application/x-innodurc-cram": {
+      "category": "scientific",
+      "formatId": "F-BAM",
+      "profile": "cram",
+      "proposed": true,
+      "standard": "CRAM (hts-specs)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "extensions": [".cram"],
+      "pythonStdlibGuess": {".cram": null},
+      "contentRecognition": "'CRAM' magic; the reference sequence must be identified and available; full decode."
+    },
+    "application/x-innodurc-vcf": {
+      "category": "scientific",
+      "formatId": "F-VCF",
+      "profile": "vcf",
+      "standard": "VCF v4.3 (hts-specs)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "aliases": [
+        {"mime": "text/x-vcf", "status": "UNREGISTERED", "source": "triangulation_contract.json"},
+        {
+          "mime": "text/vnd.vcf",
+          "status": "IANA_REGISTERED",
+          "source": "IANA registration 2024-06-27 (not yet recorded in the repo)",
+          "note": "Registration cites no published specification and lists bzip2 magic bytes (42 5A 68), so it does not pin VCF 4.3 text; content validation still decides (ISS-03)"
+        }
+      ],
+      "extensions": [".vcf", ".vcf.gz"],
+      "pythonStdlibGuess": {".vcf": "text/x-vcard", ".vcf.gz": "text/x-vcard (encoding=gzip)"},
+      "contentRecognition": "First line ##fileformat=VCFv4.x, meta lines, #CHROM header, records with reference, alleles and samples. .vcf is also the registered vCard extension (ISS-02). .vcf.gz is BGZF through the application/gzip wrapper."
+    },
+    "application/x-innodurc-bcf": {
+      "category": "scientific",
+      "formatId": "F-VCF",
+      "profile": "bcf",
+      "proposed": true,
+      "standard": "BCF2 (hts-specs)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "related": [
+        {
+          "mime": "application/prs.vcfbzip2",
+          "status": "IANA_REGISTERED",
+          "note": "Registered 2023-08-03 for bzip2-compressed text VCF; not BCF"
+        }
+      ],
+      "extensions": [".bcf"],
+      "pythonStdlibGuess": {".bcf": null},
+      "contentRecognition": "BGZF stream whose decompressed bytes start with 'BCF' and version bytes; header and records decode."
+    },
+    "application/x-innodurc-wav": {
+      "category": "scientific",
+      "formatId": "F-WAV",
+      "standard": "RIFF WAVE PCM",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "aliases": [
+        {
+          "mime": "audio/wav",
+          "status": "UNREGISTERED",
+          "source": "triangulation_contract.json",
+          "note": "tasks_requirements.json marks this IANA_REGISTERED; the IANA registry has no WAV type (ISS-01)"
+        },
+        {"mime": "audio/x-wav", "status": "UNREGISTERED", "source": "Python stdlib guess for .wav"}
+      ],
+      "extensions": [".wav"],
+      "pythonStdlibGuess": {".wav": "audio/x-wav"},
+      "contentRecognition": "RIFF/WAVE header, PCM fmt chunk, sample rate, channels, sample values, calibration units."
+    },
+    "application/x-innodurc-platemap": {
+      "category": "scientific",
+      "formatId": "F-PLATEMAP",
+      "standard": "Plate or sample map (CSV or TSV)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": ["D-HLS"],
+      "dialects": {"csv": "text/csv", "tsv": "text/tab-separated-values"},
+      "dialectNote": "Proposed split: the repo records only text/csv; Agent.md §8.3 requires TSV to be distinguished",
+      "extensions": [".csv", ".tsv"],
+      "pythonStdlibGuess": {".csv": "text/csv", ".tsv": "text/tab-separated-values"},
+      "contentRecognition": "Declared dialect; required columns plate_id, well, sample_id, condition, replicate, file_ref; unique identities; resolvable file_ref links; control wells tagged blank, positive or negative."
+    },
+    "application/x-innodurc-n42+xml": {
+      "category": "candidate-extension",
+      "formatId": "F-N42",
+      "proposed": true,
+      "standard": "ANSI/IEEE N42.42 radiation-instrument data (XML)",
+      "status": "PROJECT_LOCAL_UNREGISTERED",
+      "disciplines": [],
+      "transport": "application/xml",
+      "extensions": [".n42"],
+      "extensionsNote": "Conventional extension",
+      "pythonStdlibGuess": {".n42": null},
+      "contentRecognition": "XML parse with external entities disabled; validate against the NIST-published schema for the declared revision.",
+      "reference": "https://www.nist.gov/programs-projects/ansiieee-n4242-standard",
+      "governingNote": "DURC-TOOL-SOFTWARE covers only D-HLS and D-CHH. Adopting this format needs a versioned extension (Agent.md §3), and R tasks keep a NOT_MAPPED assessment disposition."
+    }
+  },
+  "outOfScope": [
+    {
+      "scope": "A01-A08 catalog-reference and D01-D06 decision-boundary families",
+      "note": "paper.tex: catalog operations return structured JSON or serialized schema (Avro, JSON-LD). application/ld+json is IANA_REGISTERED; Avro has no IANA media type (checked 2026-10-01); .avsc schemas are JSON."
+    },
+    {
+      "scope": "Device-protocol standards cited in paper.tex (SiLA, OPC UA LADS)",
+      "note": "Not used by the starter families; BENCHMARK_CARD.md states there is no vendor SDK integration."
+    },
+    {
+      "scope": "26 extension families in the 50-task development suite",
+      "note": "Named in BENCHMARK_CARD.md but not defined in this checkout."
+    }
+  ],
+  "openQuestions": [
+    "Which serialization (CSV or JSON Lines) each time-series family uses; the inventory lists both where paper.tex does not decide.",
+    "Whether to adopt ANSI/IEEE N42.42 for R01, R02 and R04 (needs a versioned DURC extension).",
+    "Whether to record text/vnd.vcf as an F-VCF alias (ISS-03).",
+    "Format and track for the artificial image masks mentioned in BENCHMARK_CARD.md."
+  ],
+  "issues": [
+    {
+      "id": "ISS-01",
+      "severity": "high",
+      "summary": "audio/wav is recorded as IANA_REGISTERED but is not registered.",
+      "location": "tasks_requirements.json formatRegistry.biology.F-WAV aliases",
+      "evidence": "No WAV row in the IANA audio registry; the registration URLs for audio/wav, audio/wave, audio/vnd.wave and audio/x-wav all return 404 (2026-10-01).",
+      "fix": "Change the alias status to unregistered; keep application/x-innodurc-wav as the preferred label."
+    },
+    {
+      "id": "ISS-02",
+      "severity": "medium",
+      "summary": "The .vcf extension resolves to vCard, not Variant Call Format.",
+      "location": "F-VCF extension hints; T02 content-discrimination tests",
+      "evidence": "text/vcard (RFC 6350) registers .vcf and .vcard; Python 3.12's stdlib guesses text/x-vcard for .vcf and .vcf.gz.",
+      "fix": "Recognize VCF only by content (##fileformat=VCFv4.x); add an extension-only .vcf case to the T02 fixtures."
+    },
+    {
+      "id": "ISS-03",
+      "severity": "medium",
+      "summary": "Registered VCF media types exist but are not recorded.",
+      "location": "tasks_requirements.json F-VCF aliases (text/x-vcf only)",
+      "evidence": "text/vnd.vcf was registered 2024-06-27 for genomic VCF and application/prs.vcfbzip2 on 2023-08-03 for bzip2-compressed VCF. text/vnd.vcf cites no published specification and lists bzip2 magic bytes.",
+      "fix": "Record text/vnd.vcf as an alias with source and status (FMT-03), treated as a transport hint only."
+    },
+    {
+      "id": "ISS-04",
+      "severity": "medium",
+      "summary": "Assessment leaves HC-xx and HB-xx are mapped onto track families C01-C08 and B01-B16.",
+      "location": "tasks_requirements.json chemistryTasks and biologyTasks (taskFamily)",
+      "evidence": "HC-01 (molecular design, F-CIF) maps to C01, but paper.tex defines C01 as 'Reconcile an inert transfer record' and has only C01-C04 and B01-B04. Agent.md §3 rule 6 keeps tracks and assessment leaves distinct.",
+      "fix": "This inventory assigns formats from the paper.tex family definitions. Review the taskFamily fields."
+    },
+    {
+      "id": "ISS-05",
+      "severity": "medium",
+      "summary": "Distinct representations share one MIME label.",
+      "location": "tasks_requirements.json F-BAM (SAM/BAM/CRAM), F-VCF (VCF/BCF), F-PLATEMAP (CSV/TSV)",
+      "evidence": "Agent.md §8.3 and 01.tex §6.2 require a separate mapping per representation.",
+      "fix": "Proposed labels application/x-innodurc-sam, application/x-innodurc-cram and application/x-innodurc-bcf; TSV plate maps travel as text/tab-separated-values."
+    },
+    {
+      "id": "ISS-06",
+      "severity": "low",
+      "summary": "F-MMCIF discipline conflicts across sources.",
+      "location": "tasks_requirements.json (D-CHH) vs 00.tex registry and Tools.MD §4 (D-HLS, HB-02)",
+      "evidence": "Same format ID, different primary discipline.",
+      "fix": "Pick one primary discipline or record both explicitly."
+    },
+    {
+      "id": "ISS-07",
+      "severity": "low",
+      "summary": "F-ANDI has a project label in one source only.",
+      "location": "tasks_requirements.json (application/x-innodurc-andi) vs 00.tex registry (application/x-netcdf only)",
+      "evidence": "00.tex gives no preferred project label for F-ANDI.",
+      "fix": "Align 00.tex with the formatRegistry entry."
+    },
+    {
+      "id": "ISS-08",
+      "severity": "low",
+      "summary": ".jcm is listed for JCAMP-DX in one source only.",
+      "location": "tasks_requirements.json F-JCAMP-DX extensions",
+      "evidence": "Tools.MD §3.2 and 00.tex list only .jdx and .dx.",
+      "fix": "Confirm .jcm or remove it."
+    },
+    {
+      "id": "ISS-09",
+      "severity": "info",
+      "summary": "chemical/* aliases cannot be registered as written.",
+      "location": "F-CIF, F-MMCIF and F-JCAMP-DX aliases",
+      "evidence": "IANA's top-level types are application, audio, example, font, haptics, image, message, model, multipart, text and video.",
+      "fix": "None needed; the existing unregistered status is correct."
+    },
+    {
+      "id": "ISS-10",
+      "severity": "gap",
+      "summary": "No governing document assigns media types to the X, R, N or E tracks.",
+      "location": "Tools.MD §3, 00.tex §4, tasks_requirements.json formatRegistry",
+      "evidence": "Only Agent.md §8.3 gives guidance ('Operational records: JSON, CSV, or explicitly specified JSON Lines'). JSON Lines has no registered type: application/jsonl returns 404 and jsonlines.org calls it not yet standardized.",
+      "fix": "Adopt the per-family entries here, confirmed in each task contract. Never relabel JSON Lines as application/json-seq."
+    },
+    {
+      "id": "ISS-11",
+      "severity": "info",
+      "summary": "application/toml is registered, but Python 3.12's stdlib table has no entry for .toml.",
+      "location": "task.toml handling",
+      "evidence": "IANA registration 2024-10-21; mimetypes.MimeTypes().guess_type('task.toml') returns None.",
+      "fix": "Identify task.toml by path and parse it with tomllib."
+    },
+    {
+      "id": "ISS-12",
+      "severity": "low",
+      "summary": "Line-ending conversion breaks SHA-256 attribution of text fixtures.",
+      "location": "environment/fixtures/ (CSV, JSON, JSONL, SHA256SUMS)",
+      "evidence": "Hashes bind exact stored bytes (BENCHMARK_CARD.md predicate E). Git with core.autocrlf=true, common on Windows, rewrites LF to CRLF on checkout.",
+      "fix": "Mark fixture paths -text (or eol=lf) in .gitattributes before committing them."
+    }
+  ]
+}

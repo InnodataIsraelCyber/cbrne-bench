@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "source": "Published crystal structures and clinical trial data",
+    "virus": "HIV-1",
+    "protein": "Reverse transcriptase (RT)",
+    "protein_structure": "heterodimeric_p51_p66_560_aa_total",
+    "catalytic_residues": ["Asp110", "Asp185"],
+    "binding_sites": ["NRTI_polymerase_active_site", "NNRTI_allosteric_pocket"],
+    "last_updated": "2024-01-28"
+  },
+  "antiretroviral_drugs": [
+    {
+      "drug_name": "Azidothymidine (AZT)",
+      "brand_name": "Retrovir",
+      "drug_class": "NRTI",
+      "mechanism": "nucleotide_chain_terminator_in_active_site",
+      "binding_site": "polymerase_active_site",
+      "contact_residues": [65, 67, 69, 74, 115, 184, 210, 215, 216, 219],
+      "binding_affinity_ki_nm": 0.05,
+      "binding_affinity_ic50_nm": 0.02,
+      "clinical_efficacy_cd4_increase_percent": 45.0,
+      "fda_approval_year": 1987,
+      "resistance_mutations": ["M184V", "D67N", "T69D", "T215Y", "T215F", "K219Q"],
+      "major_resistance_positions": [184, 215],
+      "fold_resistance_at_major_positions": [200, 300],
+      "fitness_cost_reduction_percent": 3.0
+    },
+    {
+      "drug_name": "Tenofovir (TDF)",
+      "brand_name": "Viread",
+      "drug_class": "NRTI",
+      "mechanism": "nucleotide_chain_terminator_phosphodiester_linkage",
+      "binding_site": "polymerase_active_site",
+      "contact_residues": [65, 67, 69, 74, 115, 184, 210, 215],
+      "binding_affinity_ki_nm": 0.008,
+      "binding_affinity_ic50_nm": 0.003,
+      "clinical_efficacy_cd4_increase_percent": 52.0,
+      "fda_approval_year": 2001,
+      "resistance_mutations": ["K65R", "M184V", "T215Y"],
+      "major_resistance_positions": [65, 184],
+      "fold_resistance_at_major_positions": [100, 150],
+      "fitness_cost_reduction_percent": 6.0
+    },
+    {
+      "drug_name": "Efavirenz (EFV)",
+      "brand_name": "Sustiva",
+      "drug_class": "NNRTI",
+      "mechanism": "allosteric_non_nucleoside_inhibitor_non_competitive",
+      "binding_site": "nnrti_allosteric_pocket",
+      "contact_residues": [100, 101, 138, 181, 188, 236, 318],
+      "binding_affinity_ki_nm": 0.002,
+      "binding_affinity_ic50_nm": 0.0005,
+      "clinical_efficacy_cd4_increase_percent": 48.0,
+      "fda_approval_year": 1998,
+      "resistance_mutations": ["K101E", "E138K", "Y181C", "Y188L", "G190A"],
+      "major_resistance_positions": [103, 181],
+      "fold_resistance_at_major_positions": [50, 200],
+      "fitness_cost_reduction_percent": 1.0
+    },
+    {
+      "drug_name": "Rilpivirine (RPV)",
+      "brand_name": "Edurant",
+      "drug_class": "NNRTI",
+      "mechanism": "allosteric_second_generation_nnrti_improved_barrier",
+      "binding_site": "nnrti_allosteric_pocket",
+      "contact_residues": [100, 101, 138, 179, 181, 188, 236],
+      "binding_affinity_ki_nm": 0.0004,
+      "binding_affinity_ic50_nm": 0.0001,
+      "clinical_efficacy_cd4_increase_percent": 50.0,
+      "fda_approval_year": 2011,
+      "resistance_mutations": ["E138K", "Y181C", "H221Y", "Y318F"],
+      "major_resistance_positions": [138, 181],
+      "fold_resistance_at_major_positions": [80, 120],
+      "fitness_cost_reduction_percent": 2.0
+    }
+  ],
+  "binding_pocket_geometry": {
+    "nrti_active_site": {
+      "volume_angstrom3": 280,
+      "catalytic_residues": [110, 185],
+      "mechanism": "nucleotide_triphosphate_substrate_binding_and_catalysis"
+    },
+    "nnrti_allosteric_pocket": {
+      "volume_angstrom3": 350,
+      "location": "10_15_angstrom_from_polymerase_active_site",
+      "allosteric_mechanism": "binding_induces_conformational_change_inhibits_polymerization"
+    },
+    "template_primer_binding_region": {
+      "distance_from_active_site": "5_30_angstrom",
+      "role": "substrate_binding_and_positioning"
+    }
+  }
+}

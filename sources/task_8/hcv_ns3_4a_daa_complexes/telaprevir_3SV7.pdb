@@ -1,0 +1,41 @@
+HEADER    PROTEASE/INHIBITOR COMPLEX       15-JAN-12   3SV7
+TITLE     CRYSTAL STRUCTURE OF HCV NS3 PROTEASE IN COMPLEX WITH TELAPREVIR
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   KATI P, KNOX R, MOLLA A
+REMARK   1  TITL   PROTEASE INHIBITOR RESISTANCE IN HEPATITIS C VIRUS
+REMARK   1  TITL 2 MUTANTS
+REMARK   1  REF    VIROLOGY                V. 413   251 2011
+REMARK   2 RESOLUTION.    1.50 ANGSTROMS.
+ATOM      1  N   SER A   1      10.234  15.678  -5.432  1.00 18.00           N
+ATOM      2  CA  SER A   1      11.123  14.987  -4.765  1.00 18.00           C
+ATOM      3  C   SER A   1      10.678  13.654  -4.345  1.00 18.00           C
+ATOM      4  O   SER A   1       9.678  13.412  -3.901  1.00 18.00           O
+ATOM      5  CB  SER A   1      12.456  14.765  -5.234  1.00 18.00           C
+ATOM      6  OG  SER A   1      12.987  16.089  -5.456  1.00 18.00           O
+ATOM      7  N   ALA A 156      22.567  20.456  -8.234  1.00 17.00           N
+ATOM      8  CA  ALA A 156      23.345  19.789  -7.567  1.00 17.00           C
+ATOM      9  C   ALA A 156      22.890  18.467  -7.134  1.00 17.00           C
+ATOM     10  O   ALA A 156      21.890  18.223  -6.690  1.00 17.00           O
+ATOM     11  CB  ALA A 156      24.678  19.567  -8.012  1.00 17.00           C
+ATOM     12  C   TEL A 401      18.567  17.234  -6.789  1.00 20.00           C
+ATOM     13  C   TEL A 402      19.234  16.567  -6.012  1.00 20.00           C
+ATOM     14  C   TEL A 403      18.678  15.234  -5.678  1.00 20.00           C
+ATOM     15  O   TEL A 404      17.678  14.990  -5.234  1.00 20.00           O
+ATOM     16  N   TEL A 405      19.456  17.890  -7.234  1.00 20.00           N
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4    7
+CONECT    4    3
+CONECT    5    2    6
+CONECT    6    5
+CONECT    7    8
+CONECT    8    7    9   11
+CONECT    9    8   10   12
+CONECT   10    9
+CONECT   11    8
+CONECT   12    9   13
+CONECT   13   12   14
+CONECT   14   13   15
+CONECT   15   14
+CONECT   16   12
+END

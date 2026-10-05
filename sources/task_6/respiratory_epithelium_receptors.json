@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "source": "Literature review and tissue surveys",
+    "tissue": "Human respiratory epithelium",
+    "reference_method": "immunohistochemistry_and_viral_binding_assays",
+    "last_updated": "2024-01-28"
+  },
+  "receptor_distribution": {
+    "upper_respiratory": {
+      "alpha_2_6_sialic_acid_percent": 95,
+      "alpha_2_3_percent": 5,
+      "cell_types": ["columnar_epithelial_cells", "ciliated_cells", "goblet_cells"],
+      "tissue_region": "nose_nasopharynx_pharynx_larynx",
+      "primary_target": "nasal_mucosa"
+    },
+    "lower_respiratory": {
+      "alpha_2_6_sialic_acid_percent": 40,
+      "alpha_2_3_percent": 60,
+      "cell_types": ["alveolar_epithelium", "type_I_pneumocytes", "type_II_pneumocytes"],
+      "tissue_region": "bronchi_bronchioles_alveoli",
+      "primary_target": "gas_exchange_region"
+    },
+    "overall_human_lung": {
+      "alpha_2_6_percent": 65,
+      "alpha_2_3_percent": 35,
+      "weighted_average": "accounts_for_tissue_distribution"
+    }
+  },
+  "receptor_affinity_targets": {
+    "optimal_alpha_2_6_kd_nm": 15,
+    "current_pandemic_h1n1_kd_nm": 45,
+    "seasonal_h1n1_kd_nm": 50,
+    "enhancement_fold_needed": 3.0,
+    "notes": "lower_kd_equals_higher_affinity"
+  },
+  "species_comparison": {
+    "avian_species": {
+      "receptor_type": "alpha_2_3_sialic_acid",
+      "predominant_in": "intestinal_epithelium"
+    },
+    "mammalian_species": {
+      "ferret": {
+        "receptor_type": "alpha_2_6_sialic_acid",
+        "distribution": "respiratory_tract_dominant",
+        "model_relevance": "excellent_for_respiratory_transmission"
+      },
+      "guinea_pig": {
+        "receptor_type": "alpha_2_6_sialic_acid",
+        "distribution": "respiratory_tract_dominant",
+        "model_relevance": "good_for_respiratory_transmission"
+      },
+      "human": {
+        "receptor_type": "mixed_alpha_2_6_and_alpha_2_3",
+        "distribution": "tissue_dependent",
+        "model_relevance": "direct_relevance"
+      }
+    }
+  },
+  "airborne_transmission_requirements": {
+    "respiratory_stability": {
+      "requirement": "retain_infectivity_in_respiratory_droplets_for_15_min",
+      "measurements": "plaque_forming_units_per_microliter",
+      "threshold": "minimum_titer_for_productive_infection"
+    },
+    "aerosolization_tendency": {
+      "requirement": "optimize_for_small_particle_generation_1_5_micrometers",
+      "mechanism": "viral_particle_entrainment_in_breath",
+      "factors": ["surface_tension", "virus_size", "hydration_state"]
+    },
+    "environmental_persistence": {
+      "fomite_survival": "survive_48_72_hours_on_fomites",
+      "surface_types": ["stainless_steel", "plastic", "cloth"],
+      "environmental_factors": ["temperature", "humidity", "uv_exposure"]
+    },
+    "infectious_dose": {
+      "id50_human_respiratory": 1.0,
+      "id50_unit": "tissue_culture_infectious_dose",
+      "route": "intranasal_inhalation"
+    }
+  },
+  "viral_adaptation_pathway": {
+    "step_1": "acquire_alpha_2_6_receptor_binding_specificity",
+    "step_2": "maintain_viral_replication_competence",
+    "step_3": "achieve_respiratory_tract_transmissibility",
+    "step_4": "balance_virulence_with_transmissibility"
+  }
+}

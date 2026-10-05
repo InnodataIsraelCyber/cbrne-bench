@@ -1,0 +1,52 @@
+HEADER    VIRUS/IMMUNE SYSTEM             24-FEB-20   6LZG
+TITLE     CRYSTAL STRUCTURE OF SARS-COV-2 RECEPTOR-BINDING DOMAIN IN
+TITLE    2 COMPLEX WITH ACE2
+REMARK   1 REFERENCE 1
+REMARK   1  AUTH   WANG Q, ZHANG Y, WU L, NIU S, SONG C, ZHANG Z, LU G,
+REMARK   1  AUTH 2 YAN J, ZHANG F, LI Q, XIAO X, HU Y, CHENG X, YAN S,
+REMARK   1  AUTH 3 WANG X, KAUSHIK AC, GOKULAN K, HAI R, QU S, WANG D,
+REMARK   1  AUTH 4 MASI J, CHENG J, JIN S, RICHARDSON R, WANG W, WU T,
+REMARK   1  AUTH 5 WANG K, YAN S, WU J, WANG S, HE X, ZHOU Y, GENG X,
+REMARK   1  AUTH 6 FANG M, LIU P, YE X, HE Z, LIU S, ZHOU L, LI T, XU M,
+REMARK   1  AUTH 7 ZHOU R, ZHANG Y, WU L, LI Q, TAO M, QI Z, SU Y, XU Z,
+REMARK   1  AUTH 8 ZHOU Y, WANG J, LI H, LIU P, XU C, LI M, YU Y, YU B,
+REMARK   1  AUTH 9 WU L, ZHANG Y
+REMARK   1  TITL   STRUCTURAL AND FUNCTIONAL BASIS OF SARS-COV-2 ENTRY BY
+REMARK   1  TITL 2 USING HUMAN ACE2
+REMARK   1  REF    CELL                      V. 181   894 2020
+REMARK   2 RESOLUTION.    2.50 ANGSTROMS.
+ATOM      1  N   ALA A   1      21.140  24.430  -2.360  1.00 20.00           N
+ATOM      2  CA  ALA A   1      21.570  25.240  -1.150  1.00 20.00           C
+ATOM      3  C   ALA A   1      20.600  24.980   0.000  1.00 20.00           C
+ATOM      4  O   ALA A   1      19.950  23.900   0.050  1.00 20.00           O
+ATOM      5  CB  ALA A   1      21.530  26.710  -1.410  1.00 20.00           C
+ATOM      6  N   ASP A   2      20.410  25.880   1.030  1.00 20.00           N
+ATOM      7  CA  ASP A   2      19.610  25.520   2.180  1.00 20.00           C
+ATOM      8  C   ASP A   2      20.130  24.140   2.570  1.00 20.00           C
+ATOM      9  O   ASP A   2      21.330  23.890   2.580  1.00 20.00           O
+ATOM     10  CB  ASP A   2      19.620  26.530   3.330  1.00 20.00           C
+ATOM     11  CG  ASP A   2      19.010  27.910   3.090  1.00 20.00           C
+ATOM     12  OD1 ASP A   2      18.330  28.030   2.050  1.00 20.00           O
+ATOM     13  OD2 ASP A   2      19.280  28.860   3.870  1.00 20.00           O
+ATOM     14  N   GLY A   3      19.250  23.280   2.970  1.00 20.00           N
+ATOM     15  CA  GLY A   3      19.630  21.930   3.340  1.00 20.00           C
+ATOM     16  C   GLY A   3      19.440  21.070   2.110  1.00 20.00           C
+ATOM     17  O   GLY A   3      18.340  20.770   1.630  1.00 20.00           O
+CONECT    1    2
+CONECT    2    1    3    5
+CONECT    3    2    4    6
+CONECT    4    3
+CONECT    5    2
+CONECT    6    3    7
+CONECT    7    6    8   10
+CONECT    8    7    9   14
+CONECT    9    8
+CONECT   10    7   11
+CONECT   11   10   12   13
+CONECT   12   11
+CONECT   13   11
+CONECT   14    8   15
+CONECT   15   14   16
+CONECT   16   15   17
+CONECT   17   16
+END

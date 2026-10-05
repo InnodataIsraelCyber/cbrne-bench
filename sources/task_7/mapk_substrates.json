@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "source": "Published crystallographic structures and biochemical studies",
+    "toxin": "Bacillus anthracis lethal factor",
+    "protein_length": 776,
+    "domain_I_residues": "1-262",
+    "domain_II_residues": "263-776",
+    "catalytic_residues": ["His686", "His690", "Glu735"],
+    "zinc_coordination": "His686_His690_Glu735_water",
+    "reference": "Nature 414:229-233 (2001)"
+  },
+  "mapk_substrates": [
+    {
+      "protein": "MEK1",
+      "full_name": "mitogen_activated_protein_kinase_kinase_1",
+      "cleavage_site_sequence": "TPXE↓D",
+      "cleavage_site_residues": [8, 9],
+      "cleavage_position": 218,
+      "ref_aa": "D",
+      "alt_aa": "cleaved",
+      "reaction_rate_wt": 0.023,
+      "reaction_rate_units": "min_inverse",
+      "pdb_id": "1S9J",
+      "pdb_resolution_angstrom": 2.4,
+      "lethal_function": "blocks_mapk_signaling_cascade",
+      "physiological_consequence": "inhibits_erk1_erk2_phosphorylation"
+    },
+    {
+      "protein": "MEK2",
+      "full_name": "mitogen_activated_protein_kinase_kinase_2",
+      "cleavage_site_sequence": "TPXE↓D",
+      "cleavage_site_residues": [8, 9],
+      "cleavage_position": 218,
+      "ref_aa": "D",
+      "alt_aa": "cleaved",
+      "reaction_rate_wt": 0.021,
+      "reaction_rate_units": "min_inverse",
+      "pdb_id": "1S9I",
+      "pdb_resolution_angstrom": 2.5,
+      "lethal_function": "blocks_mapk_signaling_cascade",
+      "physiological_consequence": "inhibits_erk1_erk2_phosphorylation"
+    },
+    {
+      "protein": "ERK1",
+      "full_name": "extracellular_signal_regulated_kinase_1",
+      "cleavage_site_sequence": "SRPE↓D",
+      "cleavage_site_residues": [11, 12],
+      "cleavage_position": 314,
+      "ref_aa": "D",
+      "alt_aa": "cleaved",
+      "reaction_rate_wt": 0.018,
+      "reaction_rate_units": "min_inverse",
+      "pdb_id": "2ERK",
+      "pdb_resolution_angstrom": 2.4,
+      "lethal_function": "blocks_mapk_signaling_cascade",
+      "physiological_consequence": "prevents_downstream_kinase_activation"
+    },
+    {
+      "protein": "ERK2",
+      "full_name": "extracellular_signal_regulated_kinase_2",
+      "cleavage_site_sequence": "SRPE↓D",
+      "cleavage_site_residues": [11, 12],
+      "cleavage_position": 314,
+      "ref_aa": "D",
+      "alt_aa": "cleaved",
+      "reaction_rate_wt": 0.021,
+      "reaction_rate_units": "min_inverse",
+      "pdb_id": "2ERK",
+      "pdb_resolution_angstrom": 2.4,
+      "lethal_function": "blocks_mapk_signaling_cascade",
+      "physiological_consequence": "prevents_downstream_kinase_activation"
+    }
+  ],
+  "catalytic_requirements": {
+    "zinc_coordination": "His686_His690_Glu735_water_molecule",
+    "zinc_role": "activates_water_molecule_for_nucleophilic_attack",
+    "substrate_positioning": "carboxyl_group_of_asp_residue_activated_by_zinc",
+    "peptide_bond_hydrolysis": "nucleophilic_attack_by_water_molecule",
+    "turnover_number_kcat_wt": 0.5,
+    "turnover_number_units": "per_second",
+    "michaelis_constant_km_um": 45.0,
+    "catalytic_efficiency": {
+      "kcat_km_s_inverse_um_inverse": 0.011,
+      "rate_determining_step": "substrate_dissociation"
+    }
+  },
+  "recognition_motifs": {
+    "consensus_sequence": "[T/S]P[any]E↓D",
+    "essential_residues": ["Pro_at_P2", "Glu_at_P1", "Asp_at_P1_prime"],
+    "substrate_specificity": "recognizes_mapk_kinases_only",
+    "binding_groove": "long_deep_groove_domains_II_III_IV"
+  },
+  "cleavage_specificity": {
+    "pro_ile_peptide_bond": "primary_cleavage_site_mek1",
+    "secondary_sites": "minimal_off_target_cleavage",
+    "specificity_constant": "very_high_only_mapk_kinases"
+  }
+}

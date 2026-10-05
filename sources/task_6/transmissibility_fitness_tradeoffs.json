@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "source": "Experimental studies and epidemiological data",
+    "virus": "Influenza A H1N1",
+    "measurement_method": "in_vitro_replication_kinetics_and_transmission_models",
+    "last_updated": "2024-01-28"
+  },
+  "fitness_constraints": {
+    "egg_replication": {
+      "description": "mutations_often_reduce_efficiency_in_eggs",
+      "reason": "embryonated_eggs_have_different_temperature_optima",
+      "impact": "problematic_for_vaccine_production",
+      "adaptation_cost": "high"
+    },
+    "mammalian_replication": {
+      "description": "different_temperature_optima_and_polymerase_requirements",
+      "human_optimal_temp": 37,
+      "avian_optimal_temp": 40,
+      "ferret_optimal_temp": 38.5,
+      "adaptation_cost": "moderate"
+    },
+    "viral_stability": {
+      "description": "increased_receptor_binding_sometimes_reduces_stability",
+      "mechanism": "conformational_changes_reduce_structural_integrity",
+      "half_life_impact": "may_reduce_environmental_persistence",
+      "adaptation_cost": "variable"
+    }
+  },
+  "transmissibility_measures": {
+    "r_naught_wt_h1n1": {
+      "value": 1.2,
+      "range": "0.8-1.6",
+      "definition": "basic_reproduction_number_wild_type"
+    },
+    "r_naught_enhanced_variants": {
+      "value": 1.8,
+      "range": "1.4-2.2",
+      "definition": "transmissibility_enhanced_mutants",
+      "fold_increase": 1.5
+    },
+    "doubling_time_wt_hours": {
+      "value": 6.5,
+      "range": "5.5-8.0",
+      "tissue_context": "mammalian_respiratory_epithelium",
+      "temperature": 37
+    },
+    "doubling_time_enhanced_hours": {
+      "value": 3.2,
+      "range": "2.5-4.0",
+      "tissue_context": "mammalian_respiratory_epithelium",
+      "temperature": 37,
+      "fold_increase": 2.0
+    }
+  },
+  "virulence_association": {
+    "transmissibility_mutations_virulence_correlation": 0.45,
+    "correlation_strength": "moderate",
+    "definition": "tendency_for_transmissibility_enhancing_mutations_to_increase_virulence",
+    "high_transmissibility_moderate_virulence": "often_associated",
+    "mechanism": "polybasic_cleavage_sites_enable_systemic_spread"
+  },
+  "fitness_landscape": {
+    "peak_1_wt_phenotype": {
+      "transmissibility": "low",
+      "replication_efficiency": "high",
+      "environmental_stability": "high",
+      "fitness_score": 1.0
+    },
+    "peak_2_transmissibility_enhanced": {
+      "transmissibility": "high",
+      "replication_efficiency": "moderate",
+      "environmental_stability": "moderate",
+      "fitness_score": 0.85
+    },
+    "valley_reduced_fitness": {
+      "transmissibility": "moderate",
+      "replication_efficiency": "low",
+      "environmental_stability": "low",
+      "fitness_score": 0.45
+    }
+  },
+  "evolutionary_trajectory": {
+    "stage_1_acquisition": "virus_acquires_single_transmissibility_mutation",
+    "stage_1_fitness": "reduced_due_to_fitness_cost",
+    "stage_2_compensation": "suppressor_mutations_restore_fitness",
+    "stage_2_outcome": "balanced_transmissibility_and_replication",
+    "stage_3_persistence": "enhanced_variant_circulates_in_population"
+  },
+  "seasonal_variation": {
+    "winter_conditions": {
+      "temperature": 4,
+      "humidity": "low",
+      "aerosolization": "enhanced",
+      "transmissibility_advantage": "true"
+    },
+    "summer_conditions": {
+      "temperature": 25,
+      "humidity": "high",
+      "aerosolization": "reduced",
+      "transmissibility_advantage": "false"
+    }
+  }
+}

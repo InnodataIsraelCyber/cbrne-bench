@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "source": "PDB and literature",
+    "protein": "SARS-CoV-2 RBD (residues 330-530)",
+    "rbd_coordinates": {
+      "start": 330,
+      "end": 530,
+      "molecular_weight_kda": 25
+    },
+    "reference_pdb_ids": ["6LZG", "7K8M", "6XDG"],
+    "last_updated": "2024-01-25"
+  },
+  "antibodies": [
+    {
+      "name": "REGN10933",
+      "pdb_id": "6XDG",
+      "epitope_residues": [338, 345, 365, 371, 386, 391, 394, 405, 408, 415],
+      "ic50_nm": 0.03,
+      "vaccine_source": "convalescent_serum",
+      "vhh_or_fab": "fab",
+      "contact_surface_area_angstrom2": 892,
+      "escape_resistant": false,
+      "neutralization_breadth": "narrow"
+    },
+    {
+      "name": "S309",
+      "pdb_id": "6G0B",
+      "epitope_residues": [365, 371, 373, 375, 384, 386, 388, 391, 394, 405],
+      "ic50_nm": 0.091,
+      "vaccine_source": "vaccine_induced",
+      "vhh_or_fab": "fab",
+      "contact_surface_area_angstrom2": 756,
+      "escape_resistant": true,
+      "neutralization_breadth": "broad"
+    },
+    {
+      "name": "VHH-72",
+      "pdb_id": "6WAQ",
+      "epitope_residues": [394, 405, 408, 415, 425, 431, 437, 438],
+      "ic50_nm": 0.18,
+      "vaccine_source": "llama_immunization",
+      "vhh_or_fab": "vhh",
+      "contact_surface_area_angstrom2": 620,
+      "escape_resistant": true,
+      "neutralization_breadth": "broad"
+    },
+    {
+      "name": "RBD-4A8",
+      "pdb_id": "7K8M",
+      "epitope_residues": [345, 350, 355, 365, 371, 375],
+      "ic50_nm": 0.15,
+      "vaccine_source": "vaccine_induced",
+      "vhh_or_fab": "fab",
+      "contact_surface_area_angstrom2": 780,
+      "escape_resistant": false,
+      "neutralization_breadth": "moderate"
+    },
+    {
+      "name": "CB6",
+      "pdb_id": "7C01",
+      "epitope_residues": [473, 475, 478, 486, 487, 489, 493, 498, 500, 501],
+      "ic50_nm": 0.084,
+      "vaccine_source": "convalescent_serum",
+      "vhh_or_fab": "fab",
+      "contact_surface_area_angstrom2": 835,
+      "escape_resistant": false,
+      "neutralization_breadth": "moderate"
+    }
+  ],
+  "ace2_binding_residues": [449, 453, 455, 456, 486, 487, 489, 493, 498, 500, 501, 505],
+  "conserved_epitopes": [345, 371, 373, 405],
+  "variable_epitopes": [338, 365, 375, 386, 391, 408, 415],
+  "critical_contact_points": {
+    "ace2_interface": [449, 453, 455, 456, 486, 487, 489, 493, 498, 500, 501, 505],
+    "antibody_vulnerable": [345, 365, 371, 375, 386, 391, 394, 405, 408, 415]
+  }
+}

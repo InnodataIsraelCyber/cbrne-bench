@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "purpose": "Molecular dynamics simulations and binding visualization",
+    "application": "HCV NS3/4A protease drug binding analysis",
+    "last_updated": "2024-01-28"
+  },
+  "md_simulation_parameters": {
+    "force_field": "AMBER14",
+    "force_field_description": "well_validated_for_protease_dynamics",
+    "simulation_time_ns": 100,
+    "simulation_time_description": "sufficient_for_equilibration_and_sampling",
+    "temperature_kelvin": 310,
+    "temperature_celsius": 37.0,
+    "temperature_description": "human_body_temperature",
+    "ph": 7.0,
+    "ph_description": "physiological_neutral_ph",
+    "water_model": "TIP3P",
+    "water_model_description": "three_point_charge_water_model",
+    "counter_ions": "sodium_chloride",
+    "ionic_strength_mm": 150.0,
+    "ionic_strength_description": "physiological_salt_concentration",
+    "pressure_atm": 1.0,
+    "ensemble": "NPT",
+    "ensemble_description": "isothermal_isobaric",
+    "time_step_fs": 2.0,
+    "integration_method": "leap_frog_verlet"
+  },
+  "binding_pocket_definition": {
+    "center_residue": 156,
+    "center_residue_name": "Alanine_156",
+    "radius_angstrom": 10,
+    "radius_description": "defines_binding_site_sphere",
+    "key_interaction_residues": [155, 156, 157, 158, 168, 170],
+    "residue_count": 6,
+    "substrate_envelope": {
+      "definition": "volume_occupied_by_natural_viral_substrates",
+      "importance": "guides_inhibitor_design_and_mutation_effects",
+      "reference": "literature_consensus"
+    }
+  },
+  "visualization_elements": {
+    "svg_binding_pose": {
+      "type": "2d_projection_with_contacts_and_hydrogen_bonds",
+      "includes": ["ligand_structure", "key_residues", "hydrogen_bond_network", "water_molecules"],
+      "rendering": "publication_quality_graphics"
+    },
+    "orbital_overlap": {
+      "type": "predicted_electrostatic_surface_potentials",
+      "method": "APBS_adaptive_poisson_boltzmann_solver",
+      "scale": "kT_e_units",
+      "visualization": "color_mapped_molecular_surface"
+    },
+    "energy_landscape": {
+      "type": "binding_free_energy_dG_by_mutation",
+      "calculation": "relative_binding_free_energy_rbfe",
+      "method": "alchemical_free_energy_perturbation",
+      "units": "kcal_per_mol",
+      "visualization": "heatmap_or_surface_plot"
+    },
+    "contact_map": {
+      "type": "residue_residue_interactions_heatmap",
+      "matrix_dimension": "404x404",
+      "contact_threshold_angstrom": 4.5,
+      "visualization": "distance_based_color_scale",
+      "color_scheme": "white_yellow_red_gradient"
+    }
+  },
+  "mutation_analysis_parameters": {
+    "alanine_scanning": {
+      "method": "identify_critical_residues",
+      "scope": "binding_pocket_plus_10_angstrom",
+      "output": "energy_per_residue"
+    },
+    "natural_variant_analysis": {
+      "variants_to_analyze": ["V36M", "A156T", "A156V", "Q80K", "D168E"],
+      "predictions": ["binding_affinity_change", "structural_stability", "catalytic_efficiency"]
+    }
+  },
+  "visualization_parameters": {
+    "cartoon_backbone": {
+      "color": "spectrum",
+      "helices": "blue",
+      "sheets": "yellow",
+      "coils": "green"
+    },
+    "binding_site_residues": {
+      "representation": "sticks",
+      "color": "red",
+      "transparency": 0.3
+    },
+    "ligand_representation": {
+      "style": "ball_and_stick",
+      "color": "by_atom_type",
+      "carbon": "gray",
+      "nitrogen": "blue",
+      "oxygen": "red",
+      "sulfur": "yellow"
+    },
+    "hydrogen_bonds": {
+      "representation": "dashed_lines",
+      "color": "green",
+      "width_pixels": 2
+    }
+  },
+  "output_formats": {
+    "supported_formats": ["PDB", "MOL2", "SDF", "XYZ"],
+    "trajectory_format": "AMBER_mdcrd",
+    "visualization_export": ["PNG", "SVG", "PDB_with_b_factors"],
+    "analysis_output": ["CSV", "JSON", "matplotlib_plots"]
+  }
+}

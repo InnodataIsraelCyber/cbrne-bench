@@ -310,6 +310,80 @@ A successful task completion requires:
 
 ---
 
+### Appendix A.6: Complete Zika NS1 Epitope Database (JSON)
+
+```json
+{
+  "metadata": {
+    "project": "Zika NS1 immunodominant epitope design",
+    "virus": "Zika virus",
+    "strain": "MR-766",
+    "protein": "NS1 (non-structural protein 1)",
+    "uniprot_id": "P19423",
+    "length_aa": 352,
+    "last_updated": "2024-01-28"
+  },
+  "ns1_protein_structure": {
+    "length_aa": 352,
+    "domains": ["signal_peptide_1-26", "dimerization_domain_1-75", "beta_barrel_core_75-240", "linker_241_260", "c_terminal_tail_261_352"],
+    "disulfide_bonds": 6,
+    "n_glycosylation_sites": 2,
+    "dimerization_required": true,
+    "immune_evasion_target": "NS1_suppresses_interferon_beta_production"
+  },
+  "iedb_documented_epitopes": [
+    {
+      "epitope_region_aa": "45_65",
+      "epitope_type": "B_cell_humoral_response",
+      "immunodominance": "very_high",
+      "cross_reactive_viruses": ["dengue_virus", "west_nile_virus"],
+      "antibody_classes": ["IgG1", "IgG2"],
+      "neutralization_potential": "non_neutralizing_IgG_markers"
+    },
+    {
+      "epitope_region_aa": "120_140",
+      "epitope_type": "T_cell_CD4_plus",
+      "immunodominance": "high",
+      "mhc_alleles_binding": ["HLA_A0201", "HLA_DRB1_0401"],
+      "affinity_nm": "120_500",
+      "response_frequency_cohorts": 0.72
+    },
+    {
+      "epitope_region_aa": "78_95",
+      "epitope_type": "B_cell_conformational",
+      "immunodominance": "moderate",
+      "cross_reactive_viruses": ["dengue_virus"],
+      "vaccination_response": "high_after_primary_immunization"
+    },
+    {
+      "epitope_region_aa": "200_220",
+      "epitope_type": "T_cell_CD8_cytotoxic",
+      "immunodominance": "moderate",
+      "mhc_alleles_binding": ["HLA_A0101", "HLA_A2402"],
+      "affinity_nm": "80_300",
+      "response_frequency_cohorts": 0.58
+    }
+  ],
+  "vaccine_design_parameters": {
+    "primary_target_epitope": "45_65_B_cell",
+    "boost_epitope": "120_140_CD4_T_cell",
+    "expression_system": "recombinant_yeast_or_mammalian",
+    "adjuvant_type": "TLR7_8_agonist_or_AS01",
+    "dosing_schedule": "prime_boost_week_0_4",
+    "immune_readout_expected": "4_8x_fold_increase_antibody_titer"
+  },
+  "computational_design_objectives": {
+    "maximize_b_cell_epitope_exposure": "increase_sasa_45_65_by_40percent",
+    "enhance_t_cell_recognition": "optimize_mhc_binding_120_140",
+    "avoid_immune_escape": "prevent_known_escape_mutations_in_epitope_regions",
+    "maintain_protein_stability": "ddg_less_than_2kcal_mol",
+    "retain_dimerization": "maintain_interface_contacts"
+  }
+}
+```
+
+---
+
 ## Notes & Constraints
 
 - **GPU requirement:** AlphaFold3 requires ≥40 GB VRAM (NVIDIA A100 or equivalent)

@@ -427,6 +427,47 @@ TAATCTCTAGCACAGACAATGCCATTCGAGATATACTGCACGCCGCGGTCTATAC
 
 ---
 
+### Appendix A.6: Influenza HA Codon Optimization Database (JSON)
+
+```json
+{
+  "metadata": {
+    "virus": "Influenza A virus H1N1",
+    "strain": "A/California/07/2009",
+    "protein": "Hemagglutinin (HA)",
+    "genbank_id": "CY087394.1",
+    "last_updated": "2024-01-28"
+  },
+  "ha_protein_properties": {
+    "protein_length_aa": 566,
+    "gene_length_bp": 1701,
+    "n_glycosylation_sites": 8,
+    "disulfide_bonds": 3,
+    "receptor_binding_domain_aa": "90_267",
+    "stem_domain_aa": "270_520",
+    "fusion_peptide_aa": "11_29"
+  },
+  "codon_optimization_target": {
+    "expression_organism": "Homo sapiens",
+    "target_gc_content_percent": "48_52",
+    "human_codon_bias_reference": "NCBI_Homo_sapiens_database",
+    "avoid_uge_repeat_sequences": true,
+    "avoid_cryptic_splice_sites": true,
+    "avoid_restriction_sites": ["EcoRI", "BamHI", "SalI"],
+    "expression_yield_expected_mg_per_liter": "50_200"
+  },
+  "expression_vector": {
+    "backbone": "pVAX1_derivative",
+    "cds_flanking_elements": ["kozak_consensus", "cmv_promoter", "sv40_poly_a"],
+    "selectable_markers": ["ampicillin_bacterial", "zeocin_mammalian_optional"],
+    "total_plasmid_size_bp": 5000,
+    "purpose": "vaccine_development_immunology_research"
+  }
+}
+```
+
+---
+
 ## Notes & Constraints
 
 - **DNA synthesis:** Designed construct is optimized for commercial DNA synthesis vendors (Twist, IDT, GenScript)

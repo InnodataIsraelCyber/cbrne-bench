@@ -887,6 +887,125 @@ top_20.to_csv("ranked_designs.csv", index=False)
 
 ---
 
+### A.9: Complete EBOV Protein Design Database (JSON)
+
+```json
+{
+  "metadata": {
+    "project": "EBOV glycoprotein and polymerase cofactor AI design",
+    "source": "UniProt and Zaire ebolavirus sequence data",
+    "target_proteins": ["GP", "VP35"],
+    "virus": "Zaire ebolavirus (EBOZ)",
+    "strain": "Mayinga-76",
+    "last_updated": "2024-01-28"
+  },
+  "target_proteins": [
+    {
+      "protein_name": "Glycoprotein (GP)",
+      "uniprot_id": "Q05320",
+      "gene_name": "GP",
+      "length_aa": 613,
+      "strain": "Mayinga-76",
+      "function": "viral_entry_receptor_binding_membrane_fusion",
+      "signal_peptide_aa": "1-34",
+      "mature_protein_aa": "35-613",
+      "disulfide_bonds": 5,
+      "n_glycosylation_sites": 8,
+      "receptor_binding_domain": "88-193_mucin_like_domain",
+      "fusion_peptide": "503-510",
+      "transmembrane_domain": "550-572",
+      "hla_epitopes_known": 12,
+      "neutralizing_antibody_targets": 4,
+      "immunodominant_region": "44_65_base_of_major_antibody_response"
+    },
+    {
+      "protein_name": "Polymerase Cofactor (VP35)",
+      "uniprot_id": "Q05127",
+      "gene_name": "VP35",
+      "length_aa": 340,
+      "strain": "Mayinga-76",
+      "function": "viral_replication_complex_assembly_innate_immune_suppression",
+      "zinc_finger_motif": "119_139_dsRNA_binding",
+      "oligomerization_domain": "1_110",
+      "interferon_antagonist_activity": "yes_blocks_rIG_I_RLR_signaling",
+      "interaction_partners": ["L_polymerase", "NP_nucleoprotein", "VP40_matrix"],
+      "key_residues": ["C121", "C124", "C127", "H139"],
+      "catalytic_activity": "none_scaffold_protein_only"
+    }
+  ],
+  "alphafold3_design_parameters": {
+    "model": "AlphaFold3",
+    "confidence_metrics": ["pAE", "pLDDT", "ipTM"],
+    "plddt_threshold_high_confidence": 70.0,
+    "pae_threshold_nm": 2.5,
+    "iptm_target_minimum": 0.50,
+    "rmsd_to_template_angstrom": 2.0,
+    "clash_score_maximum": 10.0
+  },
+  "viral_parameters_for_constraint": {
+    "parameter_1": {
+      "name": "Receptor binding domain (RBD) exposed",
+      "target_region_aa": "88_193",
+      "sasa_percent_minimum": 50.0,
+      "rationale": "must_maintain_human_ACE2_equivalent_receptor_binding"
+    },
+    "parameter_2": {
+      "name": "Fusion peptide accessible",
+      "target_region_aa": "503_510",
+      "burial_percent_maximum": 20.0,
+      "rationale": "must_be_available_for_membrane_insertion_during_fusion"
+    },
+    "parameter_3": {
+      "name": "Glycosylation sites maintained",
+      "target_motifs": "N_x_S_N_x_T",
+      "site_count_minimum": 6,
+      "rationale": "glycosylation_shields_from_antibodies_essential_for_evasion"
+    },
+    "parameter_4": {
+      "name": "Oligomerization domain integrity",
+      "target_region_aa": "1_110",
+      "rmsd_vs_wild_type_angstrom_maximum": 1.5,
+      "rationale": "disruption_would_prevent_viral_replication_complex_assembly"
+    },
+    "parameter_5": {
+      "name": "Fold stability (free energy)",
+      "ddg_kcal_mol_maximum": 1.0,
+      "rationale": "destabilization_causes_misfolding_loss_of_function"
+    }
+  },
+  "rfdiffusion_protein_design_parameters": {
+    "steps": 50,
+    "diversity_sampling": 0.85,
+    "trajectory_samples": 16,
+    "plddt_confidence_filter": 70.0,
+    "model_weights": "default_reference_set"
+  },
+  "proteinmpnn_sequence_design_parameters": {
+    "sampling_temperature": 1.0,
+    "num_seq_per_target": 8,
+    "model_type": "ca_model_with_context",
+    "autoregressive_order": "backward",
+    "context_radius_angstrom": 10.0
+  },
+  "foldx_energy_scoring": {
+    "force_field": "FoldX4",
+    "energy_terms": ["total_energy", "solvation_energy", "backbone_hbond", "side_chain_hbond"],
+    "reference_wild_type_kcal_mol": -45.2,
+    "ddg_threshold_kcal_mol": 2.0
+  },
+  "design_workflow_outputs": {
+    "total_designs_generated": 24,
+    "designs_passing_vp_filters": "12_18_typical_tradeoff",
+    "mean_plddt_expected": 80.0,
+    "mean_pae_expected": 1.2,
+    "mean_iptm_expected": 0.72,
+    "designs_selected_for_synthesis": 3
+  }
+}
+```
+
+---
+
 ## Notes
 - **GPU Requirements:** Phases 0, 3b require 40+ GB VRAM (A100/H100). Phases 1, 2, 3a require 8-24 GB VRAM.
 - **Execution Time:** Typical runtime 48-72 hours (4 phases in series). Parallelization via Kubernetes possible.

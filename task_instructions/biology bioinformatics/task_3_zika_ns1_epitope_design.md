@@ -496,3 +496,64 @@ QKGSFAKPKTETGFNKTSRDANWGKQNFHXSGCGPLCTKTV
 - UniProt: https://www.uniprot.org/uniprotkb/P19423/
 - NCBI Protein: https://www.ncbi.nlm.nih.gov/protein/NP_543412.1/
 - IEDB NS1 Epitopes: https://www.iedb.org/ (search "Zika NS1")
+
+---
+
+## Appendix: Complete Source Files (Embedded)
+
+### A.1: zika_ns1_reference.fasta
+>sp|P19423|NS1_ZIKV Nonstructural protein 1 [Zika virus (strain MR-766, Uganda, 1947)]
+MNNQRKKTARPDVIDLGPWKKKPKSVAAVQFKHGIQTQSNQCPWVICPWTNPFLPFNPPPPK
+AKTKASHLKQKKEELLKTFQLMPHFDAKSPHEFCPPEKCKQPRVCLPTSEEVVDLGCYKQL
+QKGSFAKPKTETGFNKTSRDANWGKQNFHXSGCGPLCTKTV
+
+### A.2: zika_ns1_epitopes.json
+{
+  "metadata": {
+    "source": "IEDB - Immune Epitope Database",
+    "virus": "Zika virus",
+    "protein": "Nonstructural protein 1 (NS1)",
+    "strain": "MR-766 (Uganda, 1947)",
+    "total_length": 352,
+    "last_updated": "2024-01-15"
+  },
+  "epitope_regions": [
+    {
+      "name": "epitope_1",
+      "start": 45,
+      "end": 65,
+      "sequence": "WKKKPKSVAAVQFKHGIQ",
+      "antibody_source": "human_convalescent",
+      "conserved": false,
+      "references": ["PMID:27353555"]
+    },
+    {
+      "name": "epitope_2",
+      "start": 120,
+      "end": 140,
+      "sequence": "FHXSGCGPLCTKTV",
+      "antibody_source": "dengue_cross_reactive",
+      "conserved": true,
+      "references": ["PMID:27353555", "PMID:27103392"]
+    },
+    {
+      "name": "epitope_3",
+      "start": 78,
+      "end": 95,
+      "sequence": "NPPPPKAKTKASHLK",
+      "antibody_source": "human_convalescent",
+      "conserved": false,
+      "references": ["PMID:27353555"]
+    },
+    {
+      "name": "epitope_4",
+      "start": 200,
+      "end": 220,
+      "sequence": "VVDLGCYKQLQKGSF",
+      "antibody_source": "dengue_cross_reactive",
+      "conserved": true,
+      "references": ["PMID:27103392"]
+    }
+  ],
+  "target_variation": [45, 47, 52, 55, 62, 78, 85, 92, 120, 124, 131, 138, 200, 205, 210, 215]
+}

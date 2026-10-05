@@ -1054,6 +1054,134 @@ for model in structure:
 
 ---
 
+### A.6: Complete Cellulase Engineering Database (JSON)
+
+```json
+{
+  "metadata": {
+    "project": "Cellulase enzyme engineering pipeline",
+    "source": "Published crystal structures and biochemical data",
+    "target_protein": "Endoglucanase (GH5 family cellulase)",
+    "organisms": ["Acidothermus cellulolyticus", "Thermobifida fusca", "Cellulomonas fimi"],
+    "pdb_ids": ["1IFS", "1UQ4", "2P8N"],
+    "last_updated": "2024-01-28"
+  },
+  "cellulase_variants": [
+    {
+      "pdb_id": "1IFS",
+      "organism": "Acidothermus cellulolyticus",
+      "protein_name": "Endoglucanase Cel5A",
+      "chain": "A",
+      "length_aa": 374,
+      "uniprot_id": "P27809",
+      "temperature_optimum_celsius": 48,
+      "ph_optimum": 5.5,
+      "catalytic_residues": {
+        "nucleophile": "Asp54",
+        "proton_donor": "Glu177"
+      },
+      "mechanism": "inverting_glycosidase_two_step_catalysis",
+      "substrate_specificity": "cellulose_and_glucans",
+      "kcat_per_sec": 1250.0,
+      "km_mm": 0.8,
+      "turnover_efficiency": 1562.5,
+      "pdb_resolution_angstrom": 1.8,
+      "structure_quality": "high_resolution_atomic_detail",
+      "expression_system": "recombinant_thermophile_production",
+      "industrial_application": "lignocellulose_bioprocessing"
+    },
+    {
+      "pdb_id": "1UQ4",
+      "organism": "Thermobifida fusca",
+      "protein_name": "Cellulase",
+      "chain": "A",
+      "length_aa": 378,
+      "uniprot_id": "P17869",
+      "temperature_optimum_celsius": 70,
+      "ph_optimum": 6.0,
+      "catalytic_residues": {
+        "nucleophile": "Asp50",
+        "proton_donor": "Glu179"
+      },
+      "mechanism": "inverting_glycosidase_two_step_catalysis",
+      "substrate_specificity": "cellulose_and_glucans",
+      "kcat_per_sec": 1890.0,
+      "km_mm": 0.6,
+      "turnover_efficiency": 3150.0,
+      "pdb_resolution_angstrom": 1.9,
+      "structure_quality": "high_resolution_atomic_detail",
+      "expression_system": "recombinant_thermophile_production",
+      "industrial_application": "high_temperature_bioconversion"
+    },
+    {
+      "pdb_id": "2P8N",
+      "organism": "Cellulomonas fimi",
+      "protein_name": "Cellulase Cel5",
+      "chain": "A",
+      "length_aa": 381,
+      "uniprot_id": "P09759",
+      "temperature_optimum_celsius": 37,
+      "ph_optimum": 5.0,
+      "catalytic_residues": {
+        "nucleophile": "Asp55",
+        "proton_donor": "Glu177"
+      },
+      "mechanism": "inverting_glycosidase_two_step_catalysis",
+      "substrate_specificity": "cellulose_and_glucans",
+      "kcat_per_sec": 980.0,
+      "km_mm": 1.2,
+      "turnover_efficiency": 816.7,
+      "pdb_resolution_angstrom": 2.0,
+      "structure_quality": "high_resolution_atomic_detail",
+      "expression_system": "recombinant_mesophile_production",
+      "industrial_application": "room_temperature_processing"
+    }
+  ],
+  "codon_optimization_parameters": {
+    "target_organism": "Escherichia coli K-12",
+    "target_gc_content_percent": "50_55",
+    "avoid_rare_codons": true,
+    "remove_restriction_sites": ["EcoRI", "BamHI", "SalI", "XbaI"],
+    "remove_homopolymer_runs": true,
+    "max_homopolymer_length": 8,
+    "shuffle_codons_to_avoid_mrna_secondary_structure": true,
+    "expression_expected_improvement": "2_5x_over_native_sequence"
+  },
+  "expression_vector_specifications": {
+    "backbone_name": "pET28a+",
+    "origin_of_replication": "pBR322",
+    "antibiotic_selection": "kanamycin_50ug_ml",
+    "promoter": "T7_lacUV5",
+    "terminator": "rrnB_terminator",
+    "solubility_tag": "N_terminal_His6_SUMO_tag",
+    "tag_size_aa": 11,
+    "cleavage_site": "SUMO_protease_recognition",
+    "codon_optimized_gene_insert_bp": "1122_1134",
+    "total_plasmid_size_bp": 5500,
+    "expression_yield_expected_mg_per_liter": "100_500",
+    "protein_purity_achieved": ">95_percent_SDS_PAGE"
+  },
+  "enzyme_validation_metrics": {
+    "stability_thermal_denaturation_celsius": "60_75_per_organism",
+    "structural_conservation_rmsd_angstrom": 2.1,
+    "sequence_identity_pairwise_1ifs_1uq4": 0.89,
+    "sequence_identity_pairwise_1ifs_2p8n": 0.86,
+    "catalytic_efficiency_preservation": ">90_percent_of_wild_type",
+    "specific_activity_units_per_mg": "1000_2000"
+  },
+  "md_simulation_parameters": {
+    "force_field": "AMBER14",
+    "simulation_time_ns": 100,
+    "temperature_kelvin": 310,
+    "water_model": "TIP3P",
+    "ionic_strength_mm": 150,
+    "restraints_applied": "minimal_backbone_only"
+  }
+}
+```
+
+---
+
 ## Notes
 
 - **Protein Targets:** Pipeline uses cellulase enzymes (Cel5A family) from thermophilic bacteria:

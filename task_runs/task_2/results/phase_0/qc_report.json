@@ -1,0 +1,12 @@
+{
+  "model": "alphafold3",
+  "sequence_length": 340,
+  "plddt_avg": 82.28314705882354,
+  "plddt_min": 72.14,
+  "plddt_high_conf_fraction": 1.0,
+  "ptm_score": 0.85,
+  "pae_min": 0.2,
+  "validation_passed": true,
+  "validation_warnings": [],
+  "timestamp": "2026-10-04T18:13:07.629490"
+}

@@ -1,0 +1,18 @@
+{
+  "plasmid_backbones": "backbones_generated.fasta",
+  "stage": 5,
+  "total_backbones": 30,
+  "valid_plasmids": 30,
+  "components": {
+    "ori": "Origin of replication (pBR322-like)",
+    "promoter": "T7 RNA Polymerase Promoter",
+    "rbs": "Shine-Dalgarno Ribosome Binding Site",
+    "terminator": "Rho-independent transcription terminator",
+    "resistance_marker": "Ampicillin/Beta-lactamase resistance gene (partial)"
+  },
+  "min_length_bp": 4500,
+  "average_length_bp": 4500,
+  "average_gc_content": 0.0749,
+  "topology": "circular",
+  "timestamp": "2026-10-05T07:10:24.083447Z"
+}

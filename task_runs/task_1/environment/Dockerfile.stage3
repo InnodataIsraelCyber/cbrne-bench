@@ -16,10 +16,13 @@ RUN pip install --no-cache-dir \
     pandas
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
-# ProteinMPNN installation
-# Clone or download ProteinMPNN (model weights should be mounted)
+# Install ProteinMPNN from GitHub
+RUN git clone https://github.com/dauparas/ProteinMPNN.git /workspace/ProteinMPNN && \
+    cd /workspace/ProteinMPNN && \
+    pip install --no-cache-dir -e .
+
+# Create model directory
 RUN mkdir -p /workspace/models
-RUN mkdir -p /workspace/ProteinMPNN
 
 # Copy scripts
 COPY scripts/stage3_entrypoint.sh /workspace/

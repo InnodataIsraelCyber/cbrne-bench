@@ -88,31 +88,6 @@ def run_dna_chisel(protein_seq: str, variant_idx: int) -> str:
         logger.error(f"DNA Chisel error: {e}")
         raise
 
-def fallback_codon_optimization(protein_seq: str, variant_idx: int) -> str:
-    """
-    Fallback codon optimization using E. coli usage frequencies
-    Weighted random selection based on codon bias
-    """
-    import numpy as np
-
-    dna = ""
-    np.random.seed(variant_idx)
-
-    for aa in protein_seq:
-        if aa not in ECOLI_CODON_USAGE:
-            logger.warning(f"Unknown amino acid: {aa}, using first available codon")
-            aa = 'A'  # Default fallback
-
-        # Get codon options and their frequencies
-        codon_table = ECOLI_CODON_USAGE[aa]
-        codons = list(codon_table.keys())
-        frequencies = np.array(list(codon_table.values()))
-
-        # Weighted random selection
-        selected_codon = np.random.choice(codons, p=frequencies)
-        dna += selected_codon
-
-    return dna
 
 def verify_translation(dna_seq: str, protein_seq: str) -> bool:
     """
@@ -179,12 +154,8 @@ total_variants = 0
 with open(output_fasta, 'w') as out_f:
     for seq_idx, (header, protein_seq) in enumerate(zip(headers, sequences)):
         for variant in range(CODON_VARIANTS):
-            try:
-                # Try DNA Chisel first
-                dna_seq = run_dna_chisel(protein_seq, variant)
-            except (ImportError, Exception):
-                # Fall back to statistical optimization
-                dna_seq = fallback_codon_optimization(protein_seq, variant)
+            # Use DNA Chisel - required tool, no fallback
+            dna_seq = run_dna_chisel(protein_seq, variant)
 
             # Verify translation
             if verify_translation(dna_seq, protein_seq):

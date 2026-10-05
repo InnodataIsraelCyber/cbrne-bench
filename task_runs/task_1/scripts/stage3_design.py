@@ -88,64 +88,6 @@ def run_proteinmpnn(scaffold_dir: str, fixed_positions: List[int],
 
     return sequences_by_scaffold
 
-def fallback_sequence_design(scaffold_dir: str, num_scaffolds: int,
-                            num_seqs: int, fixed_positions: List[int]) -> Dict[str, List[str]]:
-    """
-    Fallback: Use statistical/ML-free sequence design
-    Generates sequences using codon bias and secondary structure preservation
-    """
-    from Bio.PDB import PDBParser
-
-    logger.info("Using fallback statistical sequence design")
-    AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY"
-    sequences_by_scaffold = {}
-
-    parser = PDBParser(QUIET=True)
-    scaffold_files = sorted([f for f in os.listdir(scaffold_dir) if f.endswith('.pdb')])
-
-    for idx, scaffold_file in enumerate(scaffold_files, 1):
-        scaffold_name = Path(scaffold_file).stem
-        pdb_path = os.path.join(scaffold_dir, scaffold_file)
-
-        try:
-            # Load structure to determine length
-            structure = parser.get_structure("scaffold", pdb_path)
-            residue_list = []
-            for model in structure:
-                for chain in model:
-                    for residue in chain:
-                        residue_list.append(residue)
-
-            seq_length = len(residue_list)
-            logger.info(f"Scaffold {scaffold_name} has {seq_length} residues")
-
-            # Generate sequence variants
-            seqs = []
-            np.random.seed(idx)
-
-            for seq_idx in range(num_seqs):
-                sequence = []
-                for pos in range(seq_length):
-                    if pos in fixed_positions:
-                        # Keep catalytic residues: use common amino acids
-                        sequence.append(AMINO_ACIDS[pos % len(AMINO_ACIDS)])
-                    else:
-                        # Use biased random selection (favoring hydrophobic)
-                        if np.random.random() < 0.6:
-                            sequence.append(np.random.choice(['A', 'V', 'I', 'L', 'M']))
-                        else:
-                            sequence.append(np.random.choice(AMINO_ACIDS))
-
-                seqs.append(''.join(sequence))
-
-            sequences_by_scaffold[scaffold_name] = seqs
-            logger.info(f"Generated {num_seqs} sequences for {scaffold_name}")
-
-        except Exception as e:
-            logger.error(f"Error processing scaffold {scaffold_file}: {e}")
-            raise
-
-    return sequences_by_scaffold
 
 # Wait for scaffold directory and files (with retry)
 import time
@@ -163,15 +105,9 @@ for retry in range(max_retries):
         logger.info(f"Waiting for scaffolds... (attempt {retry+1}/{max_retries}, {retry * retry_delay:.0f}s elapsed)")
     time.sleep(retry_delay)
 
-# Run design
-try:
-    sequences_by_scaffold = run_proteinmpnn(DATA_INPUT, FIXED_POSITIONS,
-                                           NUM_SEQUENCES, SAMPLING_TEMP)
-except (FileNotFoundError, RuntimeError):
-    logger.info("Falling back to statistical sequence design")
-    scaffold_files = [f for f in os.listdir(DATA_INPUT) if f.endswith('.pdb')]
-    sequences_by_scaffold = fallback_sequence_design(DATA_INPUT, len(scaffold_files),
-                                                    NUM_SEQUENCES, FIXED_POSITIONS)
+# Run design with ProteinMPNN - required tool, no fallback
+sequences_by_scaffold = run_proteinmpnn(DATA_INPUT, FIXED_POSITIONS,
+                                       NUM_SEQUENCES, SAMPLING_TEMP)
 
 # Write combined FASTA output
 total_sequences = 0

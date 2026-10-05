@@ -219,41 +219,6 @@ def run_pydna_assembly(gene_sequences: List[str], backbone_sequences: List[str])
         logger.warning("pydna not available, using fallback assembly")
         raise
 
-def fallback_assembly(gene_sequences: List[str], backbone_sequences: List[str]) -> Tuple[List[Dict], int]:
-    """
-    Fallback assembly using manual overlap detection
-    """
-    logger.info("Using fallback assembly with overlap detection")
-
-    assembled_plasmids = []
-    success_count = 0
-
-    for gene_idx, gene_seq in enumerate(gene_sequences[:10]):
-        backbone = backbone_sequences[gene_idx % len(backbone_sequences)]
-
-        # Attempt Gibson assembly
-        success, assembled_seq, error = gibson_assembly([gene_seq, backbone])
-
-        if success:
-            success_count += 1
-            logger.info(f"Assembly {gene_idx} successful ({len(assembled_seq)} bp)")
-        else:
-            # Fallback: simple concatenation with linker
-            logger.warning(f"Assembly {gene_idx} failed: {error}")
-            # Add minimal linker
-            linker = "GGTCTC"  # BsaI site for flexibility
-            assembled_seq = gene_seq + linker + backbone
-
-        assembled_plasmids.append({
-            "plasmid_id": f"pGibson_{gene_idx:03d}",
-            "gene_idx": gene_idx,
-            "backbone_idx": gene_idx % len(backbone_sequences),
-            "success": success,
-            "sequence": assembled_seq,
-            "length": len(assembled_seq)
-        })
-
-    return assembled_plasmids, success_count
 
 # Read input sequences
 logger.info(f"Reading gene sequences from {DATA_INPUT_GENE}")
@@ -294,11 +259,8 @@ if not gene_seqs or not backbone_seqs:
     logger.error("No sequences loaded")
     exit(1)
 
-# Perform assembly
-try:
-    assembled_plasmids, success_count = run_pydna_assembly(gene_seqs, backbone_seqs)
-except (ImportError, Exception):
-    assembled_plasmids, success_count = fallback_assembly(gene_seqs, backbone_seqs)
+# Perform assembly with pydna - required tool, no fallback
+assembled_plasmids, success_count = run_pydna_assembly(gene_seqs, backbone_seqs)
 
 # Write GenBank output
 gb_file = os.path.join(DATA_OUTPUT, "assembled_plasmids.gb")

@@ -18,8 +18,12 @@ RUN pip install --no-cache-dir \
     pandas
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
-# RFdiffusion installation (if model weights available)
-# Model weights should be mounted at /workspace/models/
+# Install RFdiffusion2 from GitHub
+RUN git clone https://github.com/RosettaCommons/RFdiffusion.git /workspace/RFdiffusion && \
+    cd /workspace/RFdiffusion && \
+    pip install --no-cache-dir -e .
+
+# Create model directory
 RUN mkdir -p /workspace/models
 
 # Copy configuration and scripts

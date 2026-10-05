@@ -76,51 +76,6 @@ def run_rfdiffusion(pdb_file: str, num_designs: int, fixed_positions: List[int])
 
     return output_scaffolds
 
-def fallback_scaffold_generation(pdb_files: List[str], num_designs: int,
-                                 fixed_positions: List[int]) -> List[str]:
-    """
-    Fallback: Use structure-based methods if RFdiffusion unavailable
-    Implements simple scaffold generation by loading and perturbing input structures
-    """
-    from Bio.PDB import PDBParser, PDBIO
-    import numpy as np
-
-    logger.info("Using fallback structure-based scaffolding")
-    output_scaffolds = []
-    parser = PDBParser(QUIET=True)
-    pdbio = PDBIO()
-
-    for pdb_file in pdb_files:
-        try:
-            structure = parser.get_structure("input", pdb_file)
-
-            for design_idx in range(num_designs):
-                # Generate variants by small coordinate perturbations
-                new_structure = structure.copy() if hasattr(structure, 'copy') else structure
-
-                # Add small noise to coordinates (simulating sampling diversity)
-                np.random.seed(design_idx)
-                for model in new_structure:
-                    for chain in model:
-                        for residue in chain:
-                            for atom in residue:
-                                # Small gaussian perturbation
-                                noise = np.random.normal(0, 0.1, 3)
-                                atom.coord += noise
-
-                # Save scaffold
-                scaffold_idx = (pdb_files.index(pdb_file) * num_designs) + design_idx + 1
-                scaffold_file = os.path.join(DATA_OUTPUT, f"scaffolds_{scaffold_idx}.pdb")
-                pdbio.set_structure(new_structure)
-                pdbio.save(scaffold_file)
-                output_scaffolds.append(scaffold_file)
-                logger.info(f"Generated scaffold {scaffold_idx}: {scaffold_file}")
-
-        except Exception as e:
-            logger.error(f"Error processing {pdb_file}: {e}")
-            raise
-
-    return output_scaffolds
 
 # Load input structures
 input_files = [f for f in os.listdir(DATA_INPUT) if f.endswith('.pdb')]
@@ -132,14 +87,8 @@ if not input_files:
 
 pdb_paths = [os.path.join(DATA_INPUT, f) for f in input_files]
 
-# Try RFdiffusion first, fall back to structure-based method
-try:
-    # This requires RFdiffusion to be installed and model weights available
-    output_scaffolds = run_rfdiffusion(pdb_paths[0], NUM_DESIGNS, FIXED_POSITIONS)
-except (FileNotFoundError, RuntimeError, subprocess.TimeoutExpired):
-    # Fallback to simpler structure-based approach
-    logger.info("Falling back to structure-based scaffold generation")
-    output_scaffolds = fallback_scaffold_generation(pdb_paths, NUM_DESIGNS, FIXED_POSITIONS)
+# Run RFdiffusion - required tool, no fallback
+output_scaffolds = run_rfdiffusion(pdb_paths[0], NUM_DESIGNS, FIXED_POSITIONS)
 
 # Verify catalytic residues in output structures
 from Bio.PDB import PDBParser

@@ -1,0 +1,81 @@
+{
+  "hotspots": [
+    {
+      "position": 20,
+      "residue": "M",
+      "confidence": 0.8866449546811797
+    },
+    {
+      "position": 21,
+      "residue": "P",
+      "confidence": 0.7488808236491649
+    },
+    {
+      "position": 23,
+      "residue": "P",
+      "confidence": 0.8109462394417309
+    },
+    {
+      "position": 25,
+      "residue": "L",
+      "confidence": 0.7724775367753789
+    },
+    {
+      "position": 29,
+      "residue": "I",
+      "confidence": 0.8870683557066681
+    },
+    {
+      "position": 33,
+      "residue": "L",
+      "confidence": 0.7651768422824474
+    },
+    {
+      "position": 34,
+      "residue": "M",
+      "confidence": 0.9010102950229968
+    },
+    {
+      "position": 38,
+      "residue": "I",
+      "confidence": 0.6125547589951349
+    },
+    {
+      "position": 39,
+      "residue": "P",
+      "confidence": 0.8342763490360869
+    },
+    {
+      "position": 40,
+      "residue": "V",
+      "confidence": 0.6809926858341707
+    },
+    {
+      "position": 43,
+      "residue": "I",
+      "confidence": 0.6208910366967569
+    },
+    {
+      "position": 44,
+      "residue": "F",
+      "confidence": 0.9124268187279267
+    },
+    {
+      "position": 47,
+      "residue": "I",
+      "confidence": 0.872974820564419
+    },
+    {
+      "position": 51,
+      "residue": "P",
+      "confidence": 0.8577110344917609
+    },
+    {
+      "position": 53,
+      "residue": "L",
+      "confidence": 0.7589536720422105
+    }
+  ],
+  "total_count": 15,
+  "timestamp": "2026-10-04T18:13:07.626490"
+}

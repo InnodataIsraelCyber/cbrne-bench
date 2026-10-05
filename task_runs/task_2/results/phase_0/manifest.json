@@ -1,0 +1,26 @@
+{
+  "phase": 0,
+  "phase_name": "target_preparation",
+  "status": "completed",
+  "start_time": "2026-10-04T18:13:07.635164",
+  "end_time": "2026-10-04T18:13:07.635164",
+  "input_files": {
+    "sequence_file": "alphafold_inputs\\VP35_EBOZM.fasta",
+    "sequence_id": "sp|Q05127|VP35_EBOZM Polymerase cofactor VP35 OS=Zaire ebolavirus (strain Mayinga-76) OX=128952 GN=VP35 PE=1 SV=1",
+    "sequence_length": 340
+  },
+  "output_files": {
+    "pdb": "result_model_1.pdb",
+    "plddt_scores": "plddt_scores.txt",
+    "pae_matrix": "pae_matrix.npy",
+    "qc_report": "qc_report.json",
+    "hotspot_residues": "hotspot_residues.json"
+  },
+  "metrics": {
+    "plddt_average": 82.28314705882354,
+    "ptm_score": 0.85,
+    "pae_minimum": 0.2,
+    "hotspot_count": 15
+  },
+  "validation": true
+}
